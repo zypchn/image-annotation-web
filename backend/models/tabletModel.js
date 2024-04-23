@@ -12,6 +12,7 @@ const tabletSchema = new Schema({
         required: true,
         unique: true
     },
+    
     // TODO: add constructor for labels
     
 }, { timestamps: true })

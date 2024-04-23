@@ -5,6 +5,7 @@ import LoginPage from "./pages/LoginPage";
 import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import TabletSearch from "./pages/TabletSearch";
 import Navbar from "./components/Navbar.jsx";
+import UploadPage from "./pages/UploadPage.jsx";
 
 function Redirect(props) {
     return null;
@@ -17,6 +18,7 @@ function App() {
             <Routes>
                 <Route exact path={"/login"} element={<LoginPage />} />
                 <Route exact path={"/tablets"} element={<TabletSearch />} />
+                <Route exact path={"/tablets/create"} element={<UploadPage />} />
             </Routes>
         </Router>
     </div>
