@@ -13,6 +13,50 @@ canvas {
     margin-left: 8px;
 }
 
-.add-tablet-btn {
-    margin-top: 10px;
+.sidebar {
+    height: 35%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 10px;
+    right: 10px;
+    background-color: #111;
+    overflow-x: hidden;
+    padding-top: 60px;
+    transition: 0.5s;
+}
+
+.sidebar .closeBtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+.openBtn {
+    font-size: 20px;
+    cursor: pointer;
+    background-color: #111;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.openBtn:hover {
+    background-color: #444;
+}
+
+#tablets {
+    transition: margin-left .5s;
+    padding: 20px;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+    .sidebar {padding-top: 15px;}
+    .sidebar a {font-size: 18px;}
 }

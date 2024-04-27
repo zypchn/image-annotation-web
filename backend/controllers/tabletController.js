@@ -4,7 +4,7 @@ const multer = require("multer");
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, "public/images");
+        cb(null, "../frontend/public/images");
     },
     filename: (req, file, cb) => {
         cb(null, file.originalname);
@@ -21,16 +21,6 @@ const displayTablets = async (req, res) => {
 const labelTablet = async = async (req, res) => {
     const {id} = req.params;
     if (!mongoose.Types.ObjectId.isValid(id)) { return res.status(404).json({error: "invalid id"}) }
-    
-    /*
-    const tablet = await Tablet.findOneAndUpdate({_id: id}, {
-        ...req.body
-    });
-    
-    if (!tablet) { return res.status(404).json({error: "tablet not found"}) }
-    
-    res.status(200).json(tablet);
-     */
 }
 
 

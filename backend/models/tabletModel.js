@@ -12,6 +12,18 @@ const tabletSchema = new Schema({
         required: true,
         unique: true
     },
+    width: {
+        type: Number,
+        //required: true
+    },
+    height: {
+        type: Number,
+        //required: true
+    },
+    annotations: [{
+        syllableName: String,
+        segmentation: Array
+    }]
     
     // TODO: add constructor for labels
     

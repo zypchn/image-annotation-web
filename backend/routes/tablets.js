@@ -12,6 +12,6 @@ router.get("/", displayTablets);
 
 router.patch("/:id", labelTablet);
 
-router.post("/create", upload.single("file"), uploadTablet);
+router.post("/", upload.single("file"), uploadTablet);
 
 module.exports = router
