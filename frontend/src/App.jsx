@@ -14,6 +14,7 @@ function App() {
                 <Routes>
                     <Route exact path={"/login"} element={<LoginPage />} />
                     <Route exact path={"/tablets"} element={<TabletSearch />} />
+                    <Route exact path={"/label"} element={<Canvas />} />
                 </Routes>
             </Router>
         </div>
