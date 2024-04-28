@@ -28,6 +28,7 @@ const Canvas = () => {
     const [position, setPosition] = useState([0, 0]);
     const [isMouseOverPoint, setMouseOverPoint] = useState(false);
     const [isPolyComplete, setPolyComplete] = useState(false);
+    
     const videoElement = useMemo(() => {
         const element = new window.Image();
         element.width = 650;
@@ -50,9 +51,11 @@ const Canvas = () => {
             videoElement.removeEventListener("load", onload);
         };
     }, [videoElement]);
+
     const getMousePos = (stage) => {
         return [stage.getPointerPosition().x, stage.getPointerPosition().y];
     };
+
     //drawing begins when mousedown event fires.
     const handleMouseDown = (e) => {
         if (isPolyComplete) return;
@@ -155,8 +158,8 @@ const Canvas = () => {
                         alignItems: "center",
                     }}
                 >
-                    <Button name="Undo" onClick={undo} />
-                    <Button name="Reset" onClick={reset} />
+                    <Button name="Noktayı Geri Al" onClick={undo} />
+                    <Button name="Hepsini Resetle" onClick={() => window.confirm("Tüm annotationları silmek istediğinize emin misiniz ?") && reset()} />
                 </div>
             </div>
             <div
