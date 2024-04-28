@@ -122,6 +122,19 @@ const Canvas = () => {
         }
     };
     
+    const renderAnnotations = () => {
+    return (
+        <PolygonAnnotation
+            points={points}
+            flattenedPoints={flattenedPoints}
+            handlePointDragMove={handlePointDragMove}
+            handleGroupDragEnd={handleGroupDragEnd}
+            handleMouseOverStartPoint={handleMouseOverStartPoint}
+            handleMouseOutStartPoint={handleMouseOutStartPoint}
+            isFinished={isPolyComplete}
+        />)
+    }
+
     return (
         <div style={wrapperStyle}>
             <div style={columnStyle}>
@@ -140,15 +153,7 @@ const Canvas = () => {
                             width={size.width}
                             height={size.height}
                         />
-                        <PolygonAnnotation
-                            points={points}
-                            flattenedPoints={flattenedPoints}
-                            handlePointDragMove={handlePointDragMove}
-                            handleGroupDragEnd={handleGroupDragEnd}
-                            handleMouseOverStartPoint={handleMouseOverStartPoint}
-                            handleMouseOutStartPoint={handleMouseOutStartPoint}
-                            isFinished={isPolyComplete}
-                        />
+                        {renderAnnotations()}
                     </Layer>
                 </Stage>
                 <div
