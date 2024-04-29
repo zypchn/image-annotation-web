@@ -1,5 +1,5 @@
-import SidebarUpload from "../components/SidebarUpload.jsx";
-import TabletCards from "../components/TabletCards.jsx";
+import SidebarUpload from "../components/SidebarUpload";
+import TabletCards from "../components/TabletCards";
 import {useEffect, useState} from "react";
 
 const TabletSearch = () => {
@@ -28,7 +28,6 @@ const TabletSearch = () => {
         }
         fetchTablets().then()
     }, []);
-    
     
     return (
         <div>

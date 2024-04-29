@@ -2,14 +2,6 @@ import { useState } from "react";
 import { Line, Circle, Group } from "react-konva";
 import { minMax, dragBoundFunc } from "../utils";
 
-/**
- *
- * @param {minMaxX} props
- * minMaxX[0]=>minX
- * minMaxX[1]=>maxX
- *
- */
-
 const PolygonAnnotation = (props) => {
     const {
         points,

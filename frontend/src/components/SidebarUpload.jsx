@@ -11,14 +11,14 @@ const SidebarUpload = () => {
         axios.post("http://localhost:4000/tablets", formData)
         .then(res => console.log(res))
         .catch(error => console.log(error))
-        console.log(formData.keys())
+        console.log(formData.values())
     }
     
     return(
         <div className={"file-upload-container"}>
-            <div>
-                <input type={"file"} onChange={e => setFile(e.target.files[0])} />
-                <button className={"upload-button"} onClick={handleUpload}> Upload </button>
+            <div className={"mx-3"}>
+                <input type={"file"} style={{color: "white"}} onChange={e => setFile(e.target.files[0])} required={true}/>
+                <button className={"upload-button my-3"} onClick={handleUpload}> Upload </button>
             </div>
         </div>
     );

@@ -2,7 +2,7 @@ import { useMemo, useRef, useState, useEffect } from "react";
 import PolygonAnnotation from "../components/PolygonAnnotation.jsx";
 import { Stage, Layer, Image } from "react-konva";
 import Button from "../components/Button.jsx";
-const videoSource = "src/containers/tablet4.jpeg";
+import {useParams} from "react-router-dom";
 
 const wrapperStyle = {
     display: "flex",
@@ -18,7 +18,8 @@ const columnStyle = {
     marginTop: 20,
     backgroundColor: "aliceblue",
 };
-const Canvas = () => {
+
+const Canvas = ( {tablets} ) => {
     const [image, setImage] = useState();
     const imageRef = useRef(null);
     const dataRef = useRef(null);
@@ -29,14 +30,16 @@ const Canvas = () => {
     const [isMouseOverPoint, setMouseOverPoint] = useState(false);
     const [isPolyComplete, setPolyComplete] = useState(false);
     
+    const { tabletName } = useParams()
+    const videoSource = "/images/" + tabletName
+    
     const videoElement = useMemo(() => {
         const element = new window.Image();
         element.width = 650;
         element.height = 500;
         element.src = videoSource;
         return element;
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [videoSource]); //it may come from redux, so it may be dependency that's why I left it as dependecny...
+    }, []);
     useEffect(() => {
         const onload = function () {
             setSize({

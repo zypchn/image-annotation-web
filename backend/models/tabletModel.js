@@ -20,6 +20,9 @@ const tabletSchema = new Schema({
         type: Number,
         //required: true
     },
+    status: {
+        type: String
+    },
     annotations: [{
         syllableName: String,
         segmentation: Array

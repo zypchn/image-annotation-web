@@ -7,10 +7,10 @@ const LoginPage = () => {
                     <div className={"col-12"}>
                         <div className={"card bg-dark text-white my-5 mx-auto"} style={{borderRadius: "1rem", maxWidth: "400px"}}>
                             <div className={"card-body p-5 d-flex flex-column align-items-center mx-auto w-100"}>
-                                <h2 className={"fw-bold mb-4"}> Member Login </h2>
-                                <input className={"form-control mb-4 mx-5 w-100"} placeholder={"User ID"} type={"text"}/>
-                                <input className={"form-control mb-4 mx-5 w-100"} placeholder={"Password"} type={"password"}/>
-                                <button className={"btn btn-outline-light mx-2 px-5"}> Login </button>
+                                <h2 className={"fw-bold mb-4"}> Üye Girişi </h2>
+                                <input className={"form-control mb-4 mx-5 w-100"} placeholder={"Kullanıcı ID"} type={"text"}/>
+                                <input className={"form-control mb-4 mx-5 w-100"} placeholder={"Parola"} type={"password"}/>
+                                <button className={"btn btn-outline-light mx-2 px-5"}> Giriş </button>
                             </div>
                         </div>
                     </div>

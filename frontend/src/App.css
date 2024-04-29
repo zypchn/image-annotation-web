@@ -18,6 +18,7 @@ body {
     overflow-x: hidden;
     padding-top: 60px;
     transition: 0.5s;
+    text-decoration-color: white;
 }
 
 .sidebar .closeBtn {
