@@ -1,15 +1,13 @@
 const Tablet = require("../models/tabletModel");
-const mongoose = require("mongoose");
 const multer = require("multer");
 const sizeOf = require("image-size");
-const path = require("path");
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, "../frontend/public/images");
     },
     filename: (req, file, cb) => {
-        cb(null, (Date.now() + path.extname(file.originalname)));
+        cb(null, file.originalname);
     },
 })
 
@@ -20,9 +18,15 @@ const displayTablets = async (req, res) => {
 }
 
 // tablet label page
-const labelTablet = async (req, res) => {
-    const {id} = req.params;
-    if (!mongoose.Types.ObjectId.isValid(id)) { return res.status(404).json({error: "invalid id"}) }
+const getTablet = async (req, res) => {
+    const {tabletName} = req.params;
+    
+    const tablet = await Tablet.findOne({tabletName: tabletName})
+    
+    if (!tablet) { return res.status(404).json({error: "no such tablet"}) }
+    
+    res.status(200).json(tablet);
+    console.log("tablet " + tablet._id + " fetched");
 }
 
 
@@ -44,7 +48,7 @@ const uploadTablet = async (req, res) => {
 
 module.exports = {
     displayTablets,
-    labelTablet,
+    getTablet,
     uploadTablet,
     storage
 }

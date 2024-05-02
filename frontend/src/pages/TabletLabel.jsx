@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import Canvas from "../containers/Canvas.jsx";
+import Canvas from "../components/Canvas.jsx";
 import TabletCards from "../components/TabletCards.jsx";
 
 const TabletLabel = () => {

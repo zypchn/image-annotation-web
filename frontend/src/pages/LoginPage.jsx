@@ -10,7 +10,7 @@ const LoginPage = () => {
                                 <h2 className={"fw-bold mb-4"}> Üye Girişi </h2>
                                 <input className={"form-control mb-4 mx-5 w-100"} placeholder={"Kullanıcı ID"} type={"text"}/>
                                 <input className={"form-control mb-4 mx-5 w-100"} placeholder={"Parola"} type={"password"}/>
-                                <button className={"btn btn-outline-light mx-2 px-5"}> Giriş </button>
+                                <a href={"/tablets/"} className={"btn btn-outline-light mx-2 px-5"}> Giriş </a>
                             </div>
                         </div>
                     </div>

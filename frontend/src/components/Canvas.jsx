@@ -1,7 +1,7 @@
-import { useMemo, useRef, useState, useEffect } from "react";
-import PolygonAnnotation from "../components/PolygonAnnotation.jsx";
+import {useRef, useState, useEffect } from "react";
+import PolygonAnnotation from "./PolygonAnnotation.jsx";
 import { Stage, Layer, Image } from "react-konva";
-import Button from "../components/Button.jsx";
+import Button from "./Button.jsx";
 import {useParams} from "react-router-dom";
 
 const wrapperStyle = {
@@ -19,7 +19,7 @@ const columnStyle = {
     backgroundColor: "aliceblue",
 };
 
-const Canvas = ( {tablets} ) => {
+const Canvas = () => {
     const [image, setImage] = useState();
     const imageRef = useRef(null);
     const dataRef = useRef(null);
@@ -33,27 +33,20 @@ const Canvas = ( {tablets} ) => {
     const { tabletName } = useParams()
     const videoSource = "/images/" + tabletName
     
-    const videoElement = useMemo(() => {
-        const element = new window.Image();
-        element.width = 650;
-        element.height = 500;
-        element.src = videoSource;
-        return element;
-    }, []);
     useEffect(() => {
-        const onload = function () {
+        const imageObj = new window.Image()
+        imageObj.src = videoSource;
+        imageObj.onload = () => {
             setSize({
-                width: videoElement.width,
-                height: videoElement.height,
+                width: imageObj.width,
+                height: imageObj.height,
             });
-            setImage(videoElement);
-            imageRef.current = videoElement;
+            setImage(imageObj)
+            imageRef.current.cache();
+            imageRef.current.getLayer().batchDraw();
         };
-        videoElement.addEventListener("load", onload);
-        return () => {
-            videoElement.removeEventListener("load", onload);
-        };
-    }, [videoElement]);
+    }, []);
+
 
     const getMousePos = (stage) => {
         return [stage.getPointerPosition().x, stage.getPointerPosition().y];
@@ -61,9 +54,11 @@ const Canvas = ( {tablets} ) => {
 
     //drawing begins when mousedown event fires.
     const handleMouseDown = (e) => {
-        if (isPolyComplete) return;
         const stage = e.target.getStage();
         const mousePos = getMousePos(stage);
+        
+        if (isPolyComplete) { return }
+        
         if (isMouseOverPoint && points.length >= 3) {
             setPolyComplete(true);
         } else {
@@ -142,8 +137,8 @@ const Canvas = ( {tablets} ) => {
         <div style={wrapperStyle}>
             <div style={columnStyle}>
                 <Stage
-                    width={size.width || 650}
-                    height={size.height || 302}
+                    width={size.width}
+                    height={size.height}
                     onMouseMove={handleMouseMove}
                     onMouseDown={handleMouseDown}
                 >

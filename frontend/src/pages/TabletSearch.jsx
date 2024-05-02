@@ -1,8 +1,28 @@
 import SidebarUpload from "../components/SidebarUpload";
 import TabletCards from "../components/TabletCards";
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
+import {useTabletsContext} from "../hooks/useTabletsContext.jsx";
+import {TabletsContextProvider} from "../context/TabletsContext.jsx";
 
 const TabletSearch = () => {
+    
+    const {tablets, dispatch} =  useTabletsContext()
+    
+    //const [tablets, setTablets] = useState(null)
+    
+    useEffect(() => {
+        const fetchTablets = async () => {
+            
+            const response = await fetch("http://localhost:4000/tablets")
+            const json = await response.json()
+            
+            if (response.ok) {
+                dispatch({type: "SET_TABLETS", payload: json})
+                //setTablets(json);
+            }
+        }
+        fetchTablets().then()
+    }, []);
     
     const openNav = () => {
         document.getElementById("sidebar").style.width = "250px";
@@ -14,22 +34,8 @@ const TabletSearch = () => {
         document.getElementById("tablets").style.marginRight = "0";
     }
     
-    const [tablets, setTablets] = useState(null)
-    
-    useEffect(() => {
-        const fetchTablets = async () => {
-            
-            const response = await fetch("http://localhost:4000/tablets")
-            const json = await response.json()
-            
-            if (response.ok) {
-                setTablets(json);
-            }
-        }
-        fetchTablets().then()
-    }, []);
-    
     return (
+        <TabletsContextProvider>
         <div>
             <div id={"tablets"}>
                 {tablets && tablets.map((tablets) => (
@@ -48,6 +54,7 @@ const TabletSearch = () => {
                 </button>
             </div>
         </div>
+        </TabletsContextProvider>
     );
 }
 
