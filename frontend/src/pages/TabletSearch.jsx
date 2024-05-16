@@ -1,60 +1,25 @@
-import SidebarUpload from "../components/SidebarUpload";
 import TabletCards from "../components/TabletCards";
-import {useEffect} from "react";
-import {useTabletsContext} from "../hooks/useTabletsContext.jsx";
-import {TabletsContextProvider} from "../context/TabletsContext.jsx";
+import {useEffect, useState} from "react";
+import axios from "axios";
 
 const TabletSearch = () => {
     
-    const {tablets, dispatch} =  useTabletsContext()
-    
-    //const [tablets, setTablets] = useState(null)
+    const [listOfTablets, setListOfTablets] = useState([]);
     
     useEffect(() => {
-        const fetchTablets = async () => {
-            
-            const response = await fetch("http://localhost:4000/tablets")
-            const json = await response.json()
-            
-            if (response.ok) {
-                dispatch({type: "SET_TABLETS", payload: json})
-                //setTablets(json);
-            }
-        }
-        fetchTablets().then()
+        axios.get("http://localhost:4000/tablets").then((response) => {
+            setListOfTablets(response.data);
+        });
     }, []);
     
-    const openNav = () => {
-        document.getElementById("sidebar").style.width = "250px";
-        document.getElementById("tablets").style.marginRight = "250px";
-    }
-    
-    const closeNav = () => {
-        document.getElementById("sidebar").style.width = "0";
-        document.getElementById("tablets").style.marginRight = "0";
-    }
-    
     return (
-        <TabletsContextProvider>
         <div>
             <div id={"tablets"}>
-                {tablets && tablets.map((tablets) => (
-                    <TabletCards key={tablets._id} tablets={tablets}/>
+                {listOfTablets && listOfTablets.map((listOfTablets) => (
+                    <TabletCards key={listOfTablets._id} listOfTablets={listOfTablets}/>
                 ))}
             </div>
-            
-            <div id={"sidebar"} className={"sidebar"}>
-                <a href={"#"} className={"closeBtn"} onClick={closeNav}> &times; </a>
-                <SidebarUpload />
-            </div>
-            
-            <div>
-                <button className={"openBtn"} id={"openBtn"} onClick={openNav}>
-                    &#9776; Create Tablet
-                </button>
-            </div>
         </div>
-        </TabletsContextProvider>
     );
 }
 

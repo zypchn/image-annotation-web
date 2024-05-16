@@ -1,22 +1,22 @@
-require("dotenv").config()
+require("dotenv").config();
+const PORT = process.env.PORT;
 
 const express = require("express");
-const mongoose = require("mongoose");
 const cors = require("cors");
+const mysql = require("mysql2");
+const db = require("./models");
+const multer = require("multer");
+const path = require("path");
 
 const app = express();
 app.use(express.json());
 app.use(cors());
 
-const tabletRoutes = require("./routes/tablets");
+const tabletRoutes = require("./routes/tabletRoutes");
 app.use("/tablets", tabletRoutes);
 
-mongoose.connect(process.env.MONGO_URI)
-.then(() => {
-    console.log("connected to database");
-    app.listen(process.env.PORT, () => {
-        console.log("listening on PORT 4000");
-    })
-})
-.catch((error) => {console.log(error)})
-
+db.sequelize.sync().then(() => {
+    app.listen(PORT, () => {
+        console.log("server is running on PORT " + PORT);
+    });
+});
