@@ -11,6 +11,8 @@ const path = require("path");
 const app = express();
 app.use(express.json());
 app.use(cors());
+app.use(express.static("public"));
+app.use("/uploads", express.static("images"));
 
 const tabletRoutes = require("./routes/tabletRoutes");
 app.use("/tablets", tabletRoutes);

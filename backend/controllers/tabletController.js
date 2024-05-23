@@ -50,9 +50,14 @@ const uploadTablet = async (req, res) => {
     }
 };
 
+const getTablet = async (req, res) => {
+    // TODO add findById method
+}
+
 module.exports = {
     storage,
     imageFilter,
     getAllTablets,
-    uploadTablet
+    uploadTablet,
+    getTablet
 }
