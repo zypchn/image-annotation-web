@@ -1,24 +1,23 @@
-const { DataTypes } = require('sequelize');
-const User = require('./User');
+const { Model, DataTypes} = require("sequelize");
 
-class Moderator extends User {}
-
-Moderator.init({
-  labels: {
-    type: DataTypes.JSON,
-    allowNull: true,
-  },
-}, {
-  sequelize,
-  modelName: 'Moderator',
-});
-
-Moderator.prototype.annotate = function () {
-  // TODO
+module.exports = (sequelize, DataTypes) => {
+  class Moderator extends Model {
+    static associate(models) {
+      Moderator.belongsTo(models.User, { foreignKey: "id" });
+    }
+  }
+  
+  Moderator.init({
+    labels: {
+      type: DataTypes.JSON,
+      allowNull: true
+    }
+  }, {
+    sequelize,
+    modelName: "Moderator",
+    tableName: "Moderator",
+    timestamps: true
+  });
+  
+  return Moderator;
 };
-
-Moderator.prototype.assign = function () {
-  // TODO
-};
-
-module.exports = Moderator;
