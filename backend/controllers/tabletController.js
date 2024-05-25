@@ -57,10 +57,20 @@ const getTablet = async (req, res) => {
     return res.json(tablet);
 };
 
+const updateAnnots = async (req, res) => {
+    const id = req.params.id;
+    const annotations = req.body;
+    const tablet = await Tablets.findByPk(id);
+    Object.assign(tablet, annotations);
+    await tablet.save();
+    return res.send(tablet);
+};
+
 module.exports = {
     storage,
     imageFilter,
     getAllTablets,
     uploadTablet,
-    getTablet
+    getTablet,
+    updateAnnots
 }

@@ -1,17 +1,17 @@
 import React, {useEffect} from "react";
 import { useUndoRedo, useGetPolygons } from "polygon-annotation";
-import data from "bootstrap/js/src/dom/data.js";
 
 const Toolbar = ({
     showLabel,
     setShowLabel,
+    saveFunc
 }) => {
     const { undo, redo, canUndo, canRedo } = useUndoRedo();
     const { polygons, updateLabel, deletePolygons } = useGetPolygons();   // TODO redux kullanarak memoization
     
     // TODO exportData download yerine database güncelleme işlevi
     
-    const data = JSON.stringify(polygons);
+    const data = polygons;
     
     return (
         <div className={"toolbar-wrapper"}>
@@ -43,7 +43,7 @@ const Toolbar = ({
             </div>
             
             <div>
-                <button disabled={!polygons.length} onClick={() => console.log(data)}> Export Data </button>
+                <button disabled={!polygons.length} onClick={() => {saveFunc(data)}}> Save Polygons </button>
             </div>
             
             <div className={"points-wrapper"}>

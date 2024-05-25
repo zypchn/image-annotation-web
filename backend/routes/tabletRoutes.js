@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const {getAllTablets, uploadTablet, storage, imageFilter, getTablet} = require("../controllers/tabletController");
+const {getAllTablets, uploadTablet, storage, imageFilter, getTablet, updateAnnots} = require("../controllers/tabletController");
 const multer = require("multer");
 
 const upload = multer({
@@ -13,5 +13,7 @@ router.get("/", getAllTablets);
 router.post("/upload", upload.single("image"), uploadTablet);
 
 router.get("/:id", getTablet);
+
+router.patch("/:id", updateAnnots);
 
 module.exports = router;
