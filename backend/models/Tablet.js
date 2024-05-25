@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         annotations: {
             type: DataTypes.JSON,
-            allowNull: true,
+            allowNull: false
         },
         status: {
             type: DataTypes.STRING,

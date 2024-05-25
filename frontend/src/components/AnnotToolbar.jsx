@@ -1,37 +1,24 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { useUndoRedo, useGetPolygons } from "polygon-annotation";
+import data from "bootstrap/js/src/dom/data.js";
 
 const Toolbar = ({
-    maxPolygons,
     showLabel,
-    setMaxPolygons,
     setShowLabel,
-    config,
-    setConfig
 }) => {
     const { undo, redo, canUndo, canRedo } = useUndoRedo();
     const { polygons, updateLabel, deletePolygons } = useGetPolygons();   // TODO redux kullanarak memoization
     
-    const exportData = () => {
-        const data = JSON.stringify(polygons);
-        const blob = new Blob([data], { type:"text/plain" });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = "polygon-data.json";
-        a.click();
-        URL.revokeObjectURL(url);
-    };
+    // TODO exportData download yerine database güncelleme işlevi
+    
+    const data = JSON.stringify(polygons);
     
     return (
         <div className={"toolbar-wrapper"}>
             <div>
                 <label htmlFor={"showLabel"}> Show Labels: </label>
-                <input
-                    id={"showLabel"}
-                    type={"checkbox"}
-                    onChange={(e) => setShowLabel(e.target.checked)}
-                />
+                <input id={"showLabel"} type={"checkbox"}
+                       onChange={(e) => setShowLabel(e.target.checked)} />
             </div>
             
             {showLabel && polygons.map((p) => (
@@ -56,7 +43,7 @@ const Toolbar = ({
             </div>
             
             <div>
-                <button disabled={!polygons.length} onClick={exportData}> Export Data </button>
+                <button disabled={!polygons.length} onClick={() => console.log(data)}> Export Data </button>
             </div>
             
             <div className={"points-wrapper"}>
@@ -70,6 +57,19 @@ const Toolbar = ({
                     </div>
                 ))}
             </div>
+            
+            <div className={"status-buttons"} style={{display: "inline-block"}}>
+                <div style={{marginBottom: 30}}>
+                    <label htmlFor={"labelDone"}><b> Label İşlemi Tamamlandı: &ensp; </b></label>
+                    <input id={"labelDone"} type={"checkbox"} />
+                </div>
+  
+                <div>
+                    <label htmlFor={"checked"}><b> Kontrol Edildi: &ensp; </b></label>
+                    <input id={"checked"} type={"checkbox"} />
+                </div>
+            </div>
+            
         </div>
     );
 };

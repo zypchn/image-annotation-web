@@ -14,9 +14,9 @@ const TabletSearch = () => {
     
     return (
         <div>
-            <div id={"tablets"}>
+            <div id={"tablets"}  >
                 {listOfTablets && listOfTablets.map((listOfTablets) => (
-                    <TabletCards key={listOfTablets._id} listOfTablets={listOfTablets}/>
+                    <TabletCards key={listOfTablets.id} listOfTablets={listOfTablets}/>
                 ))}
             </div>
         </div>

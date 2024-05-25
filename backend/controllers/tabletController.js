@@ -40,7 +40,8 @@ const uploadTablet = async (req, res) => {
             path: req.file.path,
             status: "pending",
             height: dimensions.height,
-            width: dimensions.width
+            width: dimensions.width,
+            annotations: []
         });
         
         return res.send("file has been updated");
@@ -51,8 +52,10 @@ const uploadTablet = async (req, res) => {
 };
 
 const getTablet = async (req, res) => {
-    // TODO add findById method
-}
+    const id = req.params.id;
+    const tablet = await Tablets.findByPk(id);
+    return res.json(tablet);
+};
 
 module.exports = {
     storage,

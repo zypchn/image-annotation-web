@@ -1,37 +1,22 @@
-import {useState} from "react";
-import { PolygonAnnotation } from "polygon-annotation";
-import Toolbar from "../components/AnnotToolbar.jsx";
+import AnnotTool from "../components/AnnotTool.jsx";
+import {useEffect, useState} from "react";
+import axios from "axios";
 import {useParams} from "react-router-dom";
 
-const polygonStyle = {
-    vertexRadius: 5,
-    lineColor: '#1ea703',
-    fillColor: '#37f71139',
-    vertexColor: '#ff0000',
-};
-const initialData = [];
-// TODO useState kullanarak initialData setInıtialData
-// her save alındığında initialData değişicek
-
-const AnnotPage = ({ listOfTablets }) => {
+const AnnotPage = () => {
     
-    const { name } = useParams();
-    const [showLabel, setShowLabel] = useState(false);
-
+    const { id } = useParams();
+    const [tablet, setTablet] = useState({});
+    
+    useEffect(() => {
+        axios.get(`http://localhost:4000/tablets/${id}`).then((response) => {
+            setTablet(response.data);
+        });
+    }, []);
+    
     return (
-        <div className={"label-tool"}>
-            <PolygonAnnotation
-                bgImage={"http://localhost:4000/uploads/" + name}
-                maxPolygons={Infinity}
-                polygonStyle={polygonStyle}
-                showLabel={showLabel}
-                //initialPolygons={initialData}
-            >
-                <Toolbar
-                    showLabel={showLabel}
-                    setShowLabel={setShowLabel}
-                    />
-            </PolygonAnnotation>
+        <div>
+            <AnnotTool key={tablet.id} tablet={tablet}/>
         </div>
     );
 };

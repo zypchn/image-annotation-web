@@ -46,11 +46,6 @@ body {
     background-color: #444;
 }
 
-#tablets {
-    transition: margin-left .5s;
-    padding: 20px;
-}
-
 .toolbar-wrapper {
     flex-direction: column;
     margin: 1rem;
@@ -84,6 +79,9 @@ body {
     margin: 1rem;
 }
 
+.status-buttons {
+    white-space: pre-line;
+}
 
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
 @media screen and (max-height: 450px) {
