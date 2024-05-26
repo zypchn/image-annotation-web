@@ -1,15 +1,9 @@
 const { Model, DataTypes} = require("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
-  class User extends Model {
-    static associate(models) {
-      User.hasOne(models.Student, { foreignKey: "id" });
-      User.hasOne(models.Moderator, { foreignKey: "id" });
-    }
-  }
-  
-  User.init({
-    name: {
+  const User = sequelize.define("User", {
+    
+    username: {
       type: DataTypes.STRING,
       allowNull: false
     },
@@ -17,12 +11,9 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     }
-  }, {
-    sequelize,
-    modelName: "User",
-    tableName: "User",
-    timestamps: true
   });
+  
+  //User.associate = (models) => {};
   
   return User;
 };

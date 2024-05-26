@@ -1,5 +1,6 @@
-import React, {useEffect} from "react";
+import React, {useState} from "react";
 import { useUndoRedo, useGetPolygons } from "polygon-annotation";
+import _ from "underscore";
 
 const Toolbar = ({
     showLabel,
@@ -9,9 +10,15 @@ const Toolbar = ({
     const { undo, redo, canUndo, canRedo } = useUndoRedo();
     const { polygons, updateLabel, deletePolygons } = useGetPolygons();   // TODO redux kullanarak memoization
     
-    // TODO exportData download yerine database güncelleme işlevi
+    //const [data, setData] = useState(polygons);
+    let data = polygons;
     
-    const data = polygons;
+    const deleteLabel = (id) => {
+        const annotKey = Object.keys(data).find(key => data[key].id === id);
+        data.splice(Number(annotKey), 1);
+        saveFunc(data);
+        location.reload();
+    }
     
     return (
         <div className={"toolbar-wrapper"}>
@@ -51,9 +58,12 @@ const Toolbar = ({
                     <div key={polygon.id}>
                         <pre style={{ whiteSpace:'pre-wrap' }}>
                             label: {JSON.stringify(polygon.label)}
+                            <button className={"labelDeleteBtn"}
+                                    onClick={() => {deleteLabel(polygon.id)}}> delete </button>
                             <br/>
                             points: {JSON.stringify(polygon.points)}
                         </pre>
+                        
                     </div>
                 ))}
             </div>

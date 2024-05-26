@@ -10,9 +10,6 @@ const polygonStyle = {
     vertexColor: '#ff0000',
 };
 
-// TODO useState kullanarak initialData setInıtialData
-// her save alındığında initialData değişicek
-
 const AnnotTool = ({ tablet }) => {
     
     const [showLabel, setShowLabel] = useState(false);

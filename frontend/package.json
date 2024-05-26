@@ -13,13 +13,15 @@
     "axios": "^1.6.8",
     "bootstrap": "^5.3.3",
     "date-fns": "^3.6.0",
+    "fontawesome-free": "^1.0.4",
     "konva": "^9.3.6",
     "polygon-annotation": "^1.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-konva": "^18.2.10",
     "react-router-dom": "^6.22.3",
-    "react-scripts": "^5.0.1"
+    "react-scripts": "^5.0.1",
+    "underscore": "^1.13.6"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",

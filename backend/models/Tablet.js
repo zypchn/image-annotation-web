@@ -24,6 +24,10 @@ module.exports = (sequelize, DataTypes) => {
         path: {
             type: DataTypes.STRING,
             allowNull: false
-        }
+        },
     });
+    
+    //Tablet.associate = (models) => {};
+    
+    return Tablet;
 };
