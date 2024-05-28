@@ -1,27 +1,22 @@
-const { Model, DataTypes} = require("sequelize");
-
 module.exports = (sequelize, DataTypes) => {
-  class Student extends Model {
-    static associate(models) {
-      Student.belongsTo(models.User, { foreignKey: "id" });
-    }
-  }
-  
-  Student.init({
+  const Student = sequelize.define("Student", {
+    
+    username: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     labels: {
       type: DataTypes.JSON,
       allowNull: true
-    },
-    assignedTablets: {
-      type: DataTypes.JSON,
-      allowNull: true
     }
-  }, {
-    sequelize,
-    modelName: "Student",
-    tableName: "Student",
-    timestamps: true
   });
+  
+  // TODO define associations and functions
+  // function: label()
   
   return Student;
 };

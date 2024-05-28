@@ -1,9 +1,7 @@
-const { Model, DataTypes} = require("sequelize");
-
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define("User", {
     
-    username: {
+    name: {
       type: DataTypes.STRING,
       allowNull: false
     },
@@ -12,8 +10,6 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     }
   });
-  
-  //User.associate = (models) => {};
   
   return User;
 };

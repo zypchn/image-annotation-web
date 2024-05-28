@@ -1,6 +1,5 @@
 import React, {useState} from "react";
 import { useUndoRedo, useGetPolygons } from "polygon-annotation";
-import _ from "underscore";
 
 const Toolbar = ({
     showLabel,
@@ -10,20 +9,29 @@ const Toolbar = ({
     const { undo, redo, canUndo, canRedo } = useUndoRedo();
     const { polygons, updateLabel, deletePolygons } = useGetPolygons();   // TODO redux kullanarak memoization
     
-    //const [data, setData] = useState(polygons);
+    const [focusedField, setFocusedField] = useState(null);
+    const [label, setLabel] = useState("");
+    const addCustomChar = (e, field) => {
+        const clickedChar = e.target.innerText;
+        field.value += clickedChar;
+        updateLabel({id: field.id, label: field.value});
+        console.log((field.value));
+    }
+    
     let data = polygons;
     
-    const deleteLabel = (id) => {
+    const deletePolygon = (id) => {
         const annotKey = Object.keys(data).find(key => data[key].id === id);
         data.splice(Number(annotKey), 1);
         saveFunc(data);
         location.reload();
+        // TODO add another method other than reload
     }
     
     return (
         <div className={"toolbar-wrapper"}>
             <div>
-                <label htmlFor={"showLabel"}> Show Labels: </label>
+                <label htmlFor={"showLabel"} style={{fontSize: 20}}> Show Labels: </label>
                 <input id={"showLabel"} type={"checkbox"}
                        onChange={(e) => setShowLabel(e.target.checked)} />
             </div>
@@ -34,19 +42,43 @@ const Toolbar = ({
                     <input
                         id={`label-${p.id}`}
                         type={"text"}
-                        placeholder={"enter a value"}
+                        placeholder={"hece adı"}
                         value={p.label}
                         onChange={(e) => {
                             updateLabel({ id:p.id, label:e.target.value });
                         }}
+                        onClick={(e) => {setFocusedField(e.target)}}
                     />
+                    <table>
+                        <tbody>
+                        <tr onClick={(e) => {
+                            const textField = document.getElementById(`label-${p.id}`);
+                            textField.value += e.target.innerText;
+                            updateLabel({id: p.id, label:textField.value})
+                        }}>
+                            <td className="accent-cell">Á</td>
+                            <td className="accent-cell">á</td>
+                            <td className="accent-cell">à</td>
+                            <td className="accent-cell">É</td>
+                            <td className="accent-cell">é</td>
+                            <td className="accent-cell">Ì</td>
+                            <td className="accent-cell">Í</td>
+                            <td className="accent-cell">ì</td>
+                            <td className="accent-cell">í</td>
+                            <td className="accent-cell">Ú</td>
+                            <td className="accent-cell">Ù</td>
+                            <td className="accent-cell">ú</td>
+                            <td className="accent-cell">Š</td>
+                            <td className="accent-cell">š</td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
             ))}
             
             <div>
                 <button onClick={undo} disabled={!canUndo}> Geri Al </button>
                 <button onClick={redo} disabled={!canRedo}> Yeniden Yap </button>
-                <button onClick={deletePolygons} disabled={!canUndo}> Hepsini Sil </button>
             </div>
             
             <div>
@@ -59,7 +91,8 @@ const Toolbar = ({
                         <pre style={{ whiteSpace:'pre-wrap' }}>
                             label: {JSON.stringify(polygon.label)}
                             <button className={"labelDeleteBtn"}
-                                    onClick={() => {deleteLabel(polygon.id)}}> delete </button>
+                                    onClick={() => {
+                                        window.confirm(`${polygon.label} silinecektir`) && deletePolygon(polygon.id)}}> delete </button>
                             <br/>
                             points: {JSON.stringify(polygon.points)}
                         </pre>

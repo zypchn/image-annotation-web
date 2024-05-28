@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    return Tablet = sequelize.define("Tablets", {
+    const Tablet =  sequelize.define("Tablets", {
         
         name: {
             type: DataTypes.STRING,
@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
         },
     });
     
-    //Tablet.associate = (models) => {};
+    // TODO define associations
     
     return Tablet;
 };

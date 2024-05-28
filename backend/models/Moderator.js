@@ -1,23 +1,22 @@
-const { Model, DataTypes} = require("sequelize");
-
 module.exports = (sequelize, DataTypes) => {
-  class Moderator extends Model {
-    static associate(models) {
-      Moderator.belongsTo(models.User, { foreignKey: "id" });
-    }
-  }
-  
-  Moderator.init({
+  const Moderator = sequelize.define("Moderator", {
+    
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     labels: {
       type: DataTypes.JSON,
       allowNull: true
     }
-  }, {
-    sequelize,
-    modelName: "Moderator",
-    tableName: "Moderator",
-    timestamps: true
   });
+  
+  // TODO define associations and functions
+  // functions: label() and assignTablet()
   
   return Moderator;
 };
