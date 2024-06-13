@@ -40,7 +40,7 @@ Object.keys(db).forEach(modelName => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-db.tablets = require("./Tablet")(sequelize, Sequelize);
-db.users = require("./User")(sequelize, Sequelize);
+db.tablets = require("./tabletModel")(sequelize, Sequelize);
+db.users = require("./userModel")(sequelize, Sequelize);
 
 module.exports = db;
