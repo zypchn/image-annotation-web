@@ -7,6 +7,7 @@ import TabletSearch from "./pages/TabletSearch";
 import UploadTablet from "./pages/UploadTablet.jsx";
 import AnnotPage from "./pages/AnnotPage.jsx";
 import SignupPage from "./pages/SignupPage.jsx";
+import Navbar from "./components/Navbar.jsx";
 
 function App() {
   

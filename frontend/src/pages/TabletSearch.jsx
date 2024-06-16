@@ -1,10 +1,12 @@
 import TabletCards from "../components/TabletCards";
 import {useEffect, useState} from "react";
 import axios from "axios";
+import Navbar from "../components/Navbar.jsx";
 
 const TabletSearch = () => {
     
     const [listOfTablets, setListOfTablets] = useState([]);
+    const isSearch = true;
     
     useEffect(() => {
         axios.get("http://localhost:4000/tablets").then((response) => {
@@ -14,7 +16,8 @@ const TabletSearch = () => {
     
     return (
         <div>
-            <div id={"tablets"}  >
+            <Navbar isSearch={isSearch}/>
+            <div id={"tablets"}>
                 {listOfTablets && listOfTablets.map((listOfTablets) => (
                     <TabletCards key={listOfTablets.id} listOfTablets={listOfTablets}/>
                 ))}

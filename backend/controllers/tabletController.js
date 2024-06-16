@@ -23,7 +23,7 @@ const storage = multer.diskStorage({
 });
 
 const getAllTablets = async (req, res) => {
-    const listOfTablets = await Tablets.findAll();
+    const listOfTablets = await Tablet.findAll();
     res.json(listOfTablets);
 };
 
@@ -53,14 +53,14 @@ const uploadTablet = async (req, res) => {
 
 const getTablet = async (req, res) => {
     const id = req.params.id;
-    const tablet = await Tablets.findByPk(id);
+    const tablet = await Tablet.findByPk(id);
     return res.json(tablet);
 };
 
 const updateAnnots = async (req, res) => {
     const id = req.params.id;
     const annotations = req.body;
-    const tablet = await Tablets.findByPk(id);
+    const tablet = await Tablet.findByPk(id);
     Object.assign(tablet, annotations);
     await tablet.save();
     return res.send(tablet);

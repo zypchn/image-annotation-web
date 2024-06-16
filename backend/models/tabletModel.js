@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    const Tablet =  sequelize.define("Tablets", {
+    const Tablet =  sequelize.define("Tablet", {
         
         name: {
             type: DataTypes.STRING,
@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         },
         status: {
-            type: DataTypes.STRING,
+            type: DataTypes.ENUM("pending", "finished"),
             allowNull: false
         },
         path: {
@@ -27,7 +27,9 @@ module.exports = (sequelize, DataTypes) => {
         },
     });
     
-    // TODO define associations
+    Tablet.associate = models => {
+        Tablet.belongsToMany(models.User, {through: "usertablet", timestamps: false},);
+    };
     
     return Tablet;
 };

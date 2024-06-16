@@ -19,8 +19,9 @@ const loginUser = async (req, res) => {
         if (!match) { return res.status(400).send("Incorrect password!"); }
         
         const token = createToken(user.id);
+        const userID = user.id;
         
-        return res.status(200).json({email, token});
+        return res.status(200).json({email, userID, token});
     } catch (error) {
         return res.status(500).send(error.message);
     }

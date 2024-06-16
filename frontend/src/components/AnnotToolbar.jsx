@@ -92,7 +92,7 @@ const Toolbar = ({
                             label: {JSON.stringify(polygon.label)}
                             <button className={"labelDeleteBtn"}
                                     onClick={() => {
-                                        window.confirm(`${polygon.label} silinecektir`) && deletePolygon(polygon.id)}}> delete </button>
+                                        window.confirm(`${polygon.label} silinecektir`) && deletePolygon(polygon.id)}}> <i className="fa-regular fa-trash-can"></i> delete </button>
                             <br/>
                             points: {JSON.stringify(polygon.points)}
                         </pre>

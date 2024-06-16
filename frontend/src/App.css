@@ -88,7 +88,7 @@ body {
     color: white;
     border: none;
     margin: 4px;
-    width: 5rem;
+    width: 6rem;
     border-radius: 2px;
     float: right;
 }
@@ -113,6 +113,12 @@ div.error {
     background: #cc3300;
     border-radius: 4px;
     margin: 20px 0;
+}
+
+#tablets {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */

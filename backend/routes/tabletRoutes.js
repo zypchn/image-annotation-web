@@ -1,7 +1,12 @@
 const express = require("express");
-const router = express.Router();
 const {getAllTablets, uploadTablet, storage, imageFilter, getTablet, updateAnnots} = require("../controllers/tabletController");
 const multer = require("multer");
+const requireAuth = require("../middleware/requireAuth");
+
+const router = express.Router();
+
+router.use(requireAuth);
+// protects API requests
 
 const upload = multer({
     storage: storage,
@@ -10,7 +15,7 @@ const upload = multer({
 
 router.get("/", getAllTablets);
 
-router.post("/upload", upload.single("image"), uploadTablet);
+router.post("/upload", upload.any("image"), uploadTablet);
 
 router.get("/:id", getTablet);
 

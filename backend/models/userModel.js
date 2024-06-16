@@ -1,10 +1,7 @@
 "use strict";
-const { Model, DataTypes} = require("sequelize");
-
 module.exports = (sequelize, DataTypes) => {
-    class User extends Model {}
-    
-    User.init({
+    const User = sequelize.define("User", {
+        
         name: {
             type: DataTypes.STRING,
             allowNull: false
@@ -26,10 +23,11 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.JSON,
             allowNull: true
         }
-    }, {
-        sequelize,
-        modelName: "user"
     });
+    
+    User.associate = models => {
+        User.belongsToMany(models.Tablet, {through: "usertablet", timestamps: false, });
+    };
     
     return User;
 }
