@@ -3,18 +3,22 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import {useParams} from "react-router-dom";
 import Navbar from "../components/Navbar.jsx";
+import {useAuthContext} from "../hooks/useAuthContext.js";
 
 const AnnotPage = () => {
     
     const { id } = useParams();
     const [tablet, setTablet] = useState({});
     const isSearch = "hidden";
+    const {user} = useAuthContext();
     
     useEffect(() => {
-        axios.get(`http://localhost:4000/tablets/${id}`).then((response) => {
-            setTablet(response.data);
-        });
-    }, []);
+        if (user) {
+            axios.get(`http://localhost:4000/tablets/${id}`, {
+                headers: { "Authorization": `Bearer ${user.token}` }
+            }).then((response) => { setTablet(response.data);} );
+        }
+    }, [user]);
     
     return (
         <div>

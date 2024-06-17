@@ -12,10 +12,9 @@ const Navbar = ({isSearch}) => {
                     <button type={"submit"}><i className={"fa fa-search"}></i></button>
                 </form>
                 <div className={"navbar-btn"}>
-                    <button className={"mx-3"}><i className={"fa-regular fa-address-card"}/> My Profile</button>
-                    <button className={"me-3"}><i className={"fa-regular fa-rectangle-list"}></i> All Tablets</button>
-                    <button onClick={handleClick}><i className={"fa-solid fa-arrow-right-from-bracket"}/> Logout
-                    </button>
+                    <a href={"/profile"}> <button className={"mx-3"}><i className={"fa-regular fa-address-card"}/> My Profile</button> </a>
+                    <a href={"/tablet"}> <button className={"me-3"}><i className={"fa-regular fa-rectangle-list"}/>All Tablets</button> </a>
+                    <button onClick={handleClick}><i className={"fa-solid fa-arrow-right-from-bracket"}/> Logout</button>
                 </div>
             </div>
         </nav>

@@ -2,6 +2,7 @@ import {useState} from "react";
 import {PolygonAnnotation} from "polygon-annotation";
 import Toolbar from "./AnnotToolbar.jsx";
 import axios from "axios";
+import {useAuthContext} from "../hooks/useAuthContext.js";
 
 const polygonStyle = {
     vertexRadius: 5,
@@ -14,10 +15,13 @@ const AnnotTool = ({ tablet }) => {
     
     const [showLabel, setShowLabel] = useState(false);
     const [initialData, setInitialData] = useState(tablet.annotations);
+    const {user} = useAuthContext();
     
     const saveData = async (annot) => {
         await axios.patch(`http://localhost:4000/tablets/${tablet.id}`, {
             annotations: annot
+        }, {
+            headers: { "Authorization": `Bearer ${user.token}` }
         });
     };
     

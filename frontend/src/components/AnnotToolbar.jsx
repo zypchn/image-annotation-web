@@ -16,7 +16,7 @@ const Toolbar = ({
         field.value += clickedChar;
         updateLabel({id: field.id, label: field.value});
         console.log((field.value));
-    }
+    };
     
     let data = polygons;
     
@@ -26,7 +26,7 @@ const Toolbar = ({
         saveFunc(data);
         location.reload();
         // TODO add another method other than reload
-    }
+    };
     
     return (
         <div className={"toolbar-wrapper"}>

@@ -2,30 +2,40 @@ import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import LoginPage from "./pages/LoginPage";
-import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
+import {BrowserRouter as Router, Route, Routes, Navigate} from "react-router-dom";
 import TabletSearch from "./pages/TabletSearch";
 import UploadTablet from "./pages/UploadTablet.jsx";
 import AnnotPage from "./pages/AnnotPage.jsx";
 import SignupPage from "./pages/SignupPage.jsx";
-import Navbar from "./components/Navbar.jsx";
+import ProfilePage from "./pages/ProfilePage.jsx";
+import {useAuthContext} from "./hooks/useAuthContext.js";
 
 function App() {
-  
-  return (
-    <>
-        <div className={"App"}>
-            <Router>
-                <Routes>
-                    <Route exact path={"/signup"} element={<SignupPage />} />
-                    <Route exact path={"/login"} element={<LoginPage />} />
-                    <Route exact path={"/tablets"} element={<TabletSearch />} />
-                    <Route exact path={"/tablets/create"} element={<UploadTablet />} />
-                    <Route exact path={"/tablets/:id"} element={<AnnotPage />} />
-                </Routes>
-            </Router>
-        </div>
-    </>
-  )
+    
+    const {user, loading} = useAuthContext();
+    
+    if (loading) {return <div>Loading...</div>}
+    // TODO: better loading page
+    
+    
+    return (
+        <>
+            <div className={"App"}>
+                <Router>
+                    <Routes>
+                        <Route exact path={"/"} element={<Navigate to={"/signup"}/>}/>
+                        <Route exact path={"/signup"} element={!user ? <SignupPage/> : <Navigate to={"/profile"}/>}/>
+                        <Route exact path={"/login"} element={!user ? <LoginPage/> : <Navigate to={"/profile"}/>}/>
+                        <Route exact path={"/tablet"} element={user ? <TabletSearch/> : <Navigate to={"/login"}/>}/>
+                        <Route exact path={"/tablet/create"} element={user ? <UploadTablet/> : <Navigate to={"/login"}/>}/>
+                        <Route exact path={"/tablet/:id"} element={user ? <AnnotPage/> : <Navigate to={"/login"}/>}/>
+                        <Route exact path={"/profile"} element={user ? <ProfilePage/> : <Navigate to={"/login"}/>}/>
+                    </Routes>
+                </Router>
+            </div>
+        </>
+    );
+    
 }
 
 export default App

@@ -5,8 +5,9 @@ const requireAuth = require("../middleware/requireAuth");
 
 const router = express.Router();
 
-router.use(requireAuth);
+
 // protects API requests
+router.use(requireAuth);
 
 const upload = multer({
     storage: storage,
@@ -15,7 +16,7 @@ const upload = multer({
 
 router.get("/", getAllTablets);
 
-router.post("/upload", upload.any("image"), uploadTablet);
+router.post("/upload", upload.single("image"), uploadTablet);
 
 router.get("/:id", getTablet);
 

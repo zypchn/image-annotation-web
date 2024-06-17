@@ -2,17 +2,21 @@ import TabletCards from "../components/TabletCards";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import Navbar from "../components/Navbar.jsx";
+import {useAuthContext} from "../hooks/useAuthContext.js";
 
 const TabletSearch = () => {
     
     const [listOfTablets, setListOfTablets] = useState([]);
     const isSearch = true;
+    const {user} = useAuthContext();
     
     useEffect(() => {
-        axios.get("http://localhost:4000/tablets").then((response) => {
-            setListOfTablets(response.data);
-        });
-    }, []);
+        if (user) {
+            axios.get("http://localhost:4000/tablets", {
+                headers: { "Authorization": `Bearer ${user.token}` }
+            }).then((response) => {setListOfTablets(response.data)});
+        }
+    }, [user]);
     
     return (
         <div>
