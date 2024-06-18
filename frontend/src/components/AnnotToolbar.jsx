@@ -1,24 +1,22 @@
-import React, {useState} from "react";
 import { useUndoRedo, useGetPolygons } from "polygon-annotation";
+import {useState} from "react";
 
 const Toolbar = ({
     showLabel,
     setShowLabel,
-    saveFunc
+    saveData
 }) => {
     const { undo, redo, canUndo, canRedo } = useUndoRedo();
-    const { polygons, updateLabel, deletePolygons } = useGetPolygons();   // TODO redux kullanarak memoization
-    
-    const [focusedField, setFocusedField] = useState(null);
-    const [label, setLabel] = useState("");
-    const addCustomChar = (e, field) => {
-        const clickedChar = e.target.innerText;
-        field.value += clickedChar;
-        updateLabel({id: field.id, label: field.value});
-        console.log((field.value));
-    };
+    const { polygons, updateLabel } = useGetPolygons();   // TODO redux kullanarak memoization
+    const [showAlert, setShowAlert] = useState(false);
     
     let data = polygons;
+    
+    const saveFunc = () => {
+        saveData(data);
+        setShowAlert(true);
+        setTimeout(() => setShowAlert(false), 1000);
+    }
     
     const deletePolygon = (id) => {
         const annotKey = Object.keys(data).find(key => data[key].id === id);
@@ -82,8 +80,10 @@ const Toolbar = ({
             </div>
             
             <div>
-                <button disabled={!polygons.length} onClick={() => {saveFunc(data)}}> Save Polygons </button>
+                <button accessKey={"s"} disabled={!polygons.length} onClick={() => {saveFunc(data)}}> Save Polygons </button>
             </div>
+            
+            {showAlert && <div className={"alert alert-success"}><strong> Saved Successfully! </strong></div>}
             
             <div className={"points-wrapper"}>
                 {polygons.map((polygon) => (

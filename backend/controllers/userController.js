@@ -3,6 +3,8 @@ const bcrypt = require("bcrypt");
 const validator = require("validator");
 const jwt = require("jsonwebtoken");
 
+const User = db.users;
+
 const createToken = (id) => {
     return jwt.sign({id}, process.env.SECRET, { expiresIn: "1d" });
 };
@@ -57,7 +59,14 @@ const signupUser = async (req, res) => {
     }
 };
 
+const getUser = async (req, res) => {
+    const id = req.params.id;
+    const user = await User.findByPk(id);
+    return res.json(user);
+};
+
 module.exports = {
     loginUser,
-    signupUser
+    signupUser,
+    getUser
 }

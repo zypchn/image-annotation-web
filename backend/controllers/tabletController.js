@@ -1,4 +1,3 @@
-const { Tablets } = require("../models");
 const multer = require("multer");
 const db = require("../models");
 const sizeOf = require("image-size");

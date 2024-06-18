@@ -11,13 +11,16 @@ const polygonStyle = {
     vertexColor: '#ff0000',
 };
 
+// eslint-disable-next-line react/prop-types
 const AnnotTool = ({ tablet }) => {
     
     const [showLabel, setShowLabel] = useState(false);
+    // eslint-disable-next-line react/prop-types,no-unused-vars
     const [initialData, setInitialData] = useState(tablet.annotations);
     const {user} = useAuthContext();
     
     const saveData = async (annot) => {
+        // eslint-disable-next-line react/prop-types
         await axios.patch(`http://localhost:4000/tablets/${tablet.id}`, {
             annotations: annot
         }, {
@@ -28,6 +31,7 @@ const AnnotTool = ({ tablet }) => {
     return (
         <div className={"label-tool"}>
             <PolygonAnnotation
+                /* eslint-disable-next-line react/prop-types */
                 bgImage={`http://localhost:4000/uploads/${tablet.name}`}
                 maxPolygons={Infinity}
                 polygonStyle={polygonStyle}
@@ -37,7 +41,7 @@ const AnnotTool = ({ tablet }) => {
                 <Toolbar
                     showLabel={showLabel}
                     setShowLabel={setShowLabel}
-                    saveFunc={saveData}
+                    saveData={saveData}
                     />
             </PolygonAnnotation>
         </div>

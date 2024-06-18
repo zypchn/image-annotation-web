@@ -9,20 +9,19 @@ const AnnotPage = () => {
     
     const { id } = useParams();
     const [tablet, setTablet] = useState({});
-    const isSearch = "hidden";
     const {user} = useAuthContext();
     
     useEffect(() => {
         if (user) {
             axios.get(`http://localhost:4000/tablets/${id}`, {
                 headers: { "Authorization": `Bearer ${user.token}` }
-            }).then((response) => { setTablet(response.data);} );
+            }).then((response) => {setTablet(response.data)});
         }
-    }, [user]);
+    }, [id, user]);
     
     return (
         <div>
-            <Navbar isSearch={isSearch}/>
+            <Navbar isSearch={"hidden"}/>
             <AnnotTool key={tablet.id} tablet={tablet}/>
         </div>
     );

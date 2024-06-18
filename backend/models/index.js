@@ -42,6 +42,5 @@ db.Sequelize = Sequelize;
 
 db.tablets = require("./tabletModel")(sequelize, Sequelize);
 db.users = require("./userModel")(sequelize, Sequelize);
-//db.tabletusers = require("./usertablet")(sequelize, Sequelize);
 
 module.exports = db;
