@@ -1,5 +1,5 @@
 const express = require("express");
-const {getAllTablets, uploadTablet, storage, imageFilter, getTablet, updateAnnots} = require("../controllers/tabletController");
+const { getAllTablets, uploadTablet, storage, imageFilter, getTablet, updateAnnots } = require("../controllers/tabletController");
 const multer = require("multer");
 const requireAuth = require("../middleware/requireAuth");
 

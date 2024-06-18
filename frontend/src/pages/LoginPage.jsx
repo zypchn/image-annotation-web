@@ -1,6 +1,5 @@
 import {useState} from "react";
 import {useLogin} from "../hooks/useLogin.js";
-import {useAuthContext} from "../hooks/useAuthContext.js";
 
 const LoginPage = () => {
     
@@ -33,6 +32,9 @@ const LoginPage = () => {
                         </div>
                     </div>
                 </div>
+            </div>
+            <div className={"trex-container"}>
+                <img alt={"trex"} src={"/public/trex.png"}/>
             </div>
         </form>
         

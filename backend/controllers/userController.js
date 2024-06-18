@@ -2,8 +2,11 @@ const db = require("../models/index");
 const bcrypt = require("bcrypt");
 const validator = require("validator");
 const jwt = require("jsonwebtoken");
+const {INTEGER} = require("sequelize");
 
 const User = db.users;
+const Tablet = db.tablets;
+const UserTablet = db.usertablet;
 
 const createToken = (id) => {
     return jwt.sign({id}, process.env.SECRET, { expiresIn: "1d" });
@@ -51,9 +54,15 @@ const signupUser = async (req, res) => {
             role
         });
         
-        const token = createToken(user.id);
+        if (user.role === "Moderator") {
+            const allTablets = await Tablet.findAll();
+            await user.addTablet(allTablets, {through: "user_tablet"});
+        }
         
-        return res.status(200).json({email, token});
+        const token = createToken(user.id);
+        const userID = user.id
+        
+        return res.status(200).json({email, token, userID});
     } catch (error) {
         return res.status(500).send(error.message);
     }
@@ -62,11 +71,44 @@ const signupUser = async (req, res) => {
 const getUser = async (req, res) => {
     const id = req.params.id;
     const user = await User.findByPk(id);
-    return res.json(user);
+    return res.status(200).json(user);
+};
+
+const getAllStudents = async (req, res) => {
+    const role = "Student";
+    const students = await User.findAll({where: {role}})
+    return res.status(200).json(students)
+};
+
+const assignTablet = async (req, res) => {
+    try {
+        const { userID, tabletID } = req.body;
+        const user = await User.findByPk(userID);
+        const tablet = await Tablet.findByPk(tabletID);
+        if (!user || !tablet) { return res.status(404).send("User or Tablet not found!"); }
+        await user.addTablet(tablet, {through: "user_tablet"});
+        return res.status(200).send("success");
+    } catch (error) {
+        res.status(500).send(error.message)
+    }
+};
+
+const getAssignedTablets = async (req, res) => {
+    try {
+        const userID = Number(req.params.id);
+        const assignedTablets = await UserTablet.findAll({where: userID, attributes: ["TabletId"]});
+        const listOfIDs = assignedTablets.map(data => data.TabletId);
+        return res.status(200).send(listOfIDs);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
 };
 
 module.exports = {
     loginUser,
     signupUser,
-    getUser
-}
+    getUser,
+    getAllStudents,
+    assignTablet,
+    getAssignedTablets
+};

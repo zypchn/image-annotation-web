@@ -45,8 +45,10 @@ const SignupPage = () => {
                     </div>
                 </div>
             </div>
+            <div className={"trex-container"}>
+                <img alt={"trex"} src={"/public/trex.png"}/>
+            </div>
         </form>
-    
     );
 }
 

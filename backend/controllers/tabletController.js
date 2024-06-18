@@ -72,4 +72,4 @@ module.exports = {
     uploadTablet,
     getTablet,
     updateAnnots
-}
+};

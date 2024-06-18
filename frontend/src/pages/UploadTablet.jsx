@@ -6,7 +6,6 @@ import {useAuthContext} from "../hooks/useAuthContext.js";
 const UploadTablet = () => {
     
     const [file, setFile] = useState();
-    const isSearch = "hidden";
     const {user} = useAuthContext();
     
     const handleFile = (e) => {
@@ -25,7 +24,7 @@ const UploadTablet = () => {
     
     return(
         <div>
-            <Navbar isSearch={isSearch}/>
+            <Navbar/>
             <div className={"container"}>
                 <input type={"file"} onChange={handleFile}/>
                 <button onClick={handleUpload}> Upload </button>

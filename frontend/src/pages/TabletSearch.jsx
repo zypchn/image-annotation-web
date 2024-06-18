@@ -7,7 +7,6 @@ import {useAuthContext} from "../hooks/useAuthContext.js";
 const TabletSearch = () => {
     
     const [listOfTablets, setListOfTablets] = useState([]);
-    const isSearch = true;
     const {user} = useAuthContext();
     
     useEffect(() => {
@@ -20,7 +19,7 @@ const TabletSearch = () => {
     
     return (
         <div>
-            <Navbar isSearch={isSearch}/>
+            <Navbar isSearch={true}/>
             <div id={"tablets"}>
                 {listOfTablets && listOfTablets.map((listOfTablets) => (
                     <TabletCards key={listOfTablets.id} listOfTablets={listOfTablets}/>

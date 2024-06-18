@@ -8,10 +8,16 @@ const ProfilePage = () => {
     const [userData, setUserData] = useState({});
     const {user} = useAuthContext();
     const id = user.userID;
+    const [assignedTablets, setAssignedTablets] = useState([]);
     
     useEffect(() => {
-            axios.get(`http://localhost:4000/user/${id}`)
-            .then((response) => {setUserData(response.data)});
+        axios.get(`http://localhost:4000/user/${id}`)
+        .then((response) => {setUserData(response.data)});
+    }, [id]);
+    
+    useEffect(() => {
+            axios.get(`http://localhost:4000/user/${id}/assigned`)
+            .then((response) => {setAssignedTablets(response.data)});
     }, [id]);
     
     return (
@@ -26,18 +32,22 @@ const ProfilePage = () => {
                             <p id={"name"}> {userData.name} </p>
                         </div>
                         <div className={"mb-3"}>
-                            <label><strong>Email</strong></label>
+                            <label><strong> Email </strong></label>
                             <p id={"email"}> {userData.email} </p>
                         </div>
                         <div className={"mb-3"}>
-                            <label> <strong>Role</strong></label>
+                            <label><strong> Role </strong></label>
                             <p id={"role"}> {userData.role} </p>
                         </div>
                     </div>
                     <div className={"col-lg-4 col-md-12 todo-section"}>
                         <h3 className={"mb-4"}> Assigned Tablets List </h3>
                         <ul className={"list-group"}>
-                            <li className={"list-group-item"}> tablet 1</li>
+                            { assignedTablets && assignedTablets.map((tabletID) => {
+                                // eslint-disable-next-line react/jsx-key
+                                return <li className={"list-group-item"}> <strong>Tablet ID:</strong> {tabletID}
+                                    <a href={`/tablet/${tabletID}`} id={"profile-label-btn"} className={"btn btn-secondary align-items-center"}> Label </a> </li>
+                            }) }
                         </ul>
                     </div>
                 </div>

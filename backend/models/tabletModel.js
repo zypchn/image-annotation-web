@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    const Tablet =  sequelize.define("Tablet", {
+    return sequelize.define("Tablet", {
         
         name: {
             type: DataTypes.STRING,
@@ -26,10 +26,4 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         },
     });
-    
-    Tablet.associate = models => {
-        Tablet.belongsToMany(models.User, {through: "usertablet", timestamps: false},);
-    };
-    
-    return Tablet;
 };

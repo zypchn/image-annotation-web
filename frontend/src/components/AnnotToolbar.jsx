@@ -16,13 +16,13 @@ const Toolbar = ({
         saveData(data);
         setShowAlert(true);
         setTimeout(() => setShowAlert(false), 1000);
-    }
+    };
     
-    const deletePolygon = (id) => {
+    const deletePolygon = async (id) => {
         const annotKey = Object.keys(data).find(key => data[key].id === id);
         data.splice(Number(annotKey), 1);
-        saveFunc(data);
-        location.reload();
+        await saveData(data);
+        location.reload()
         // TODO add another method other than reload
     };
     
@@ -42,10 +42,7 @@ const Toolbar = ({
                         type={"text"}
                         placeholder={"hece adı"}
                         value={p.label}
-                        onChange={(e) => {
-                            updateLabel({ id:p.id, label:e.target.value });
-                        }}
-                        onClick={(e) => {setFocusedField(e.target)}}
+                        onChange={(e) => { updateLabel({ id:p.id, label:e.target.value }) }}
                     />
                     <table>
                         <tbody>
@@ -77,7 +74,7 @@ const Toolbar = ({
             <div>
                 <button onClick={undo} disabled={!canUndo}> Geri Al </button>
                 <button onClick={redo} disabled={!canRedo}> Yeniden Yap </button>
-            </div>
+,            </div>
             
             <div>
                 <button accessKey={"s"} disabled={!polygons.length} onClick={() => {saveFunc(data)}}> Save Polygons </button>

@@ -121,7 +121,33 @@ div.error {
     align-items: center;
 }
 
-/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+.trex-container {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 10px;
+}
+
+.trex-container img {
+    height: 150px;
+    width: auto;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.trex-container img:hover {
+    opacity: 100;
+}
+
+#profile-label-btn {
+    margin-left: 230px;
+    margin-top: 0;
+}
+
+.navbar-btn a {
+    text-decoration: none;
+}
+
 @media screen and (max-height: 450px) {
     .sidebar {padding-top: 15px;}
     .sidebar a {font-size: 18px;}
