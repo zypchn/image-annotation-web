@@ -3,6 +3,7 @@ const db = require("../models");
 const sizeOf = require("image-size");
 
 const Tablet = db.tablets;
+const UserTablet = db.usertablet;
 
 const imageFilter = (req, file, cb) => {
     if (file.mimetype.startsWith("image")) {
@@ -65,11 +66,21 @@ const updateAnnots = async (req, res) => {
     return res.send(tablet);
 };
 
+const getAssignedUsers = async (req, res) => {
+    try {
+        const tabletID = Number(req.params.id);
+        const assignedUsers = await UserTablet.findAll({where: {TabletId: tabletID}});
+        const listOfIDs = assignedUsers.map(data => data.UserId);
+        return res.status(200).send(listOfIDs);
+    } catch (error) { res.status(500).send(error.message) }
+};
+
 module.exports = {
     storage,
     imageFilter,
     getAllTablets,
     uploadTablet,
     getTablet,
-    updateAnnots
+    updateAnnots,
+    getAssignedUsers
 };

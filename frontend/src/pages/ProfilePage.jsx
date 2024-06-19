@@ -45,7 +45,7 @@ const ProfilePage = () => {
                         <ul className={"list-group"}>
                             { assignedTablets && assignedTablets.map((tabletID) => {
                                 // eslint-disable-next-line react/jsx-key
-                                return <li className={"list-group-item"}> <strong>Tablet ID:</strong> {tabletID}
+                                return <li key={tabletID} className={"list-group-item"}> <strong>Tablet ID:</strong> {tabletID}
                                     <a href={`/tablet/${tabletID}`} id={"profile-label-btn"} className={"btn btn-secondary align-items-center"}> Label </a> </li>
                             }) }
                         </ul>

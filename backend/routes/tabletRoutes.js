@@ -1,5 +1,5 @@
 const express = require("express");
-const { getAllTablets, uploadTablet, storage, imageFilter, getTablet, updateAnnots } = require("../controllers/tabletController");
+const { getAllTablets, uploadTablet, storage, imageFilter, getTablet, updateAnnots, getAssignedUsers} = require("../controllers/tabletController");
 const multer = require("multer");
 const requireAuth = require("../middleware/requireAuth");
 
@@ -21,5 +21,7 @@ router.post("/upload", upload.single("image"), uploadTablet);
 router.get("/:id", getTablet);
 
 router.patch("/:id", updateAnnots);
+
+router.get("/:id/assigned", getAssignedUsers);
 
 module.exports = router;

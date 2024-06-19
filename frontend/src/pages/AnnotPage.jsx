@@ -13,6 +13,19 @@ const AnnotPage = () => {
     
     useEffect(() => {
         if (user) {
+            
+            const userID = user.userID;
+            
+            axios.get(`http://localhost:4000/tablets/${id}/assigned`, {
+                headers: { "Authorization": `Bearer ${user.token}` }
+            }).then((response) => {
+                const assignedUsers = response.data;
+                if (!assignedUsers.includes(userID)) {
+                    window.alert("You dont have access!");
+                    window.location.href = "/tablet";
+                }
+            });
+            
             axios.get(`http://localhost:4000/tablets/${id}`, {
                 headers: { "Authorization": `Bearer ${user.token}` }
             }).then((response) => {setTablet(response.data)});

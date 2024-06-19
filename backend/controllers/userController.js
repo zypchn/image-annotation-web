@@ -96,12 +96,10 @@ const assignTablet = async (req, res) => {
 const getAssignedTablets = async (req, res) => {
     try {
         const userID = Number(req.params.id);
-        const assignedTablets = await UserTablet.findAll({where: userID, attributes: ["TabletId"]});
+        const assignedTablets = await UserTablet.findAll({where: {UserId: userID}});
         const listOfIDs = assignedTablets.map(data => data.TabletId);
         return res.status(200).send(listOfIDs);
-    } catch (error) {
-        res.status(500).send(error.message);
-    }
+    } catch (error) { res.status(500).send(error.message) }
 };
 
 module.exports = {
