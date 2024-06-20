@@ -4,11 +4,13 @@ import {useState} from "react";
 const Toolbar = ({
     showLabel,
     setShowLabel,
-    saveData
+    saveData,
+    changeStatus
 }) => {
     const { undo, redo, canUndo, canRedo } = useUndoRedo();
     const { polygons, updateLabel } = useGetPolygons();   // TODO redux kullanarak memoization
     const [showAlert, setShowAlert] = useState(false);
+    const [statusAlert, setStatusAlert] = useState(false);
     
     let data = polygons;
     
@@ -24,6 +26,12 @@ const Toolbar = ({
         await saveData(data);
         location.reload()
         // TODO add another method other than reload
+    };
+    
+    const changeStatusFunc = (status) => {
+        changeStatus(status);
+        setStatusAlert(true);
+        setTimeout(() => setStatusAlert(false), 1000);
     };
     
     return (
@@ -98,18 +106,13 @@ const Toolbar = ({
                 ))}
             </div>
             
-            <div className={"status-buttons"} style={{display: "inline-block"}}>
-                <div style={{marginBottom: 30}}>
-                    <label htmlFor={"labelDone"}><b> Label İşlemi Tamamlandı: &ensp; </b></label>
-                    <input id={"labelDone"} type={"checkbox"} />
-                </div>
-  
-                <div>
-                    <label htmlFor={"checked"}><b> Kontrol Edildi: &ensp; </b></label>
-                    <input id={"checked"} type={"checkbox"} />
-                </div>
+            <div className={"status-buttons mx-3"} style={{display: "inline-block"}}>
+                <button onClick={() => changeStatusFunc("pending")} id={"pendingBtn"}> Pending </button>
+                <button onClick={() => changeStatusFunc("ready to check")} id={"checkBtn"}> Ready To Check </button>
+                <button onClick={() => changeStatusFunc("done")} id={"doneBtn"}> Done </button>
+                {statusAlert && <div className={"alert alert-success my-2"}><strong> Changed the Status Successfully! </strong></div>}
+                
             </div>
-            
         </div>
     );
 };

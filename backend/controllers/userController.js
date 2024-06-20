@@ -83,11 +83,15 @@ const getAllStudents = async (req, res) => {
 const assignTablet = async (req, res) => {
     try {
         const { userID, tabletID } = req.body;
-        const user = await User.findByPk(userID);
         const tablet = await Tablet.findByPk(tabletID);
-        if (!user || !tablet) { return res.status(404).send("User or Tablet not found!"); }
-        await user.addTablet(tablet, {through: "user_tablet"});
-        return res.status(200).send("success");
+        
+        for (const id of userID) {
+            const user = await User.findByPk(id);
+            if (!tablet || !user) { return res.status(404).send("User or Tablet not found!"); }
+            await user.addTablet(tablet, {through: "user_tablet"});
+        }
+        
+        return res.status(200).send("Successfully assigned!");
     } catch (error) {
         res.status(500).send(error.message)
     }

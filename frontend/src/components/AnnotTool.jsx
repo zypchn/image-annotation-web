@@ -21,8 +21,17 @@ const AnnotTool = ({ tablet }) => {
     
     const saveData = async (annot) => {
         // eslint-disable-next-line react/prop-types
-        await axios.patch(`http://localhost:4000/tablets/${tablet.id}`, {
+        await axios.patch(`http://localhost:4000/tablets/${tablet.id}/annotations`, {
             annotations: annot
+        }, {
+            headers: { "Authorization": `Bearer ${user.token}` }
+        });
+    };
+    
+    const changeStatus = async (status) => {
+        // eslint-disable-next-line react/prop-types
+        await axios.patch(`http://localhost:4000/tablets/${tablet.id}/status`, {
+            status: status
         }, {
             headers: { "Authorization": `Bearer ${user.token}` }
         });
@@ -42,6 +51,7 @@ const AnnotTool = ({ tablet }) => {
                     showLabel={showLabel}
                     setShowLabel={setShowLabel}
                     saveData={saveData}
+                    changeStatus={changeStatus}
                     />
             </PolygonAnnotation>
         </div>

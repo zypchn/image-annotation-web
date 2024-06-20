@@ -75,6 +75,18 @@ const getAssignedUsers = async (req, res) => {
     } catch (error) { res.status(500).send(error.message) }
 };
 
+const changeStatus = async (req, res) => {
+    try {
+        const tabletID = req.params.id;
+        const status = req.body;
+        const tablet = await Tablet.findByPk(tabletID);
+        Object.assign(tablet, status);
+        await tablet.save();
+        return res.send(tablet)
+        
+    } catch (error) { res.status(500).send(error.message) }
+};
+
 module.exports = {
     storage,
     imageFilter,
@@ -82,5 +94,6 @@ module.exports = {
     uploadTablet,
     getTablet,
     updateAnnots,
-    getAssignedUsers
+    getAssignedUsers,
+    changeStatus
 };

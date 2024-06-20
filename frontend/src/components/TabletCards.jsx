@@ -4,7 +4,7 @@ const TabletCards = ({ listOfTablets }) => {
    return (
        <div className={"row-sm-2 my-5 mx-3 d-inline-flex"}>
            <div className={"card"} style={{width: 280, height:400}}>
-               <div className={"card-header text-center h5"} style={{color: listOfTablets?.status === "done" ? "green" : listOfTablets.status === "check" ? "orange": "red"}} key={listOfTablets._id}>
+               <div className={"card-header text-center h5"} style={{color: listOfTablets?.status === "done" ? "green" : listOfTablets.status === "ready to check" ? "orange": "red"}} key={listOfTablets._id}>
                    {listOfTablets.status}
                </div>
                <div className={"card-body"}>

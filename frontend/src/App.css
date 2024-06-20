@@ -148,6 +148,24 @@ div.error {
     text-decoration: none;
 }
 
+#pendingBtn {
+    background-color: red;
+    color: white;
+    font-size: 20px;
+}
+
+#checkBtn {
+    background-color: orange;
+    color: white;
+    font-size: 20px;
+}
+
+#doneBtn {
+    background-color: green;
+    color: white;
+    font-size: 20px;
+}
+
 @media screen and (max-height: 450px) {
     .sidebar {padding-top: 15px;}
     .sidebar a {font-size: 18px;}

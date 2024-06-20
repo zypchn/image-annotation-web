@@ -21,7 +21,7 @@ const AnnotPage = () => {
             }).then((response) => {
                 const assignedUsers = response.data;
                 if (!assignedUsers.includes(userID)) {
-                    window.alert("You dont have access!");
+                    window.alert(`You do not have an access to Tablet ${id}`);
                     window.location.href = "/tablet";
                 }
             });
