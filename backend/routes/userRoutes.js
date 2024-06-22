@@ -1,4 +1,4 @@
-const { loginUser, signupUser, getUser, getAllStudents, assignTablet, getAssignedTablets} = require("../controllers/userController");
+const { loginUser, signupUser, getUser, getAllStudents, assignTablet, getAssignedTablets, verifyOTP} = require("../controllers/userController");
 
 const express = require("express");
 
@@ -15,5 +15,7 @@ router.get("/:id/assigned", getAssignedTablets);
 router.get("/students", getAllStudents);
 
 router.get("/:id", getUser);
+
+router.patch("/verifyOTP", verifyOTP);
 
 module.exports = router;

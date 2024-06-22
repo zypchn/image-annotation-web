@@ -43,8 +43,10 @@ db.Sequelize = Sequelize;
 db.tablets = require("./tabletModel")(sequelize, Sequelize);
 db.users = require("./userModel")(sequelize, Sequelize);
 db.usertablet = require("./user_tablet")(sequelize, Sequelize);
+db.userotp = require("./userOTP")(sequelize, Sequelize);
 
 db.users.belongsToMany(db.tablets, {through: "User_Tablet"});
 db.tablets.belongsToMany(db.users, {through: "User_Tablet"});
+db.users.hasOne(db.userotp);
 
 module.exports = db;

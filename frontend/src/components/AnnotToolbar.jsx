@@ -93,7 +93,7 @@ const Toolbar = ({
             <div className={"points-wrapper"}>
                 {polygons.map((polygon) => (
                     <div key={polygon.id}>
-                        <pre style={{ whiteSpace:'pre-wrap' }}>
+                        <pre style={{whiteSpace:'pre-wrap'}}>
                             label: {JSON.stringify(polygon.label)}
                             <button className={"labelDeleteBtn"}
                                     onClick={() => {
@@ -101,7 +101,6 @@ const Toolbar = ({
                             <br/>
                             points: {JSON.stringify(polygon.points)}
                         </pre>
-                        
                     </div>
                 ))}
             </div>

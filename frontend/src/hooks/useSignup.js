@@ -11,7 +11,7 @@ export const useSignup = () => {
         setError(null);
         
         try {
-            const response = await axios.post("http://localhost:4000/user/signup",
+            const response = await axios.patch("http://localhost:4000/user/verifyOTP",
                 {name, email, password, role}, {
                     headers: {"Content-Type": "application/json"}
                 })
@@ -19,7 +19,7 @@ export const useSignup = () => {
             
             localStorage.setItem("user", JSON.stringify(response.data));
             dispatch({ type: "LOGIN", payload: response.data });
-        } catch(error) {}
+        } catch(error) { console.log(error.message) }
     };
     
     return { signup, error };

@@ -46,13 +46,14 @@ const AssignTablet = ({ assignedTablets }) => {
     };
     
     return(
-        <div>
-            <h1 className={"my-5"}> Assign Tablet to Student(s) </h1>
+        <div style={{display: "inline-block", width: "850px"}}>
+            <h2 className={"my-4"}> Assign Tablet to Student(s) </h2>
             <div className={"container mt-4"}>
                 <div className={"row"}>
                     <div className={"col-md-3"}>
-                        <h2> Select a Tablet </h2>
+                        <h3> Select a Tablet </h3>
                         <ul className={"list-group"}>
+                            {/* eslint-disable-next-line react/prop-types */}
                             {assignedTablets && assignedTablets.map(tabletID => (
                                 <li key={tabletID} className={"list-group-item"}>
                                     <input
@@ -69,7 +70,7 @@ const AssignTablet = ({ assignedTablets }) => {
                         </ul>
                     </div>
                     <div className={"col-md-4"}>
-                        <h2> Select Student(s) </h2>
+                        <h3> Select Student(s) </h3>
                         <ul className={"list-group"}>
                             {allStudents && allStudents.map(student => (
                                 <li key={student.id} className={"list-group-item"}>

@@ -26,7 +26,7 @@ const ProfilePage = () => {
             <Navbar isSearch={"hidden"}/>
             <div className={"container"}>
                 <div className={"row"}>
-                    <div className={"col-lg-8 col-md-12 mb-4 profile-section"}>
+                    <div className={"col-lg-8 col-md-12 mb-4"}>
                         <h2 className={"mb-4"}> My Profile </h2>
                         <div className={"mb-3"}>
                             <label><strong> Name </strong></label>
@@ -41,14 +41,16 @@ const ProfilePage = () => {
                             <p id={"role"}> {userData.role} </p>
                         </div>
                     </div>
-                    <div className={"col-lg-4 col-md-12 todo-section"}>
+                    <div className={"col-lg-4 col-md-12"}>
                         <h3 className={"mb-4"}> Assigned Tablet(s) List </h3>
-                        <ul className={"list-group"}>
-                            {assignedTablets && assignedTablets.map((tabletID) => {
-                                return <li key={tabletID} className={"list-group-item"}> <strong>Tablet ID:</strong> {tabletID}
-                                    <a href={`/tablet/${tabletID}`} id={"profile-label-btn"} className={"btn btn-secondary align-items-center"}> Label </a> </li>
-                            })}
-                        </ul>
+                        <div className={"custom-scrollbar"}>
+                            <ul className={"list-group"}>
+                                {assignedTablets && assignedTablets.map((tabletID) => {
+                                    return <li key={tabletID} className={"list-group-item"}> <strong>Tablet ID:</strong> {tabletID}
+                                        <a href={`/tablet/${tabletID}`} id={"profile-label-btn"} className={"btn btn-secondary align-items-center"}> Label </a> </li>
+                                })}
+                            </ul>
+                        </div>
                     </div>
                 </div>
                 { userData.role === "Moderator" && <AssignTablet assignedTablets={assignedTablets}/>}

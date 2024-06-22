@@ -29,8 +29,6 @@ const getAllTablets = async (req, res) => {
 
 const uploadTablet = async (req, res) => {
     try {
-        console.log(req.file);
-        
         if (req.file === undefined) { return res.send("you must select a file") }
         
         const dimensions = sizeOf(req.file.path);
@@ -44,10 +42,10 @@ const uploadTablet = async (req, res) => {
             annotations: []
         });
         
-        return res.send("file has been updated");
+        return res.send("file uploaded successfully");
     } catch (error) {
         console.log(error);
-        return res.send("error when uploading images: " + error);
+        return res.send("error when uploading image: " + error);
     }
 };
 
@@ -58,12 +56,14 @@ const getTablet = async (req, res) => {
 };
 
 const updateAnnots = async (req, res) => {
-    const id = req.params.id;
-    const annotations = req.body;
-    const tablet = await Tablet.findByPk(id);
-    Object.assign(tablet, annotations);
-    await tablet.save();
-    return res.send(tablet);
+    try {
+        const id = req.params.id;
+        const annotations = req.body;
+        const tablet = await Tablet.findByPk(id);
+        Object.assign(tablet, annotations);
+        await tablet.save();
+        return res.status(200).send(tablet);
+    } catch (error) {res.status(500).send(error.message)}
 };
 
 const getAssignedUsers = async (req, res) => {

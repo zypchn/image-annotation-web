@@ -7,11 +7,14 @@ const SignupPage = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [role, setRole] = useState("");
+    const [otpSent, setOTPSent] = useState(false);
+    
     const {signup, error} = useSignup();
     
     const handleSubmit = async (e) => {
         e.preventDefault();   // to prevent refresh after submitting
         await signup(name, email, password, role);
+        setOTPSent(true);
     };
     
     return (
@@ -37,8 +40,18 @@ const SignupPage = () => {
                                     <input type={"radio"} id={"moderator"} name={"role"} value={"Moderator"}/> &nbsp;
                                     <label htmlFor={"Moderator"}> Moderator </label>
                                 </div>
-                                <button className={"btn btn-outline-light mx-2 mt-2 px-5"}> sign up </button>
+                                { otpSent &&
+                                <div className={"otp-container"}>
+                                    <div id={"otp-inputs"} className={"otp-inputs"}>
+                                        <input className={"otp-input"} type={"text"} inputMode={"numeric"} maxLength={1}/>
+                                        <input className={"otp-input"} type={"text"} inputMode={"numeric"} maxLength={1}/>
+                                        <input className={"otp-input"} type={"text"} inputMode={"numeric"} maxLength={1}/>
+                                        <input className={"otp-input"} type={"text"} inputMode={"numeric"} maxLength={1}/>
+                                    </div>
+                                </div> }
                                 { error && <div className={"error"}> {error} </div> }
+                                { !otpSent && <button className={"btn btn-outline-light mx-2 mt-2 px-5"} onClick={() => handleSubmit}> send OTP </button> }
+                                { otpSent && <button className={"btn btn-outline-light mx-2 mt-2 px-5"}> sign up </button> }
                                 <h6 className={"mt-4"}> Already a member? <a href={"/login"}> Login </a> </h6>
                             </div>
                         </div>
@@ -46,7 +59,7 @@ const SignupPage = () => {
                 </div>
             </div>
             <div className={"trex-container"}>
-                <img alt={"trex"} src={"/trex.png"}/>
+                <img alt={"trex"} src={"/images/trex.png"}/>
             </div>
         </form>
     );

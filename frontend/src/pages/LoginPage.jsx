@@ -34,7 +34,7 @@ const LoginPage = () => {
                 </div>
             </div>
             <div className={"trex-container"}>
-                <img alt={"trex"} src={"/trex.png"}/>
+                <img alt={"trex"} src={"/images/trex.png"}/>
             </div>
         </form>
         
