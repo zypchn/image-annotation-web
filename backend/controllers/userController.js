@@ -112,7 +112,9 @@ const getAssignedTablets = async (req, res) => {
 
 const verifyOTP = async (req, res) => {
     try {
-        let {userID, otp} = req.body;
+        let {userEmail, otp} = req.body;
+        const user = await User.findAll({where: {email: userEmail}});
+        const userID = user[0].id;
         if (!userID || !otp) { console.log("empty OTP details are not allowed!") }
         else {
             const OTPRecord = await userOTP.findAll({where: {UserId: userID}});

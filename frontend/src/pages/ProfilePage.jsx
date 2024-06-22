@@ -23,7 +23,7 @@ const ProfilePage = () => {
     
     return (
         <div>
-            <Navbar isSearch={"hidden"}/>
+            <Navbar/>
             <div className={"container"}>
                 <div className={"row"}>
                     <div className={"col-lg-8 col-md-12 mb-4"}>
@@ -42,7 +42,7 @@ const ProfilePage = () => {
                         </div>
                     </div>
                     <div className={"col-lg-4 col-md-12"}>
-                        <h3 className={"mb-4"}> Assigned Tablet(s) List </h3>
+                        <h3 className={"mb-4"}> Assigned Tablet(s) List &nbsp; #{assignedTablets.length}</h3>
                         <div className={"custom-scrollbar"}>
                             <ul className={"list-group"}>
                                 {assignedTablets && assignedTablets.map((tabletID) => {
@@ -53,7 +53,7 @@ const ProfilePage = () => {
                         </div>
                     </div>
                 </div>
-                { userData.role === "Moderator" && <AssignTablet assignedTablets={assignedTablets}/>}
+                { userData.role === "Moderator" && <AssignTablet assignedTablets={assignedTablets}/> }
             </div>
         </div>
     )

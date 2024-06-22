@@ -19,7 +19,7 @@ const TabletSearch = () => {
     
     return (
         <div>
-            <Navbar isSearch={true}/>
+            <Navbar/>
             <div id={"tablets"}>
                 {listOfTablets && listOfTablets.map((listOfTablets) => (
                     <TabletCards key={listOfTablets.id} listOfTablets={listOfTablets}/>

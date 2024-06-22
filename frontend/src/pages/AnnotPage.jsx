@@ -34,7 +34,7 @@ const AnnotPage = () => {
     
     return (
         <div>
-            <Navbar isSearch={"hidden"}/>
+            <Navbar/>
             <AnnotTool key={tablet.id} tablet={tablet}/>
         </div>
     );

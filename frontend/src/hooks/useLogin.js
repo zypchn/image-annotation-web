@@ -19,7 +19,7 @@ export const useLogin = () => {
             
             localStorage.setItem("user", JSON.stringify(response.data));
             dispatch({ type: "LOGIN", payload: response.data });
-        } catch (error) {}
+        } catch (error) { console.log(error.message) }
     };
     
     return { login, error };

@@ -17,9 +17,6 @@ module.exports = (sequelize, DataTypes) => {
         role: {
             type: DataTypes.ENUM("Student", "Moderator"),
             allowNull: false
-        },
-        verified: {
-            type: DataTypes.TINYINT(1)
         }
     });
 };

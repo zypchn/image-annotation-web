@@ -23,7 +23,7 @@ const LoginPage = () => {
                                 <h2 className={"fw-bold mb-4"}> Log In </h2>
                                 <input className={"form-control mb-4 mx-5 w-100"} placeholder={"Email"} type={"text"}
                                     onChange={(e) => setEmail(e.target.value)}/>
-                                <input className={"form-control mb-4 mx-5 w-100"} placeholder={"Parola"} type={"password"}
+                                <input className={"form-control mb-4 mx-5 w-100"} placeholder={"Password"} type={"password"}
                                     onChange={(e) => setPassword(e.target.value)}/>
                                 <button className={"btn btn-outline-light mx-2 px-5"}> login </button>
                                 { error && <div className={"error"}> {error} </div> }
