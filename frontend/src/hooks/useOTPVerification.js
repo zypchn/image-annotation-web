@@ -6,11 +6,9 @@ export const useOTPVerification = () => {
     
     const [otpError, setError] = useState(null);
     const navigate = useNavigate();
-    const [verified, setVerified] = useState(false);
     
     const otpVerification = async (email, otp) => {
         setError(null);
-        
         try {
             await axios.post("http://localhost:4000/user/verifyOTP",
                 {userEmail: email, otp}).then(response => {

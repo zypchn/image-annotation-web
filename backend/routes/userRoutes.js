@@ -16,6 +16,6 @@ router.get("/students", getAllStudents);
 
 router.get("/:id", getUser);
 
-router.post("/verifyOTP", verifyOTP); // no need to patch we have auth context provider
+router.post("/verifyOTP", verifyOTP);
 
 module.exports = router;

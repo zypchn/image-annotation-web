@@ -26,27 +26,27 @@ const ProfilePage = () => {
             <Navbar/>
             <div className={"container"}>
                 <div className={"row"}>
-                    <div className={"col-lg-8 col-md-12 mb-4"}>
-                        <h2 className={"mb-4"}> My Profile </h2>
-                        <div className={"mb-3"}>
-                            <label><strong> Name </strong></label>
+                    <div className={"col-md-12 col-lg-7 mb-4 profile-container"}>
+                        <h1 className={"profile-header"} style={{textAlign: "center"}}> My Profile </h1>
+                        <div className={"mb-3 profile-detail"}>
+                            <h3><strong> Name </strong></h3>
                             <p id={"name"}> {userData.name} </p>
                         </div>
-                        <div className={"mb-3"}>
-                            <label><strong> Email </strong></label>
+                        <div className={"mb-3 profile-detail"}>
+                            <h3><strong> Email </strong></h3>
                             <p id={"email"}> {userData.email} </p>
                         </div>
-                        <div className={"mb-3"}>
-                            <label><strong> Role </strong></label>
+                        <div className={"mb-3 profile-detail"}>
+                            <h3><strong> Role </strong></h3>
                             <p id={"role"}> {userData.role} </p>
                         </div>
                     </div>
-                    <div className={"col-lg-4 col-md-12"}>
-                        <h3 className={"mb-4"}> Assigned Tablet(s) List &nbsp; #{assignedTablets.length}</h3>
+                    <div className={"col-lg-4 col-md-12 tablets-list-container"}>
+                        <h3 className={"mb-4 mt-1 tablets-header"} style={{textAlign: "center"}}> Assigned Tablet(s) List &nbsp; #{assignedTablets.length}</h3>
                         <div className={"custom-scrollbar"}>
-                            <ul className={"list-group"}>
+                            <ul className={"list-group"} style={{height: 280, overflow: "scroll"}}>
                                 {assignedTablets && assignedTablets.map((tabletID) => {
-                                    return <li key={tabletID} className={"list-group-item"}> <strong>Tablet ID:</strong> {tabletID}
+                                    return <li key={tabletID} className={"list-group-item"}> Tablet ID: <strong>{tabletID}</strong>
                                         <a href={`/tablet/${tabletID}`} id={"profile-label-btn"} className={"btn btn-secondary align-items-center"}> Label </a> </li>
                                 })}
                             </ul>

@@ -127,18 +127,61 @@ body {
 }
 
 #profile-label-btn {
-    margin-left: 230px;
+    margin-left: 200px;
     margin-top: 0;
 }
 
 .navbar-btn a {
     text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.navbar-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 #pendingBtn {
     background-color: red;
     color: white;
     font-size: 20px;
+}
+
+.profile-container {
+    height: 340px;
+    padding: 10px;
+    margin: auto;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+.tablets-list-container {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    margin: auto;
+}
+
+.profile-detail {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-top: 3px solid #eee;
+    border-bottom: 3px solid #eee;
+    background-color: #f9f9f9;
+}
+
+.profile-detail h3 {
+    font-size: 1.2rem;
+    color: #555;
+    margin: 0;
+}
+
+.profile-detail p {
+    font-size: 1rem;
+    color: #333;
+    margin: 0;
 }
 
 #checkBtn {
@@ -179,6 +222,24 @@ body {
 .otp-input:nth-child(1) {
     cursor: pointer;
     pointer-events: all;
+}
+
+#eye-icon-login {
+    position: fixed;
+    right: 625px;
+    bottom: 478px;
+    transform: translateY(-25%);
+    color: #aaa;
+    cursor: pointer;
+}
+
+#eye-icon-signup {
+    position: fixed;
+    right: 625px;
+    bottom: 416px;
+    transform: translateY(-25%);
+    color: #aaa;
+    cursor: pointer;
 }
 
 @media screen and (max-height: 450px) {

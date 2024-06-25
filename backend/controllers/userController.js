@@ -11,7 +11,7 @@ const UserTablet = db.usertablet;
 const userOTP = db.userotp;
 
 const createToken = (id) => {
-    return jwt.sign({id}, process.env.SECRET, { expiresIn: "1d" });
+    return jwt.sign({id}, process.env.SECRET, { expiresIn: "12h" });
 };
 
 const loginUser = async (req, res) => {
@@ -25,6 +25,8 @@ const loginUser = async (req, res) => {
         
         const match = await bcrypt.compare(password, user.password);
         if (!match) { return res.status(400).send("Incorrect password!"); }
+        
+        if (user.verified !== "verified") { return res.status(400).send("Email not verified!") }
         
         const token = createToken(user.id);
         
@@ -49,11 +51,14 @@ const signupUser = async (req, res) => {
         const salt = await bcrypt.genSalt(10);
         const hash = await bcrypt.hash(password, salt);
         
+        const verified = "not-verified";
+        
         const user = await db.users.create({
             name,
             email,
             password: hash,
-            role
+            role,
+            verified: verified,
         });
         const userID = user.id
         const userEmail = user.email
@@ -115,10 +120,10 @@ const verifyOTP = async (req, res) => {
         let {userEmail, otp} = req.body;
         const user = await User.findAll({where: {email: userEmail}});
         const userID = user[0].id;
-        if (!userID || !otp) { console.log("empty OTP details are not allowed!") }
+        if (!userID || !otp) { res.status(500).send("empty OTP details are not allowed!") }
         else {
             const OTPRecord = await userOTP.findAll({where: {UserId: userID}});
-            if (OTPRecord.length <= 0) { console.log("Account doesn't exist or has been verified already!") }
+            if (OTPRecord.length <= 0) { res.status(500).send("Account doesn't exist or has been verified already!") }
             else {
                 const expiresAt = OTPRecord[0].expiresAt;
                 const hashedOTP = OTPRecord[0].otp;
@@ -126,16 +131,15 @@ const verifyOTP = async (req, res) => {
                 if (expiresAt < Date.now()) {
                     await db.userotp.destroy({where: {UserId: userID}});
                     await db.users.destroy({where: {id: userID}});
-                    console.log("code has expired");
+                    return res.status(500).send("code has expired");
                 }
                 else {
                     const validOTP = await bcrypt.compare(otp, hashedOTP);
                     
-                    if (!validOTP) { console.log("invalid code. please check your inbox.") }
+                    if (!validOTP) { res.send("invalid code. please check your inbox") }
                     else {
-                        const verified = true;
                         const user = await User.findByPk(userID);
-                        Object.assign(user, verified);
+                        user.verified = "verified";
                         await user.save();
                         await db.userotp.destroy({where: {UserId: userID}});
                         

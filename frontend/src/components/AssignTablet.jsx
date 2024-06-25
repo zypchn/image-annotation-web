@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 
 // eslint-disable-next-line react/prop-types
-const AssignTablet = ({ assignedTablets }) => {
+const AssignTablet = ({assignedTablets}) => {
     
     const [showAlert, setShowAlert] = useState(false);
     
@@ -11,19 +11,20 @@ const AssignTablet = ({ assignedTablets }) => {
     const [selectedStudents, setSelectedStudents] = useState([]);
     
     const handleStudentSelect = (e) => {
-        const { value, checked } = e.target;
+        const {value, checked} = e.target;
         
         if (checked) {
             setSelectedStudents([...selectedStudents, Number(value)]);
-        }
-        else {
+        } else {
             setSelectedStudents(selectedStudents.filter((e) => e !== value));
         }
     };
     
     useEffect(() => {
         axios.get("http://localhost:4000/user/students")
-        .then((response) => {setAllStudents(response.data)});
+        .then((response) => {
+            setAllStudents(response.data)
+        });
     }, []);
     
     const handleAssign = async () => {
@@ -45,51 +46,55 @@ const AssignTablet = ({ assignedTablets }) => {
         setSelectedStudents([]);
     };
     
-    return(
-        <div style={{display: "inline-block", width: "850px"}}>
-            <h2 className={"my-4"}> Assign Tablet to Student(s) </h2>
-            <div className={"container mt-4"}>
-                <div className={"row"}>
-                    <div className={"col-md-3"}>
-                        <h3> Select a Tablet </h3>
-                        <ul className={"list-group"}>
-                            {/* eslint-disable-next-line react/prop-types */}
-                            {assignedTablets && assignedTablets.map(tabletID => (
-                                <li key={tabletID} className={"list-group-item"}>
-                                    <input
-                                        type={"radio"}
-                                        name={"tabletID"}
-                                        value={tabletID}
-                                        onChange={(e) => setSelectedTablet(e.target.value)}
-                                        className={"mr-2"}
-                                        style={{marginRight: 7}}
-                                    />
-                                    <label> Tablet ID: {tabletID} </label>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                    <div className={"col-md-4"}>
-                        <h3> Select Student(s) </h3>
-                        <ul className={"list-group"}>
-                            {allStudents && allStudents.map(student => (
-                                <li key={student.id} className={"list-group-item"}>
-                                    <input
-                                        type={"checkbox"}
-                                        name={"studentID"}
-                                        value={student.id}
-                                        onChange={handleStudentSelect}
-                                        className={"mr-2"}
-                                        style={{marginRight: 7}}
-                                    />
-                                    <label> {student.name} </label>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                    <div className={"col-md-4"}>
-                        <button onClick={handleAssign}> Assign </button>
-                        { showAlert && <div className={"alert alert-success my-2"}><strong> Assigned Successfully! </strong></div> }
+    return (
+        <div className={"d-flex justify-content-center align-items-center mt-4"}>
+            <div className={"assign-tablet-container"} style={{display: "inline"}}>
+                <h2 className={"my-4"} style={{textAlign: "center"}}> Assign Tablet to Student(s) <button onClick={handleAssign} className={"btn btn-danger"}> Assign </button> </h2>
+                {showAlert &&
+                    <div className={"alert alert-success my-2"} style={{textAlign: "center"}}><strong> Assigned Successfully! </strong>
+                    </div>}
+                <div className={"mt-4 mb-2"}>
+                    <div className={"row"}>
+                        <div className={"col-md-3 col-lg-5"}>
+                            <h3 style={{textAlign: "center"}}> Select Tablet </h3>
+                            <ul className={"list-group"} style={{height: 300, overflow: "scroll"}}>
+                                {/* eslint-disable-next-line react/prop-types */}
+                                {assignedTablets && assignedTablets.map(tabletID => (
+                                    <li key={tabletID} className={"list-group-item"}>
+                                        <input
+                                            type={"radio"}
+                                            name={"tabletID"}
+                                            value={tabletID}
+                                            onChange={(e) => setSelectedTablet(e.target.value)}
+                                            className={"mr-2"}
+                                            style={{marginRight: 7}}
+                                        />
+                                        <label> Tablet ID: <strong>{tabletID}</strong> </label>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                        <div className={"col-md-5 col-lg-7"}>
+                            <h3 style={{textAlign: "center"}}> Select Student(s) </h3>
+                            <ul className={"list-group mb-2"} style={{height: 300, overflow: "scroll"}}>
+                                {allStudents && allStudents.map(student => (
+                                    <li key={student.id} className={"list-group-item"}>
+                                        <input
+                                            type={"checkbox"}
+                                            name={"studentID"}
+                                            value={student.id}
+                                            onChange={handleStudentSelect}
+                                            className={"mr-2"}
+                                            style={{marginRight: 7}}
+                                        />
+                                        <label> {student.name} </label>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                        <div className={"col-md-4"}>
+                        
+                        </div>
                     </div>
                 </div>
             </div>
