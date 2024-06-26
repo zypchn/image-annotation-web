@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         },
         verified: {
-            type: DataTypes.ENUM("verified", "not-verified")
+            type: DataTypes.TINYINT(1),
         }
     });
 };

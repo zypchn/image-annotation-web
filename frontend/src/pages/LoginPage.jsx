@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {useLogin} from "../hooks/useLogin.js";
 
 const LoginPage = () => {
@@ -31,7 +31,7 @@ const LoginPage = () => {
                                     onChange={(e) => setEmail(e.target.value)}/>
                                 <input id={"input-password"} className={"form-control mb-4 mx-5 w-100"} placeholder={"Password"} type={"password"}
                                        onChange={(e) => setPassword(e.target.value)}/>
-                                <i id={"eye-icon-login"} className={"fa-regular fa-eye-slash"} onClick={() => handlePasswordVisibility()}/>
+                                <i id={"eye-icon"} className={"fa-regular fa-eye-slash"} onClick={() => handlePasswordVisibility()}/>
                                 { error && <div className={"alert alert-danger"}> {error} </div> }
                                 <button className={"btn btn-outline-light mx-2 px-5"}> login </button>
                                 <h6 className={"mt-4"}> Not a member? <a href={"/signup"}> Sign Up </a> </h6>

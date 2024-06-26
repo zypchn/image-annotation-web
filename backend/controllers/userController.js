@@ -2,7 +2,6 @@ const db = require("../models/index");
 const bcrypt = require("bcrypt");
 const validator = require("validator");
 const jwt = require("jsonwebtoken");
-const nodemailer = require("nodemailer");
 const sendOTP = require("../utils/sendOTP");
 
 const User = db.users;
@@ -26,7 +25,7 @@ const loginUser = async (req, res) => {
         const match = await bcrypt.compare(password, user.password);
         if (!match) { return res.status(400).send("Incorrect password!"); }
         
-        if (user.verified !== "verified") { return res.status(400).send("Email not verified!") }
+        if (!user.verified) { return res.status(400).send("Email not verified!") }
         
         const token = createToken(user.id);
         
@@ -41,9 +40,15 @@ const signupUser = async (req, res) => {
         const { name, email, password, role } = req.body;
         
         if (!name || !email || !password || !role) { return res.status(400).send("All fields must be filled!"); }
+        let userExists = await db.users.findOne({ where: {email} });
         
         if (!validator.isEmail(email)) { return res.status(400).send("Invalid Email!") }
-        const userExists = await db.users.findOne({ where: {email} });
+        
+        if (userExists && !(userExists.verified)) {
+            await db.users.destroy({ where: {email} });
+            userExists = await db.users.findOne({ where: {email} });
+        }
+        
         if (userExists) { return res.status(400).send("Email already in use!") }
         
         if (!validator.isStrongPassword(password)) { return res.status(400).send("Password not strong enough!") }
@@ -51,14 +56,12 @@ const signupUser = async (req, res) => {
         const salt = await bcrypt.genSalt(10);
         const hash = await bcrypt.hash(password, salt);
         
-        const verified = "not-verified";
-        
         const user = await db.users.create({
             name,
             email,
             password: hash,
             role,
-            verified: verified,
+            verified: false,
         });
         const userID = user.id
         const userEmail = user.email
@@ -123,7 +126,7 @@ const verifyOTP = async (req, res) => {
         if (!userID || !otp) { res.status(500).send("empty OTP details are not allowed!") }
         else {
             const OTPRecord = await userOTP.findAll({where: {UserId: userID}});
-            if (OTPRecord.length <= 0) { res.status(500).send("Account doesn't exist or has been verified already!") }
+            if (OTPRecord.length <= 0) { res.status(400).send("Account doesn't exist or has been verified already!") }
             else {
                 const expiresAt = OTPRecord[0].expiresAt;
                 const hashedOTP = OTPRecord[0].otp;
@@ -131,15 +134,15 @@ const verifyOTP = async (req, res) => {
                 if (expiresAt < Date.now()) {
                     await db.userotp.destroy({where: {UserId: userID}});
                     await db.users.destroy({where: {id: userID}});
-                    return res.status(500).send("code has expired");
+                    return res.status(400).send("Code has expired");
                 }
                 else {
                     const validOTP = await bcrypt.compare(otp, hashedOTP);
                     
-                    if (!validOTP) { res.send("invalid code. please check your inbox") }
+                    if (!validOTP) { return res.status(400).send("Invalid code! Please check your inbox.") }
                     else {
                         const user = await User.findByPk(userID);
-                        user.verified = "verified";
+                        user.verified = true;
                         await user.save();
                         await db.userotp.destroy({where: {UserId: userID}});
                         

@@ -15,7 +15,7 @@ export const useOTPVerification = () => {
                     if (response.status === 200) {
                         navigate("/login");
                     }
-            }).catch(error => setError(error.message))
+            }).catch(error => setError(error.response.data))
         } catch (error) { console.log(error.message) }
         
     };

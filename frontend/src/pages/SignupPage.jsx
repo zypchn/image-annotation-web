@@ -15,7 +15,7 @@ const SignupPage = () => {
     const {otpVerification, otpError} = useOTPVerification();
     
     const handleSubmit = async (e) => {
-        e.preventDefault();   // to prevent refresh after submitting
+        e.preventDefault();
         await signup(name, email, password, role);
     };
     
@@ -29,7 +29,7 @@ const SignupPage = () => {
     const handlePasswordVisibility = () => {
         let passwordField = document.getElementById("input-password");
         if (passwordField.type === "password") { passwordField.type = "text" }
-        else { passwordField.type = "text" }
+        else if (passwordField.type === "text") { passwordField.type = "password" }
     };
     
     return (
@@ -47,7 +47,7 @@ const SignupPage = () => {
                                     onChange={(e) => setEmail(e.target.value)}/>
                                 <input id={"input-password"} className={"form-control mb-4 mx-5 w-100"} placeholder={"Password"} type={"password"}
                                        onChange={(e) => setPassword(e.target.value)}/>
-                                <i id={"eye-icon-signup"} className={"fa-regular fa-eye-slash"} onClick={() => handlePasswordVisibility()}/>
+                                <i id={"eye-icon"} className={"fa-regular fa-eye-slash"} onClick={() => handlePasswordVisibility()}/>
                                 <div className={"radio-group mb-2"}
                                 onChange={(e) => setRole(e.target.value)}>
                                     <input type={"radio"} id={"student"} name={"role"} value={"Student"}/> &nbsp;

@@ -80,12 +80,14 @@ const Toolbar = ({
             ))}
             
             <div>
-                <button onClick={undo} disabled={!canUndo}> Geri Al </button>
-                <button onClick={redo} disabled={!canRedo}> Yeniden Yap </button>
-,            </div>
+                <button onClick={undo} disabled={!canUndo} className={"btn btn-dark"}> Geri Al </button>
+                <button onClick={redo} disabled={!canRedo} className={"btn btn-dark"}> Yeniden Yap </button>
+            </div>
             
             <div>
-                <button accessKey={"s"} disabled={!polygons.length} onClick={() => {saveFunc(data)}}> Save Polygons </button>
+                <button accessKey={"s"} disabled={!polygons.length} onClick={() => {saveFunc(data)}}
+                className={"btn btn-dark"}> Save Polygons </button>
+                <div className={"alert alert-info note-container"}> click <strong>ALT + S</strong> to save </div>
             </div>
             
             {showAlert && <div className={"alert alert-success"}><strong> Saved Successfully! </strong></div>}

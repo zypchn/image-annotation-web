@@ -233,13 +233,17 @@ body {
     cursor: pointer;
 }
 
-#eye-icon-signup {
-    position: fixed;
-    right: 625px;
-    bottom: 416px;
-    transform: translateY(-25%);
-    color: #aaa;
+#eye-icon {
+    position: initial;
     cursor: pointer;
+    margin-top: -10px;
+    margin-bottom: 20px;
+}
+
+.note-container {
+    height: 40px;
+    font-size: 16px;
+    margin-left: 20px;
 }
 
 @media screen and (max-height: 450px) {
