@@ -26,4 +26,6 @@ router.get("/:id/assigned", getAssignedUsers);
 
 router.patch("/:id/status", changeStatus);
 
+router.post("/lock/:id")
+
 module.exports = router;

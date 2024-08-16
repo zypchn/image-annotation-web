@@ -25,5 +25,9 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false
         },
+        isLocked: {
+            type: DataTypes.ENUM("true", "false"),
+            allowNull: false
+        }
     });
 };

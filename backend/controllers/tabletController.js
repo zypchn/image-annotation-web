@@ -1,9 +1,17 @@
 const multer = require("multer");
 const db = require("../models");
 const sizeOf = require("image-size");
+const redis = require("redis");
+const { promisify } = require("util");
+const {where} = require("sequelize");
 
 const Tablet = db.tablets;
+const User = db.users;
 const UserTablet = db.usertablet;
+
+const client = redis.createClient();
+const getAsync = promisify(client.get).bind(client);
+const setAsync = promisify(client.set).bind(client);
 
 const imageFilter = (req, file, cb) => {
     if (file.mimetype.startsWith("image")) {
@@ -33,14 +41,28 @@ const uploadTablet = async (req, res) => {
         
         const dimensions = sizeOf(req.file.path);
         
-        Tablet.create({
+        await Tablet.create({
             name: req.file.filename,
             path: req.file.path,
             status: "pending",
+            isLocked: "false",
             height: dimensions.height,
             width: dimensions.width,
             annotations: []
         });
+        
+        const role = "Moderator";
+        const name = req.file.filename;
+        const tablet = await Tablet.findAll({where: {name}})
+        const allMods = await User.findAll({where: {role}});
+        
+        for (const element of allMods) {
+            try {
+                const id = element.dataValues.id;
+                const mod = await User.findByPk(id);
+                await mod.addTablet(tablet, {through: "user_tablet"});
+            } catch (error) {console.log(error)}
+        }
         
         return res.send("file uploaded successfully");
     } catch (error) {
@@ -86,6 +108,10 @@ const changeStatus = async (req, res) => {
         
     } catch (error) { res.status(500).send(error.message) }
 };
+
+const lockPage = async (req, res) => {
+    const tabletID = req.params.id;
+}
 
 module.exports = {
     storage,

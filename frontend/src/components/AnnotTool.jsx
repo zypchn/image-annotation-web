@@ -38,15 +38,15 @@ const AnnotTool = ({ tablet }) => {
     };
     
     return (
-        <div className={"label-tool"}>
-            <PolygonAnnotation
-                /* eslint-disable-next-line react/prop-types */
-                bgImage={`http://localhost:4000/uploads/${tablet.name}`}
-                maxPolygons={Infinity}
-                polygonStyle={polygonStyle}
-                showLabel={showLabel}
-                initialPolygons={JSON.stringify(initialData) === "[]" ? undefined : initialData}
-            >
+        <div className={"label-tool"} style={{position: "absolute"}}>
+                <PolygonAnnotation
+                    /* eslint-disable-next-line react/prop-types */
+                    bgImage={`http://localhost:4000/uploads/${tablet.name}`}
+                    maxPolygons={Infinity}
+                    polygonStyle={polygonStyle}
+                    showLabel={showLabel}
+                    initialPolygons={JSON.stringify(initialData) === "[]" ? undefined : initialData}
+                >
                 <Toolbar
                     showLabel={showLabel}
                     setShowLabel={setShowLabel}

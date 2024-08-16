@@ -15,7 +15,6 @@ function App() {
     const {user, loading} = useAuthContext();
     
     if (loading) {return <div>Loading...</div>}
-    // TODO: better loading page
     
     
     return (
