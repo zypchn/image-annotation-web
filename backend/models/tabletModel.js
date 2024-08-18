@@ -26,7 +26,7 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         },
         isLocked: {
-            type: DataTypes.ENUM("true", "false"),
+            type: DataTypes.TINYINT(1),
             allowNull: false
         }
     });

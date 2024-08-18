@@ -33,7 +33,7 @@ const UploadTablet = () => {
                 <input type={"file"} onChange={handleFile}/>
                 <button onClick={handleUpload}> Upload </button>
                 {showAlert && <span className={"alert alert-success my-2 mx-3"} style={{textAlign: "center"}}>
-                    <strong> Assigned Successfully! </strong></span>}
+                    <strong> File Uploaded Successfully! </strong></span>}
             </div>
         </div>
     );

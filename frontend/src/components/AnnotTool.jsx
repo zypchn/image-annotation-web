@@ -34,7 +34,7 @@ const AnnotTool = ({ tablet }) => {
             status: status
         }, {
             headers: { "Authorization": `Bearer ${user.token}` }
-        });
+        }).then().catch();
     };
     
     return (
@@ -52,7 +52,7 @@ const AnnotTool = ({ tablet }) => {
                     setShowLabel={setShowLabel}
                     saveData={saveData}
                     changeStatus={changeStatus}
-                    />
+                />
             </PolygonAnnotation>
         </div>
     );

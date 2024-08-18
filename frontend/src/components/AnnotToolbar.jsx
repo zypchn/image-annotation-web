@@ -34,6 +34,11 @@ const Toolbar = ({
         setTimeout(() => setStatusAlert(false), 1000);
     };
     
+    const changeLockFunc = (isLocked) => {
+        changeLock(isLocked);
+        console.log("Tablet is Locked");
+    }
+    
     return (
         <div className={"toolbar-wrapper"}>
             <div>
@@ -112,7 +117,6 @@ const Toolbar = ({
                 <button onClick={() => changeStatusFunc("ready to check")} id={"checkBtn"}> Ready To Check </button>
                 <button onClick={() => changeStatusFunc("done")} id={"doneBtn"}> Done </button>
                 {statusAlert && <div className={"alert alert-success my-2"}><strong> Changed the Status Successfully! </strong></div>}
-                
             </div>
         </div>
     );

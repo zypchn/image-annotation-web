@@ -45,7 +45,7 @@ const uploadTablet = async (req, res) => {
             name: req.file.filename,
             path: req.file.path,
             status: "pending",
-            isLocked: "false",
+            isLocked: 0,
             height: dimensions.height,
             width: dimensions.width,
             annotations: []
@@ -61,20 +61,21 @@ const uploadTablet = async (req, res) => {
                 const id = element.dataValues.id;
                 const mod = await User.findByPk(id);
                 await mod.addTablet(tablet, {through: "user_tablet"});
-            } catch (error) {console.log(error)}
+            } catch (error) { return res.status(500).send(error.message) }
         }
         
         return res.send("file uploaded successfully");
     } catch (error) {
-        console.log(error);
-        return res.send("error when uploading image: " + error);
+        return res.status(500).send("error when uploading image: " + error);
     }
 };
 
 const getTablet = async (req, res) => {
-    const id = req.params.id;
-    const tablet = await Tablet.findByPk(id);
-    return res.json(tablet);
+    try {
+        const id = req.params.id;
+        const tablet = await Tablet.findByPk(id);
+        return res.json(tablet);
+    } catch (error) { res.status(500).send(error.message) }
 };
 
 const updateAnnots = async (req, res) => {
@@ -105,13 +106,19 @@ const changeStatus = async (req, res) => {
         Object.assign(tablet, status);
         await tablet.save();
         return res.send(tablet)
-        
     } catch (error) { res.status(500).send(error.message) }
 };
 
-const lockPage = async (req, res) => {
-    const tabletID = req.params.id;
-}
+const changeLock = async (req, res) => {
+    try {
+        const tabletID = req.params.id;
+        const isLocked = req.body;
+        const tablet = await Tablet.findByPk(tabletID);
+        Object.assign(tablet, isLocked);
+        await tablet.save();
+        return res.send(tablet)
+    } catch (error) { res.status(500).send(error.message) }
+};
 
 module.exports = {
     storage,
@@ -121,5 +128,6 @@ module.exports = {
     getTablet,
     updateAnnots,
     getAssignedUsers,
-    changeStatus
+    changeStatus,
+    changeLock
 };

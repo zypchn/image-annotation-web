@@ -1,5 +1,5 @@
 const express = require("express");
-const { getAllTablets, uploadTablet, storage, imageFilter, getTablet, updateAnnots, getAssignedUsers, changeStatus} = require("../controllers/tabletController");
+const { getAllTablets, uploadTablet, storage, imageFilter, getTablet, updateAnnots, getAssignedUsers, changeStatus, changeLock} = require("../controllers/tabletController");
 const multer = require("multer");
 const requireAuth = require("../middleware/requireAuth");
 
@@ -26,6 +26,6 @@ router.get("/:id/assigned", getAssignedUsers);
 
 router.patch("/:id/status", changeStatus);
 
-router.post("/lock/:id")
+router.patch("/:id/lock", changeLock);
 
 module.exports = router;
