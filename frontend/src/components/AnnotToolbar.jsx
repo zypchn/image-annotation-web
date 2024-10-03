@@ -14,6 +14,8 @@ const Toolbar = ({
     
     let data = polygons;
     
+    const CUSTOM_CHARS = ["Á", "á", "à", "É", "é", "Ì", "Í", "ì", "í", "Ú", "Ù", "ú", "Š", "š"]
+    
     const saveFunc = () => {
         saveData(data);
         setShowAlert(true);
@@ -33,11 +35,6 @@ const Toolbar = ({
         setStatusAlert(true);
         setTimeout(() => setStatusAlert(false), 1000);
     };
-    
-    const changeLockFunc = (isLocked) => {
-        changeLock(isLocked);
-        console.log("Tablet is Locked");
-    }
     
     return (
         <div className={"toolbar-wrapper"}>
@@ -64,20 +61,10 @@ const Toolbar = ({
                             textField.value += e.target.innerText;
                             updateLabel({id: p.id, label:textField.value})
                         }}>
-                            <td className="accent-cell">Á</td>
-                            <td className="accent-cell">á</td>
-                            <td className="accent-cell">à</td>
-                            <td className="accent-cell">É</td>
-                            <td className="accent-cell">é</td>
-                            <td className="accent-cell">Ì</td>
-                            <td className="accent-cell">Í</td>
-                            <td className="accent-cell">ì</td>
-                            <td className="accent-cell">í</td>
-                            <td className="accent-cell">Ú</td>
-                            <td className="accent-cell">Ù</td>
-                            <td className="accent-cell">ú</td>
-                            <td className="accent-cell">Š</td>
-                            <td className="accent-cell">š</td>
+                            {CUSTOM_CHARS.map((char) => (
+                                // eslint-disable-next-line react/jsx-key
+                                <td className={"accent-cell"}>{char}</td>
+                            ))}
                         </tr>
                         </tbody>
                     </table>

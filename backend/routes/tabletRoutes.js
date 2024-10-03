@@ -5,7 +5,6 @@ const requireAuth = require("../middleware/requireAuth");
 
 const router = express.Router();
 
-
 // protects API requests
 router.use(requireAuth);
 
