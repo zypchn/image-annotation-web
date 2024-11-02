@@ -2,6 +2,8 @@ import {useState} from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 
+const apiUrl = process.env.REACT_APP_API_URL;
+
 export const useOTPVerification = () => {
     
     const [otpError, setError] = useState(null);
@@ -10,7 +12,7 @@ export const useOTPVerification = () => {
     const otpVerification = async (email, otp) => {
         setError(null);
         try {
-            await axios.post("http://localhost:4000/user/verifyOTP",
+            await axios.post(`${apiUrl}/user/verifyOTP`,
                 {userEmail: email, otp}).then(response => {
                     if (response.status === 200) {
                         navigate("/login");

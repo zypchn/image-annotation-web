@@ -1,6 +1,8 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
 
+const apiUrl = process.env.REACT_APP_API_URL;
+
 // eslint-disable-next-line react/prop-types
 const AssignTablet = ({assignedTablets}) => {
     
@@ -21,7 +23,7 @@ const AssignTablet = ({assignedTablets}) => {
     };
     
     useEffect(() => {
-        axios.get("http://localhost:4000/user/students")
+        axios.get(`${apiUrl}/user/students`)
         .then((response) => {
             setAllStudents(response.data)
         });
@@ -29,7 +31,7 @@ const AssignTablet = ({assignedTablets}) => {
     
     const handleAssign = async () => {
         
-        await axios.post("http://localhost:4000/user/assign", {
+        await axios.post(`${apiUrl}/user/assign`, {
             userID: selectedStudents,
             tabletID: selectedTablet
         }).then(response => console.log(response))

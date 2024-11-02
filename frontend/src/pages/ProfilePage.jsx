@@ -4,6 +4,8 @@ import {useAuthContext} from "../hooks/useAuthContext.js";
 import axios from "axios";
 import AssignTablet from "../components/AssignTablet.jsx";
 
+const apiUrl = process.env.REACT_APP_API_URL;
+
 const ProfilePage = () => {
     
     const [userData, setUserData] = useState({});
@@ -12,12 +14,12 @@ const ProfilePage = () => {
     const [assignedTablets, setAssignedTablets] = useState([]);
     
     useEffect(() => {
-        axios.get(`http://localhost:4000/user/${id}`)
+        axios.get(`${apiUrl}/user/${id}`)
         .then((response) => {setUserData(response.data)});
     }, [id]);
     
     useEffect(() => {
-            axios.get(`http://localhost:4000/user/${id}/assigned`)
+            axios.get(`${apiUrl}/user/${id}/assigned`)
             .then((response) => {setAssignedTablets(response.data)});
     }, [id]);
     

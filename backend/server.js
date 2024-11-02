@@ -15,10 +15,10 @@ app.use(express.static("public"));
 app.use("/uploads", express.static("images"));
 
 const tabletRoutes = require("./routes/tabletRoutes");
-app.use("/tablets", tabletRoutes);
+app.use("/api/tablets", tabletRoutes);
 
 const userRoutes = require("./routes/userRoutes");
-app.use("/user", userRoutes);
+app.use("/api/user", userRoutes);
 
 db.sequelize.sync().then(() => {
     app.listen(PORT, () => {

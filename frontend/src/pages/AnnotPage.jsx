@@ -5,6 +5,8 @@ import {useParams} from "react-router-dom";
 import Navbar from "../components/Navbar.jsx";
 import {useAuthContext} from "../hooks/useAuthContext.js";
 
+const apiUrl = process.env.REACT_APP_API_URL;
+
 const AnnotPage = () => {
     
     const { id } = useParams();
@@ -16,7 +18,7 @@ const AnnotPage = () => {
             if (user) {
                 const userID = user.userID;
                 
-                await axios.get(`http://localhost:4000/tablets/${id}/assigned`, {
+                await axios.get(`${apiUrl}/tablets/${id}/assigned`, {
                     headers: {"Authorization": `Bearer ${user.token}`}
                 }).then((response) => {
                     const assignedUsers = response.data;
@@ -26,7 +28,7 @@ const AnnotPage = () => {
                     }
                 });
                 
-                await axios.get(`http://localhost:4000/tablets/${id}`, {
+                await axios.get(`${apiUrl}/tablets/${id}`, {
                     headers: {"Authorization": `Bearer ${user.token}`}
                 }).then((response) => {
                     
@@ -37,7 +39,7 @@ const AnnotPage = () => {
                     
                     else {
                         setTablet(response.data)
-                        axios.patch(`http://localhost:4000/tablets/${id}/lock`,{
+                        axios.patch(`${apiUrl}/tablets/${id}/lock`,{
                             isLocked: 1
                         }, {
                             headers: {"Authorization": `Bearer ${user.token}`}
@@ -49,7 +51,7 @@ const AnnotPage = () => {
         
         async function unlockPage() {
             if (user) {
-                await axios.patch(`http://localhost:4000/tablets/${id}/lock`,{
+                await axios.patch(`${apiUrl}/tablets/${id}/lock`,{
                     isLocked: 0
                 }, {
                     headers: {"Authorization": `Bearer ${user.token}`}

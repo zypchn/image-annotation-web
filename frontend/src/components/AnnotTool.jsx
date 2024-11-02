@@ -11,6 +11,9 @@ const polygonStyle = {
     vertexColor: '#ff0000',
 };
 
+const apiUrl = process.env.REACT_APP_API_URL;
+const baseUrl = process.env.REACT_APP_BASE_URL;
+
 // eslint-disable-next-line react/prop-types
 const AnnotTool = ({ tablet }) => {
     
@@ -21,7 +24,7 @@ const AnnotTool = ({ tablet }) => {
     
     const saveData = async (annot) => {
         // eslint-disable-next-line react/prop-types
-        await axios.patch(`http://localhost:4000/tablets/${tablet.id}/annotations`, {
+        await axios.patch(`${apiUrl}/tablets/${tablet.id}/annotations`, {
             annotations: annot
         }, {
             headers: { "Authorization": `Bearer ${user.token}` }
@@ -30,7 +33,7 @@ const AnnotTool = ({ tablet }) => {
     
     const changeStatus = async (status) => {
         // eslint-disable-next-line react/prop-types
-        await axios.patch(`http://localhost:4000/tablets/${tablet.id}/status`, {
+        await axios.patch(`${apiUrl}/tablets/${tablet.id}/status`, {
             status: status
         }, {
             headers: { "Authorization": `Bearer ${user.token}` }
@@ -41,7 +44,7 @@ const AnnotTool = ({ tablet }) => {
         <div className={"label-tool"} style={{position: "absolute"}}>
                 <PolygonAnnotation
                     /* eslint-disable-next-line react/prop-types */
-                    bgImage={`http://localhost:4000/uploads/${tablet.name}`}
+                    bgImage={`${baseUrl}/uploads/${tablet.name}`}
                     maxPolygons={Infinity}
                     polygonStyle={polygonStyle}
                     showLabel={showLabel}

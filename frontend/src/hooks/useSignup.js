@@ -2,6 +2,8 @@ import { useAuthContext } from "./useAuthContext.js";
 import {useState} from "react";
 import axios from "axios";
 
+const apiUrl = process.env.REACT_APP_API_URL;
+
 export const useSignup = () => {
     
     const [signupError, setError] = useState(null);
@@ -12,7 +14,7 @@ export const useSignup = () => {
         setError(null);
         
         try {
-            await axios.post("http://localhost:4000/user/signup",
+            await axios.post(`${apiUrl}/user/signup`,
                 {name, email, password, role}, {
                     headers: {"Content-Type": "application/json"}
                 })

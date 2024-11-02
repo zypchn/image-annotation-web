@@ -4,6 +4,9 @@ import axios from "axios";
 import Navbar from "../components/Navbar.jsx";
 import {useAuthContext} from "../hooks/useAuthContext.js";
 
+const apiUrl = process.env.REACT_APP_API_URL;
+const baseUrl = process.env.REACT_APP_BASE_URL;
+
 const TabletSearch = () => {
     
     const [listOfTablets, setListOfTablets] = useState([]);
@@ -11,7 +14,7 @@ const TabletSearch = () => {
     
     useEffect(() => {
         if (user) {
-            axios.get("http://localhost:4000/tablets", {
+            axios.get(`${apiUrl}/tablets`, {
                 headers: { "Authorization": `Bearer ${user.token}` }
             }).then((response) => {setListOfTablets(response.data)});
         }
