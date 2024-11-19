@@ -27,7 +27,6 @@ const sendOTP = async (email, userID) => {
             from: process.env.USER,
             to: email,
             subject: "Verify Your Email",
-            //text: `Your one time password for verification is: ${otp}`
             html: `<p> Enter <b>${otp}</b> in the app to verify your email address.</p>
                     <p> This code <b>expires in 1 hour</b>. </p>`
         });
