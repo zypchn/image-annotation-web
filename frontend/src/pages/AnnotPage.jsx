@@ -4,12 +4,13 @@ import axios from "axios";
 import {useParams} from "react-router-dom";
 import Navbar from "../components/Navbar.jsx";
 import {useAuthContext} from "../hooks/useAuthContext.js";
+import AnnotToolbar from "../components/AnnotToolbar.jsx";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
 const AnnotPage = () => {
     
-    const { id } = useParams();
+    const {id} = useParams();
     const [tablet, setTablet] = useState({});
     const {user} = useAuthContext();
     
@@ -35,11 +36,9 @@ const AnnotPage = () => {
                     if (response.data.isLocked !== 0) {
                         window.alert(`Someone else is working on Tablet ${id}\nPlease choose another one`)
                         return window.location.href = "/tablet"
-                    }
-                    
-                    else {
+                    } else {
                         setTablet(response.data)
-                        axios.patch(`${apiUrl}/tablets/${id}/lock`,{
+                        axios.patch(`${apiUrl}/tablets/${id}/lock`, {
                             isLocked: 1
                         }, {
                             headers: {"Authorization": `Bearer ${user.token}`}
@@ -51,7 +50,7 @@ const AnnotPage = () => {
         
         async function unlockPage() {
             if (user) {
-                await axios.patch(`${apiUrl}/tablets/${id}/lock`,{
+                await axios.patch(`${apiUrl}/tablets/${id}/lock`, {
                     isLocked: 0
                 }, {
                     headers: {"Authorization": `Bearer ${user.token}`}

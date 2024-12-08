@@ -28,6 +28,10 @@ module.exports = (sequelize, DataTypes) => {
         isLocked: {
             type: DataTypes.TINYINT(1),
             allowNull: false
+        },
+        customID: {
+            type: DataTypes.STRING,
+            allowNull: true
         }
     });
 };

@@ -5,62 +5,50 @@ body {
 .label-tool {
     display: flex;
     justify-content: center;
-    gap: 24px
+    gap: 24px;
+    overflow: auto;
 }
 
-.sidebar {
-    height: 35%;
-    width: 0;
-    position: fixed;
-    z-index: 1;
-    top: 10px;
-    right: 10px;
-    background-color: #111;
-    overflow-x: hidden;
-    padding-top: 60px;
-    transition: 0.5s;
-    text-decoration-color: white;
-}
-
-.sidebar .closeBtn {
-    position: absolute;
-    top: 0;
-    right: 25px;
-    font-size: 36px;
-    margin-left: 50px;
-}
-
-.openBtn {
-    font-size: 20px;
-    cursor: pointer;
-    background-color: #111;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-}
-
-.openBtn:hover {
-    background-color: #444;
+.konvajs-content {
+    margin: 1rem;
 }
 
 .toolbar-wrapper {
     flex-direction: column;
-    margin: 1rem;
-    display: inline;
+    display: flex;
     float: right;
+    margin: 1rem;
 }
+
+.lang-btns {
+    padding-right: 10px;
+}
+
 .toolbar-wrapper > div {
     display: flex;
     gap: 8px;
     margin-bottom: 12px;
     width: 420px;
 }
+
 .toolbar-wrapper > button {
     width: 100px;
 }
+
+.textField-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    height: 300px;
+    overflow-y: auto;
+}
+
+.custom-char-table {
+    display: flex;
+    flex-direction: row;
+}
+
 .points-wrapper {
     display: flex;
     flex-direction: column;
@@ -69,14 +57,10 @@ body {
     height: 300px;
     overflow-y: auto;
 }
+
 .points-wrapper > div {
     width: 100%;
     background-color: aliceblue;
-}
-
-.konvajs-content {
-    border: 1px solid black;
-    margin: 1rem;
 }
 
 .status-buttons {
@@ -101,11 +85,27 @@ body {
 
 .accent-cell {
     border: 1px solid #000;
-    padding: 8px;
     cursor: pointer;
     background-color: white;
     font-weight: bold;
     text-align: center;
+    font-size: 15px;
+    height: 2rem;
+    width: 2rem;
+}
+
+.inputField {
+    height: 3rem;
+    width: 15rem;
+}
+
+#label-idx {
+    font-size: 20px;
+}
+
+input[type="radio"]:checked + span
+{
+    font-weight: bold;
 }
 
 .trex-container {
@@ -144,12 +144,6 @@ body {
     align-items: center;
 }
 
-#pendingBtn {
-    background-color: red;
-    color: white;
-    font-size: 20px;
-}
-
 .profile-container {
     height: 340px;
     padding: 10px;
@@ -184,16 +178,8 @@ body {
     margin: 0;
 }
 
-#checkBtn {
-    background-color: orange;
-    color: white;
-    font-size: 20px;
-}
-
-#doneBtn {
-    background-color: green;
-    color: white;
-    font-size: 20px;
+.scroll-buttons {
+    border: black;
 }
 
 .otp-container {

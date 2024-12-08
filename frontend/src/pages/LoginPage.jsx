@@ -1,6 +1,5 @@
 import React, {useState} from "react";
 import {useLogin} from "../hooks/useLogin.js";
-import { MDBFooter } from 'mdb-react-ui-kit';
 import Footer from "../components/Footer.jsx";
 
 const LoginPage = () => {

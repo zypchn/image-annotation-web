@@ -14,47 +14,52 @@ const polygonStyle = {
 const apiUrl = process.env.REACT_APP_API_URL;
 const baseUrl = process.env.REACT_APP_BASE_URL;
 
-// eslint-disable-next-line react/prop-types
-const AnnotTool = ({ tablet }) => {
-    
+const AnnotTool = ({tablet}) => {
     const [showLabel, setShowLabel] = useState(false);
-    // eslint-disable-next-line react/prop-types,no-unused-vars
     const [initialData, setInitialData] = useState(tablet.annotations);
     const {user} = useAuthContext();
     
     const saveData = async (annot) => {
-        // eslint-disable-next-line react/prop-types
         await axios.patch(`${apiUrl}/tablets/${tablet.id}/annotations`, {
             annotations: annot
         }, {
-            headers: { "Authorization": `Bearer ${user.token}` }
+            headers: {"Authorization": `Bearer ${user.token}`}
         });
     };
     
     const changeStatus = async (status) => {
-        // eslint-disable-next-line react/prop-types
         await axios.patch(`${apiUrl}/tablets/${tablet.id}/status`, {
             status: status
         }, {
-            headers: { "Authorization": `Bearer ${user.token}` }
+            headers: {"Authorization": `Bearer ${user.token}`}
+        }).then().catch();
+    };
+    
+    const changeCustomID = async (customID) => {
+        await axios.patch(`${apiUrl}/tablets/${tablet.id}/customID`, {
+            customID: customID
+        }, {
+            headers: {"Authorization": `Bearer ${user.token}`}
         }).then().catch();
     };
     
     return (
         <div className={"label-tool"} style={{position: "absolute"}}>
-                <PolygonAnnotation
-                    /* eslint-disable-next-line react/prop-types */
-                    bgImage={`${baseUrl}/uploads/${tablet.name}`}
-                    maxPolygons={Infinity}
-                    polygonStyle={polygonStyle}
-                    showLabel={showLabel}
-                    initialPolygons={JSON.stringify(initialData) === "[]" ? undefined : initialData}
-                >
+            <PolygonAnnotation
+                /* eslint-disable-next-line react/prop-types */
+                bgImage={`${baseUrl}/uploads/${tablet.name}`}
+                maxPolygons={Infinity}
+                polygonStyle={polygonStyle}
+                showLabel={true}
+                initialPolygons={JSON.stringify(initialData) === "[]" ? undefined : initialData}
+            >
                 <Toolbar
-                    showLabel={showLabel}
+                    showLabel={true}
                     setShowLabel={setShowLabel}
                     saveData={saveData}
                     changeStatus={changeStatus}
+                    changeCustomID={changeCustomID}
+                    initialData={JSON.stringify(initialData) === "[]" ? undefined : initialData}
                 />
             </PolygonAnnotation>
         </div>

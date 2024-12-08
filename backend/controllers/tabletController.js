@@ -109,6 +109,17 @@ const changeStatus = async (req, res) => {
     } catch (error) { res.status(500).send(error.message) }
 };
 
+const changeCustomID = async (req, res) => {
+    try {
+        const tabletID = req.params.id;
+        const customID = req.body;
+        const tablet = await Tablet.findByPk(tabletID);
+        Object.assign(tablet, customID);
+        await tablet.save();
+        return res.send(tablet)
+    } catch (error) { res.status(500).send(error.message) }
+};
+
 const changeLock = async (req, res) => {
     try {
         const tabletID = req.params.id;
@@ -129,5 +140,6 @@ module.exports = {
     updateAnnots,
     getAssignedUsers,
     changeStatus,
-    changeLock
+    changeLock,
+    changeCustomID
 };

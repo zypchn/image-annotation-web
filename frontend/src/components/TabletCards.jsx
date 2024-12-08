@@ -1,6 +1,5 @@
 import {formatDistanceToNow} from "date-fns";
 
-const apiUrl = process.env.REACT_APP_API_URL;
 const baseUrl = process.env.REACT_APP_BASE_URL;
 
 const TabletCards = ({ listOfTablets }) => {
@@ -13,8 +12,8 @@ const TabletCards = ({ listOfTablets }) => {
                </div>
                <div className={"card-body"}>
                    <img src={`${baseUrl}/uploads/` + listOfTablets.name} className={"card-img-top"} style={{height: 175}} alt={"tablet"} />
-                   <h4 className={"card-title my-4"}> {listOfTablets.name.split(".")[0]} </h4>
-                   <h5 className={"card-subtitle my-4"}> ID: {listOfTablets.id} </h5>
+                   <h4 className={"card-title my-4"}> ID: {listOfTablets.customID} </h4>
+                   {/*<h5 className={"card-subtitle my-4"}> ID: {listOfTablets.id} </h5>*/}
                    <a href={"/tablet/" + (listOfTablets.id)} className={"btn btn-primary align-items-center my-2"}> Label </a>
                </div>
                <div className={"card-footer text-muted"}>
