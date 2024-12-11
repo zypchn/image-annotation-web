@@ -47,7 +47,7 @@ const LoginPage = () => {
                         </div>
                     </div>
                 </div>
-                <div className={"trex-container"}>
+                <div className={"trex-container"} style={{marginBottom: 10}}>
                     <img alt={"trex"} src={"/images/trex.png"}/>
                 </div>
             </form>
