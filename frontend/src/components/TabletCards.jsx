@@ -34,7 +34,7 @@ const TabletCards = ({ listOfTablets }) => {
                        <button style={{border: "none"}} onClick={() => {
                            const customID = document.getElementById("changeCustomIDField").value;
                            changeCustomID(customID).then();
-                           location.reload();
+                           //location.reload();
                        }}> Change ID </button>
                    </div>}
                    <h6 className={"card-title my-4"}> Database ID: {listOfTablets.id} </h6>
