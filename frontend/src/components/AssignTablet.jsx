@@ -61,7 +61,7 @@ const AssignTablet = ({assignedTablets}) => {
                             <h3 style={{textAlign: "center"}}> Select Tablet </h3>
                             <ul className={"list-group"} style={{height: 300, overflow: "scroll"}}>
                                 {/* eslint-disable-next-line react/prop-types */}
-                                {assignedTablets && assignedTablets.map(tabletID => (
+                                {assignedTablets && Object.keys(assignedTablets).map(tabletID => (
                                     <li key={tabletID} className={"list-group-item"}>
                                         <input
                                             type={"radio"}
@@ -71,7 +71,7 @@ const AssignTablet = ({assignedTablets}) => {
                                             className={"mr-2"}
                                             style={{marginRight: 7}}
                                         />
-                                        <label> Tablet ID: <strong>{tabletID}</strong> </label>
+                                        <label> Tablet ID: <strong>{assignedTablets[tabletID] ? assignedTablets[tabletID] : tabletID}</strong> </label>
                                     </li>
                                 ))}
                             </ul>

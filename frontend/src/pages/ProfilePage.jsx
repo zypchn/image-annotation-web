@@ -47,8 +47,8 @@ const ProfilePage = () => {
                         <h3 className={"mb-4 mt-1 tablets-header"} style={{textAlign: "center"}}> Assigned Tablet(s) List &nbsp; #{assignedTablets.length}</h3>
                         <div className={"custom-scrollbar"}>
                             <ul className={"list-group"} style={{height: 280, overflow: "scroll"}}>
-                                {assignedTablets && assignedTablets.map((tabletID) => {
-                                    return <li key={tabletID} className={"list-group-item"}> Tablet ID: <strong>{tabletID}</strong>
+                                {assignedTablets && Object.keys(assignedTablets).map((tabletID) => {
+                                    return <li key={tabletID} className={"list-group-item"}> Tablet ID: <strong>{assignedTablets[tabletID] ? assignedTablets[tabletID] : tabletID}</strong>
                                         <a href={`/tablet/${tabletID}`} id={"profile-label-btn"} className={"btn btn-secondary align-items-center"}> Label </a> </li>
                                 })}
                             </ul>

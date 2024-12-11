@@ -114,7 +114,12 @@ const getAssignedTablets = async (req, res) => {
         const userID = Number(req.params.id);
         const assignedTablets = await UserTablet.findAll({where: {UserId: userID}});
         const listOfIDs = assignedTablets.map(data => data.TabletId);
-        return res.status(200).send(listOfIDs);
+        let listOfCustomIDs = {};
+        for (const id of listOfIDs) {
+            const tablet = await Tablet.findByPk(id);
+            listOfCustomIDs[id] = tablet.customID;
+        }
+        return res.status(200).send(listOfCustomIDs);
     } catch (error) { res.status(500).send(error.message) }
 };
 

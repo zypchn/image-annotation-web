@@ -4,7 +4,6 @@ import axios from "axios";
 import {useParams} from "react-router-dom";
 import Navbar from "../components/Navbar.jsx";
 import {useAuthContext} from "../hooks/useAuthContext.js";
-import AnnotToolbar from "../components/AnnotToolbar.jsx";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
@@ -55,7 +54,6 @@ const AnnotPage = () => {
                 }, {
                     headers: {"Authorization": `Bearer ${user.token}`}
                 }).then().catch();
-                return
             }
         }
         

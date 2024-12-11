@@ -15,6 +15,7 @@ dist-ssr
 !images
 /.idea
 vite.config.js
+*.env
 
 # Editor directories and files
 .vscode/*

@@ -135,7 +135,6 @@ const Toolbar = ({
         };
         
         window.addEventListener("keydown", handleKeyDown);
-        
         return () => {
             window.removeEventListener("keydown", handleKeyDown);
         };
@@ -252,7 +251,6 @@ const Toolbar = ({
                 <button accessKey={"s"} disabled={!polygons.length} onClick={() => {saveFunc(data)}}
                         className={"btn btn-dark"}> Save Polygons
                 </button>
-                <button>hey</button>
             </div>
             
             {showAlert && <div className={"alert alert-success"}><strong> Saved Successfully! </strong></div>}
