@@ -2,7 +2,6 @@ import {useState} from "react";
 import {useSignup} from "../hooks/useSignup.js";
 import {useOTPVerification} from "../hooks/useOTPVerification.js";
 import OTPInput from "../components/OTPInput.jsx";
-import Footer from "../components/Footer.jsx";
 
 const SignupPage = () => {
     
@@ -87,7 +86,6 @@ const SignupPage = () => {
                     <img alt={"trex"} src={"/images/trex.png"}/>
                 </div>
             </form>
-            <Footer/>
         </div>
     );
 }

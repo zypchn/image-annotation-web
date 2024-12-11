@@ -4,6 +4,7 @@ import axios from "axios";
 import {useParams} from "react-router-dom";
 import Navbar from "../components/Navbar.jsx";
 import {useAuthContext} from "../hooks/useAuthContext.js";
+import Footer from "../components/Footer.jsx";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 

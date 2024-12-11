@@ -1,6 +1,5 @@
 import React, {useState} from "react";
 import {useLogin} from "../hooks/useLogin.js";
-import Footer from "../components/Footer.jsx";
 
 const LoginPage = () => {
     
@@ -52,7 +51,6 @@ const LoginPage = () => {
                     <img alt={"trex"} src={"/images/trex.png"}/>
                 </div>
             </form>
-            <Footer/>
         </div>
     
     )

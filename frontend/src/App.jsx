@@ -9,6 +9,7 @@ import AnnotPage from "./pages/AnnotPage.jsx";
 import SignupPage from "./pages/SignupPage.jsx";
 import ProfilePage from "./pages/ProfilePage.jsx";
 import {useAuthContext} from "./hooks/useAuthContext.js";
+import Footer from "./components/Footer.jsx";
 
 function App() {
     
@@ -31,6 +32,7 @@ function App() {
                         <Route exact path={"/profile"} element={user ? <ProfilePage/> : <Navigate to={"/login"}/>}/>
                     </Routes>
                 </Router>
+                <Footer />
             </div>
         </>
     );

@@ -15,12 +15,16 @@ const ProfilePage = () => {
     
     useEffect(() => {
         axios.get(`${apiUrl}/user/${id}`)
-        .then((response) => {setUserData(response.data)});
+        .then((response) => {
+            setUserData(response.data)
+        });
     }, [id]);
     
     useEffect(() => {
-            axios.get(`${apiUrl}/user/${id}/assigned`)
-            .then((response) => {setAssignedTablets(response.data)});
+        axios.get(`${apiUrl}/user/${id}/assigned`)
+        .then((response) => {
+            setAssignedTablets(response.data)
+        });
     }, [id]);
     
     return (
@@ -44,18 +48,21 @@ const ProfilePage = () => {
                         </div>
                     </div>
                     <div className={"col-lg-4 col-md-12 tablets-list-container"}>
-                        <h3 className={"mb-4 mt-1 tablets-header"} style={{textAlign: "center"}}> Assigned Tablet(s) List &nbsp; #{assignedTablets.length}</h3>
+                        <h3 className={"mb-4 mt-1 tablets-header"} style={{textAlign: "center"}}> Assigned Tablet(s)
+                            List &nbsp; #{Object.keys(assignedTablets).length}</h3>
                         <div className={"custom-scrollbar"}>
                             <ul className={"list-group"} style={{height: 280, overflow: "scroll"}}>
                                 {assignedTablets && Object.keys(assignedTablets).map((tabletID) => {
-                                    return <li key={tabletID} className={"list-group-item"}> Tablet ID: <strong>{assignedTablets[tabletID] ? assignedTablets[tabletID] : tabletID}</strong>
-                                        <a href={`/tablet/${tabletID}`} id={"profile-label-btn"} className={"btn btn-secondary align-items-center"}> Label </a> </li>
+                                    return <li key={tabletID} className={"list-group-item"}> Tablet
+                                        ID: <strong>{assignedTablets[tabletID] ? assignedTablets[tabletID] : tabletID}</strong>
+                                        <a href={`/tablet/${tabletID}`} id={"profile-label-btn"}
+                                           className={"btn btn-secondary align-items-center"}> Label </a></li>
                                 })}
                             </ul>
                         </div>
                     </div>
                 </div>
-                { userData.role === "Moderator" && <AssignTablet assignedTablets={assignedTablets}/> }
+                {userData.role === "Moderator" && <AssignTablet assignedTablets={assignedTablets}/>}
             </div>
         </div>
     )
