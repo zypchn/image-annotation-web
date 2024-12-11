@@ -41,7 +41,7 @@ const Toolbar = ({
         const annotKey = Object.keys(data).find(key => data[key].id === id);
         data.splice(Number(annotKey), 1);
         await saveData(data);
-        location.reload()
+        location.reload();
         // TODO add another method other than reload
     };
     
