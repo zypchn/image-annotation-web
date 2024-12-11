@@ -285,17 +285,6 @@ const Toolbar = ({
                 {statusAlert &&
                     <div className={"alert alert-success my-2"}><strong> Status Changed Successfully! </strong></div>}
             </div>
-            
-            <br/>
-            
-            <div>
-                <input type={"text"} id={"changeCustomIDField"} style={{display: "inline-block"}}/>
-                <button style={{border: "none"}} onClick={() => {
-                    const customID = document.getElementById("changeCustomIDField").value;
-                    changeCustomIDFunc(customID);
-                }}> Change ID </button>
-                {nameAlert && <div className={"alert alert-success my-2"}><strong> Tablet Name Changed Successfully! </strong></div>}
-            </div>
         
         </div>
     );
