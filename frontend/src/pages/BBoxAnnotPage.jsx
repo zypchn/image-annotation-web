@@ -7,28 +7,31 @@ import BBoxAnnotTool from "../components/BBoxAnnotTool.jsx";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 
-const AnnotPage = () => {
+const BBoxAnnotPage = () => {
     
+    const {user} = useAuthContext();
     const {id} = useParams();
     const [tablet, setTablet] = useState({});
-    const {user} = useAuthContext();
     
-    const unlockPage = async () => {
-        if (user) {
-            await axios.patch(`${apiUrl}/tablets/${id}/lock`, {
-                isLocked: 0
-            }, {
-                headers: {"Authorization": `Bearer ${user.token}`}
-            }).then().catch();
-        }
-    }
     
     useEffect(() => {
+        
+        const unlockPage = async () => {
+            if (user) {
+                await axios.patch(`${apiUrl}/tablets/${id}/lock`, {
+                    isLocked: 0
+                }, {
+                    headers: {"Authorization": `Bearer ${user.token}`}
+                }).then().catch();
+            }
+        }
+        
         const onRender = async () => {
             if (user) {
+                
                 try {
                     const assignedResponse = await axios.get(`${apiUrl}/tablets/${id}/assigned`, {
-                        headers: { "Authorization": `Bearer ${user.token}` }
+                        headers: {"Authorization": `Bearer ${user.token}`}
                     });
                     
                     const assignedUsers = assignedResponse.data;
@@ -39,7 +42,7 @@ const AnnotPage = () => {
                     }
                     
                     const tabletResponse = await axios.get(`${apiUrl}/tablets/${id}`, {
-                        headers: { "Authorization": `Bearer ${user.token}` }
+                        headers: {"Authorization": `Bearer ${user.token}`}
                     });
                     
                     const tablet = tabletResponse.data;
@@ -51,8 +54,8 @@ const AnnotPage = () => {
                     
                     setTablet(tablet);
                     
-                    await axios.patch(`${apiUrl}/tablets/${id}/lock`, { isLocked: 1 }, {
-                        headers: { "Authorization": `Bearer ${user.token}` }
+                    await axios.patch(`${apiUrl}/tablets/${id}/lock`, {isLocked: 1}, {
+                        headers: {"Authorization": `Bearer ${user.token}`}
                     });
                 } catch (error) {
                     console.error("Error during API calls:", error);
@@ -61,7 +64,9 @@ const AnnotPage = () => {
         };
         window.addEventListener("beforeunload", unlockPage);
         onRender().then();
+        
     }, [id, user]);
+    
     
     return (
         <div>
@@ -71,4 +76,4 @@ const AnnotPage = () => {
     );
 };
 
-export default AnnotPage;
+export default BBoxAnnotPage;

@@ -35,14 +35,6 @@ const AnnotTool = ({tablet}) => {
         }).then().catch();
     };
     
-    const changeCustomID = async (customID) => {
-        await axios.patch(`${apiUrl}/tablets/${tablet.id}/customID`, {
-            customID: customID
-        }, {
-            headers: {"Authorization": `Bearer ${user.token}`}
-        }).then().catch();
-    };
-    
     return (
         <div className={"label-tool"} style={{position: "static"}}>
             <PolygonAnnotation
@@ -58,7 +50,6 @@ const AnnotTool = ({tablet}) => {
                     setShowLabel={setShowLabel}
                     saveData={saveData}
                     changeStatus={changeStatus}
-                    changeCustomID={changeCustomID}
                     initialData={JSON.stringify(initialData) === "[]" ? undefined : initialData}
                 />
             </PolygonAnnotation>

@@ -51,12 +51,6 @@ const Toolbar = ({
         setTimeout(() => setStatusAlert(false), 1000);
     };
     
-    const changeCustomIDFunc = (name) => {
-        changeCustomID(name);
-        setNameAlert(true);
-        setTimeout(() => setNameAlert(false), 1000);
-    }
-    
     const scroll = (direction) => {
         const konvaContainer = document.querySelector('.konvajs-content');
         if (!konvaContainer) return;

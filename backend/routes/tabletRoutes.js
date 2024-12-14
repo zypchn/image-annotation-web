@@ -1,6 +1,5 @@
 const express = require("express");
 const { getAllTablets, uploadTablet, storage, imageFilter, getTablet, updateAnnots, getAssignedUsers, changeStatus, changeLock,
-    changeName,
     changeCustomID
 } = require("../controllers/tabletController");
 const multer = require("multer");

@@ -5,6 +5,10 @@ body {
     padding-bottom: 45px;
 }
 
+html {
+    overflow-y: scroll;
+}
+
 .label-tool {
     display: flex;
     justify-content: center;
@@ -246,6 +250,32 @@ input[type="radio"]:checked + span
     bottom: 0;
     left: 0;          
     z-index: 100;
+}
+
+.bbox-annot {
+    display: flex;
+    gap: 16px;
+}
+
+.bbox-annot > * {
+    flex: 1;
+}
+
+.annot-data {
+    overflow: scroll; 
+    border: 0.5px solid;
+    width: 100%;
+    background-color: white;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 4px;
+    max-width: 200px;
+    height: 500px;
+}
+
+.rp-shapes{
+    width: 1200px;
+    height: 1000px;
 }
 
 @media screen and (max-height: 450px) {
