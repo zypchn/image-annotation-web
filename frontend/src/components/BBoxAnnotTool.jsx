@@ -14,6 +14,7 @@ const BBoxAnnotTool = ({tablet}) => {
     const languages = ["Hititçe", "Sümerce", "Akadca", "Hurrice", "Luwice", "Hattice", "Palaca"];
     
     const [data, setData] = useState(tablet.annotations);
+    const [saveAlert, setSaveAlert] = useState(false);
     const [langs, setLangs] = useState({});
     
     /*
@@ -54,6 +55,8 @@ const BBoxAnnotTool = ({tablet}) => {
         }, {
             headers: {"Authorization": `Bearer ${user.token}`}
         });
+        setSaveAlert(true);
+        setTimeout(() => setSaveAlert(false), 1000);
     };
     
     const changeStatus = async (status) => {
@@ -131,8 +134,12 @@ const BBoxAnnotTool = ({tablet}) => {
             </div>
             <div className={"annot-data"} style={{marginTop: "20px", display: "flex", flexDirection: "column", alignItems: "flex-start", right:0}}>
                 <p> Toplam hece sayısı: {data?.length} </p>
-                <button className={"btn btn-primary"} onClick={() => saveData(data)}>Save</button>
-                <hr style={{border: "2px solid black"}}/>
+                <div style={{ display: "flex", alignItems: "center" }}>
+                    <button className={"btn btn-primary"} accessKey={"s"} onClick={() => saveData(data)}>Save</button>
+                    {saveAlert && <p className={"alert alert-success"} style={{ marginLeft: "10px"}}><strong> <i className={"fa-solid fa-check"}></i> </strong></p>}
+                    
+                </div>
+                <p><strong>----------------------</strong></p>
                 <div>
                     {data && formatAnnotationData(data) && formatAnnotationData(data).map((item, index) => (
                         <div key={index}>

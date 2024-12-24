@@ -59,7 +59,7 @@ const AssignTablet = ({assignedTablets}) => {
                     <div className={"row"}>
                         <div className={"col-md-3 col-lg-5"}>
                             <h3 style={{textAlign: "center"}}> Select Tablet </h3>
-                            <ul className={"list-group"} style={{height: 300, overflow: "scroll"}}>
+                            <ul className={"list-group"} style={{height: 600, overflowY: "scroll"}}>
                                 {/* eslint-disable-next-line react/prop-types */}
                                 {assignedTablets && Object.keys(assignedTablets).map(tabletID => (
                                     <li key={tabletID} className={"list-group-item"}>
@@ -71,14 +71,14 @@ const AssignTablet = ({assignedTablets}) => {
                                             className={"mr-2"}
                                             style={{marginRight: 7}}
                                         />
-                                        <label> Tablet ID: <strong>{assignedTablets[tabletID] ? assignedTablets[tabletID] : tabletID}</strong> </label>
+                                        <label> <strong>{assignedTablets[tabletID] ? assignedTablets[tabletID] : tabletID}</strong> </label>
                                     </li>
                                 ))}
                             </ul>
                         </div>
                         <div className={"col-md-5 col-lg-7"}>
                             <h3 style={{textAlign: "center"}}> Select Student(s) </h3>
-                            <ul className={"list-group mb-2"} style={{height: 300, overflow: "scroll"}}>
+                            <ul className={"list-group mb-2"} style={{height: 600, overflowY: "scroll", width: 300}}>
                                 {allStudents && allStudents.map(student => (
                                     <li key={student.id} className={"list-group-item"}>
                                         <input

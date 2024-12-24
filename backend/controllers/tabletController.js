@@ -9,6 +9,8 @@ const Tablet = db.tablets;
 const User = db.users;
 const UserTablet = db.usertablet;
 
+const UPLOAD_PATH=process.env.UPLOAD_PATH;
+
 const client = redis.createClient();
 const getAsync = promisify(client.get).bind(client);
 const setAsync = promisify(client.set).bind(client);
@@ -23,7 +25,7 @@ const imageFilter = (req, file, cb) => {
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, "./public/uploads");
+        cb(null, UPLOAD_PATH);
     },
     filename: (req, file, cb) => {
         cb(null, file.originalname);

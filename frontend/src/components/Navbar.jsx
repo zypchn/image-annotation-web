@@ -5,21 +5,9 @@ const Navbar = () => {
     const [isHoveredInfo, setIsHoveredInfo] = useState(false);
     const [isHoveredShortcuts, setIsHoveredShortcuts] = useState(false);
     
-    const TOKENS = ["Özel tokenler ve anlamları :",
-        "<EOL> (End of Line) : satır sonundaki heceden sonra koyulmalı",
-        "<BOP> (Beginning of Paragraph) : paragraf başlangıcındaki heceden önce koyulmalı",
-        "<EOP> : (End of Paragraph) : paragrafın son hecesinden sonra koyulmalı",
-        "<SSEP> : (Syllable Seperation) : hece sonuna koyulmalı -eğer hece, kelimenin son hecesi değil ise-",
-        "<WSEP> : (Word Seperation) : kelimenin son hecesinden sonra koyulmalı",
-        "<PRED> : (Pre-Determinatif) : pre-deterministik hece varsa ikisinin arasına koyulmalı",
-        "<POSTD> : (Post-Determinatif) : post-deterministik hece varsa ikisinin arasına koyulmalı "];
+    const TOKENS = ["null"];
+    
     const KEYBOARD_SHORTCUTS = ["Klavye Kısayolları :",
-        "Tablet üzerinde YUKARI yönüne gitmek : YUKARI OK TUŞU",
-        "Tablet üzerinde AŞAĞI yönüne gitmek : AŞAĞI OK TUŞU",
-        "Tablet üzerinde SOL yönüne gitmek : SOL OK TUŞU",
-        "Tablet üzerinde SAĞ yönüne gitmek : SAĞ OK TUŞU",
-        "Yapılan son işlemi geri almak : DELETE / DEL (konum: klavye sağ üst)",
-        "Geri alınan son işlemi yeniden yapmak : ENTER",
         "Yapılan işaretleri kaydetmek : ALT + S"];
     
     const infoBtnsStyle = {
@@ -33,7 +21,6 @@ const Navbar = () => {
         whiteSpace: 'nowrap',
         zIndex: 9999
     }
-    
     
     const { logout } = useLogout();
     const handleClick = () => { logout() }

@@ -51,12 +51,18 @@ const ProfilePage = () => {
                         <h3 className={"mb-4 mt-1 tablets-header"} style={{textAlign: "center"}}> Assigned Tablet(s)
                             List &nbsp; #{Object.keys(assignedTablets).length}</h3>
                         <div className={"custom-scrollbar"}>
-                            <ul className={"list-group"} style={{height: 280, overflow: "scroll"}}>
+                            <ul className={"list-group"} style={{height: 280, overflowY: "scroll"}}>
                                 {assignedTablets && Object.keys(assignedTablets).map((tabletID) => {
-                                    return <li key={tabletID} className={"list-group-item"}> Tablet
-                                        ID: <strong>{assignedTablets[tabletID] ? assignedTablets[tabletID] : tabletID}</strong>
-                                        <a href={`/tablet/${tabletID}`} id={"profile-label-btn"}
-                                           className={"btn btn-secondary align-items-center"}> Label </a></li>
+                                    return <li key={tabletID} className={"list-group-item d-flex justify-content-between align-items-center"}>
+                                        Tablet ID: <strong>{assignedTablets[tabletID] ? assignedTablets[tabletID] : tabletID}</strong>
+                                        <a
+                                            href={`/tablet/${tabletID}`}
+                                            id={"profile-label-btn"}
+                                            className={"btn btn-secondary"}
+                                        >
+                                            Label
+                                        </a>
+                                    </li>
                                 })}
                             </ul>
                         </div>
