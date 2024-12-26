@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import Navbar from "../components/Navbar.jsx";
 import {useAuthContext} from "../hooks/useAuthContext.js";
 import BBoxAnnotTool from "../components/BBoxAnnotTool.jsx";
@@ -12,7 +12,8 @@ const BBoxAnnotPage = () => {
     const {user} = useAuthContext();
     const {id} = useParams();
     const [tablet, setTablet] = useState({});
-    
+    const navigate = useNavigate();
+    const [lockStatus, setLockStatus] = useState(false);
     
     useEffect(() => {
         
@@ -24,9 +25,22 @@ const BBoxAnnotPage = () => {
                     headers: {"Authorization": `Bearer ${user.token}`}
                 }).then().catch();
             }
-        }
+        };
+        
+        const handleUnload = () => {
+            window.confirm("Do you really want to leave?");
+            /*
+            if (confirmed) {
+                unlockPage().then();
+            }
+            
+             */
+        };
+      
+        
         
         const onRender = async () => {
+            
             if (user) {
                 
                 try {
@@ -37,8 +51,10 @@ const BBoxAnnotPage = () => {
                     const assignedUsers = assignedResponse.data;
                     
                     if (!assignedUsers.includes(user.userID)) {
+                        setLockStatus(true);
                         window.alert(`You do not have access to Tablet ${id}`);
-                        return window.location.href = "/tablet";
+                        navigate("/tablet");
+                        return
                     }
                     
                     const tabletResponse = await axios.get(`${apiUrl}/tablets/${id}`, {
@@ -48,8 +64,10 @@ const BBoxAnnotPage = () => {
                     const tablet = tabletResponse.data;
                     
                     if (tablet.isLocked !== 0) {
+                        setLockStatus(true);
                         window.alert(`Someone else is working on Tablet ${id}\nPlease choose another one`);
-                        return window.location.href = "/tablet";
+                        navigate("/tablet");
+                        return
                     }
                     
                     setTablet(tablet);
@@ -57,15 +75,17 @@ const BBoxAnnotPage = () => {
                     await axios.patch(`${apiUrl}/tablets/${id}/lock`, {isLocked: 1}, {
                         headers: {"Authorization": `Bearer ${user.token}`}
                     });
+                    
                 } catch (error) {
                     console.error("Error during API calls:", error);
                 }
             }
         };
-        window.addEventListener("beforeunload", unlockPage);
+        if (!lockStatus) {
+            window.addEventListener("beforeunload", unlockPage);
+        }
         onRender().then();
-        
-    }, [id, user]);
+    }, [id, lockStatus, navigate, user]);
     
     
     return (

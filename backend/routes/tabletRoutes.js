@@ -1,6 +1,6 @@
 const express = require("express");
 const { getAllTablets, uploadTablet, storage, imageFilter, getTablet, updateAnnots, getAssignedUsers, changeStatus, changeLock,
-    changeCustomID
+    changeCustomID, checkLock
 } = require("../controllers/tabletController");
 const multer = require("multer");
 const requireAuth = require("../middleware/requireAuth");
@@ -30,5 +30,7 @@ router.patch("/:id/status", changeStatus);
 router.patch("/:id/lock", changeLock);
 
 router.patch("/:id/customID", changeCustomID);
+
+router.get("/:id/checkLock", checkLock)
 
 module.exports = router;

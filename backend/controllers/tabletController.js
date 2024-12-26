@@ -126,12 +126,24 @@ const changeLock = async (req, res) => {
     try {
         const tabletID = req.params.id;
         const isLocked = req.body;
+        const isLockedStr = String(isLocked)
         const tablet = await Tablet.findByPk(tabletID);
+        if ((!isLockedStr === "1") || (!isLockedStr === "0")) {
+            return
+        }
         Object.assign(tablet, isLocked);
         await tablet.save();
         return res.send(tablet)
     } catch (error) { res.status(500).send(error.message) }
 };
+
+const checkLock = async (req, res) => {
+    try {
+        const tabletID = req.params.id;
+        const tablet = await Tablet.findByPk(tabletID);
+        return res.send(tablet.isLocked);
+    } catch (error) { res.status(500).send(error.message) }
+}
 
 module.exports = {
     storage,
@@ -143,5 +155,6 @@ module.exports = {
     getAssignedUsers,
     changeStatus,
     changeLock,
-    changeCustomID
+    changeCustomID,
+    checkLock
 };

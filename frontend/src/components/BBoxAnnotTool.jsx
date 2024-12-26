@@ -32,8 +32,13 @@ const BBoxAnnotTool = ({tablet}) => {
         return () => window.removeEventListener('resize', onResize);
     }, []);
     */
+    
     useEffect(() => {
         const preventDefault = (e) => {
+            const annotData = document.querySelector('.annot-data');
+            if (annotData && (annotData === e.target || annotData.contains(e.target))) {
+                return;
+            }
             e.preventDefault();
         };
         
@@ -43,6 +48,17 @@ const BBoxAnnotTool = ({tablet}) => {
             window.removeEventListener('wheel', preventDefault);
         };
     }, []);
+    
+    useEffect(() => {
+        if(data !== undefined) {
+            const tempLangs = {};
+            // eslint-disable-next-line react/prop-types
+            data.forEach((item) => (
+                tempLangs[item.id] = item.lang
+            ));
+            setLangs(tempLangs);
+        }
+    }, [data]);
     
     const saveData = async (annot) => {
         const updatedData = annot.map(a => ({
@@ -56,7 +72,7 @@ const BBoxAnnotTool = ({tablet}) => {
             headers: {"Authorization": `Bearer ${user.token}`}
         });
         setSaveAlert(true);
-        setTimeout(() => setSaveAlert(false), 1000);
+        setTimeout(() => setSaveAlert(false), 500);
     };
     
     const changeStatus = async (status) => {
@@ -67,12 +83,44 @@ const BBoxAnnotTool = ({tablet}) => {
         }).then().catch();
     };
     
-    const onSelect = (selectedID) => {
-        return;
+    const onSelect = (selectedId) => {
+        if (!selectedId) return;
+
+        // Find the element for the selected annotation
+        const selectedElement = document.querySelector(`[data-annotation-id="${selectedId}"]`);
+        if (selectedElement) {
+            // Scroll the element into view
+            selectedElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            
+            // Add highlight effect
+            selectedElement.style.backgroundColor = '#fff3cd';
+            
+            // Remove highlight after a delay
+            setTimeout(() => {
+                selectedElement.style.backgroundColor = '';
+            }, 2000);
+        }
     };
     
     const onChange = (currentData) => {
-        setData(currentData);
+        setData(prevData => {
+            const updatedData = [...prevData];
+            
+            const newItems = currentData.filter(item => 
+                !prevData.some(prevItem => prevItem.id === item.id)
+            );
+            
+            updatedData.push(...newItems);
+            
+            updatedData.forEach((item, index) => {
+                const currentItem = currentData.find(curr => curr.id === item.id);
+                if (currentItem) {
+                    updatedData[index] = currentItem;
+                }
+            });
+            
+            return updatedData;
+        });
     };
     
     const formatAnnotationData = (data) => {
@@ -103,17 +151,18 @@ const BBoxAnnotTool = ({tablet}) => {
             )
         )
     };
-
-    useEffect(() => {
-        if(data !== undefined) {
-            const tempLangs = {};
-            // eslint-disable-next-line react/prop-types
-            data.forEach((item) => (
-                tempLangs[item.id] = item.lang
-            ));
-            setLangs(tempLangs);
-        }
-    }, [data]);
+    
+    const deleteBox = async (id) => {
+        const annotKey = Object.keys(data).find(key => data[key].id === id);
+        data.splice(Number(annotKey), 1);
+        await saveData(data);
+    };
+    
+    const undo = async () => {
+        data.splice(-1, 1);
+        await saveData(data);
+    };
+    
     
     return (
         <div className="bbox-annot">
@@ -133,20 +182,20 @@ const BBoxAnnotTool = ({tablet}) => {
                 />
             </div>
             <div className={"annot-data"} style={{marginTop: "20px", display: "flex", flexDirection: "column", alignItems: "flex-start", right:0}}>
+                {saveAlert && <p className={"alert alert-success"} style={{ marginLeft: "10px"}}><strong> <i className={"fa-solid fa-check"}></i> </strong></p>}
                 <p> Toplam hece sayısı: {data?.length} </p>
                 <div style={{ display: "flex", alignItems: "center" }}>
                     <button className={"btn btn-primary"} accessKey={"s"} onClick={() => saveData(data)}>Save</button>
-                    {saveAlert && <p className={"alert alert-success"} style={{ marginLeft: "10px"}}><strong> <i className={"fa-solid fa-check"}></i> </strong></p>}
-                    
+                    <button className={"btn btn-danger"} style={{marginLeft: 5}} onClick={() => undo()}> Undo </button>
                 </div>
-                <p><strong>----------------------</strong></p>
+                <p><strong>------------------------</strong></p>
                 <div>
                     {data && formatAnnotationData(data) && formatAnnotationData(data).map((item, index) => (
-                        <div key={index}>
+                        <div key={index} data-annotation-id={item.id} style={{padding: '10px'}}>
                             <p><strong>Label: </strong>{item.label}</p>
                             <p><strong>Lang: </strong>
                                 <select
-                                    value={langs[item.id] || null}
+                                    value={langs[item.id] || undefined}
                                     onChange={(e) => {handleLangChange(item.id, e.target.value)}}
                                 >
                                     <option value="null">dil seçiniz</option>
@@ -155,13 +204,7 @@ const BBoxAnnotTool = ({tablet}) => {
                                     ))}
                                 </select>
                             </p>
-                            {/*
-                            <p><strong>Coordinates:</strong> x:{item.coordinates.x},
-                                y:{item.coordinates.y},
-                                width:{item.coordinates.width},
-                                height:{item.coordinates.height}
-                            </p>
-                            */}
+                            <button className={"btn btn-danger"} onClick={() => deleteBox(item.id)}> delete </button>
                             <hr/>
                         </div>
                     ))}

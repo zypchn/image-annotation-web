@@ -54,7 +54,7 @@ const ProfilePage = () => {
                             <ul className={"list-group"} style={{height: 280, overflowY: "scroll"}}>
                                 {assignedTablets && Object.keys(assignedTablets).map((tabletID) => {
                                     return <li key={tabletID} className={"list-group-item d-flex justify-content-between align-items-center"}>
-                                        Tablet ID: <strong>{assignedTablets[tabletID] ? assignedTablets[tabletID] : tabletID}</strong>
+                                        <strong>{assignedTablets[tabletID] ? assignedTablets[tabletID] : tabletID}</strong>
                                         <a
                                             href={`/tablet/${tabletID}`}
                                             id={"profile-label-btn"}

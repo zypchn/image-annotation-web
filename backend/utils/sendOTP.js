@@ -18,7 +18,7 @@ const sendOTP = async (email, userID) => {
             port: Number(process.env.EMAIL_PORT),
             secure: Boolean(process.env.SECURE),
             auth: {
-                user: process.env.USER,
+                user: process.env.USERNAME,
                 pass: process.env.PASS
             }
         });

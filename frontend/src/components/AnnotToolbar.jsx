@@ -240,8 +240,8 @@ const Toolbar = ({
             </div>
             
             <div>
-                <button onClick={undo} disabled={!canUndo} className={"btn btn-dark"}> Geri Al</button>
-                <button onClick={redo} disabled={!canRedo} className={"btn btn-dark"}> Yeniden Yap</button>
+                <button onClick={undo} disabled={!canUndo} className={"btn btn-dark"}> Geri Al </button>
+                <button onClick={redo} disabled={!canRedo} className={"btn btn-dark"}> Yeniden Yap </button>
                 <button accessKey={"s"} disabled={!polygons.length} onClick={() => {saveFunc(data)}}
                         className={"btn btn-dark"}> Save Polygons
                 </button>

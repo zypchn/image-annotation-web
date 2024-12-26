@@ -30,6 +30,7 @@ const Navbar = () => {
             <div className={"navbar-btn"}>
                 <a href={"/profile"}> <button className={"me-3 btn btn-info"} style={{marginLeft: 100}}><i className={"fa-regular fa-address-card"}/> My Profile </button> </a>
                 <a href={"/tablet"}> <button className={"me-3 btn btn-info"}><i className={"fa-regular fa-rectangle-list"}/> All Tablets </button> </a>
+                <a href={"/tablet/create"}> <button className={"me-3 btn btn-info"}><i className={"fa-solid fa-upload"}></i> Upload </button> </a>
                 <button className={"btn btn-info"} onClick={handleClick}><i className={"fa-solid fa-arrow-right-from-bracket"}/> Logout </button>
             </div>
             
