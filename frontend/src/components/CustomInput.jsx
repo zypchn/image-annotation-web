@@ -13,7 +13,9 @@ const CustomInput = ({ value, onChange, onDelete }) => {
             display: "inline-grid",
             flexDirection: "column", 
             //gap: "8px",
-            margin: 5
+            margin: 5,
+            position: "relative",
+            zIndex: 1
         }}>
             <input
                 type={"text"}

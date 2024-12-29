@@ -206,9 +206,6 @@ const BBoxAnnotTool = ({tablet}) => {
                         <i className={"fa-regular fa-floppy-disk"}></i> Save</button>
                     <button className={"btn btn-warning"} style={{marginLeft: 5}} onClick={() => undo()}>
                         <i className={"fa-solid fa-rotate-left"}></i> Undo </button>
-                    <button onClick={() => {
-                        data.forEach((d) => {console.log(langs[d.id])})
-                    }}> hey </button>
                 </div>
                 <p><strong>------------------------</strong></p>
                 <div>
@@ -232,7 +229,6 @@ const BBoxAnnotTool = ({tablet}) => {
                         </div>
                     ))}
                 </div>
-            
             </div>
         </div>
     
