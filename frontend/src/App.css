@@ -269,11 +269,11 @@ input[type="radio"]:checked + span
     padding: 10px;
     margin: 10px;
     border-radius: 4px;
-    max-width: 200px;
+    max-width: 210px;
     height: 610px;
 }
 
-.rp-shapes{
+.rp-shapes {
     width: 1200px;
     height: 1000px;
 }

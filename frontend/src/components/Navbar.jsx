@@ -5,7 +5,12 @@ const Navbar = () => {
     const [isHoveredInfo, setIsHoveredInfo] = useState(false);
     const [isHoveredShortcuts, setIsHoveredShortcuts] = useState(false);
     
-    const TOKENS = ["null"];
+    const TOKENS = ["Özel Tokenler : ", 
+        "Heceler Arası :    -", 
+        "Kelime Sonu :     ,", 
+        "Satır Sonu :    *", 
+        "Paragraf Sonu :    .", 
+        "Yeni Sütun : +"];
     
     const KEYBOARD_SHORTCUTS = ["Klavye Kısayolları :",
         "Yapılan işaretleri kaydetmek : ALT + S"];

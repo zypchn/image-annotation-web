@@ -167,6 +167,21 @@ const verifyOTP = async (req, res) => {
     } catch (error) { console.log(error) }
 };
 
+const removeTabletFromUser = async (req, res) => {
+    try {
+        const { userID, tabletID } = req.body;
+        await UserTablet.destroy({
+            where: {
+                UserId: userID,
+                TabletId: tabletID
+            }
+        })
+        return res.status(200).send("Deleted successfully!");
+    } catch (error) {
+        res.status(500).send(error.message)
+    }
+}
+
 module.exports = {
     loginUser,
     signupUser,
@@ -174,5 +189,6 @@ module.exports = {
     getAllStudents,
     assignTablet,
     getAssignedTablets,
-    verifyOTP
+    verifyOTP,
+    removeTabletFromUser
 };

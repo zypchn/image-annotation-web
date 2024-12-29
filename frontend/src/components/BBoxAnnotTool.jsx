@@ -63,7 +63,7 @@ const BBoxAnnotTool = ({tablet}) => {
     const saveData = async (annot) => {
         const updatedData = annot.map(a => ({
             ...a,
-           lang: langs[a.id] || null
+            lang: langs[a.id] || null
         }));
         
         await axios.patch(`${apiUrl}/tablets/${tablet.id}/annotations`, {
@@ -85,7 +85,7 @@ const BBoxAnnotTool = ({tablet}) => {
     
     const onSelect = (selectedId) => {
         if (!selectedId) return;
-
+        
         // Find the element for the selected annotation
         const selectedElement = document.querySelector(`[data-annotation-id="${selectedId}"]`);
         if (selectedElement) {
@@ -106,7 +106,7 @@ const BBoxAnnotTool = ({tablet}) => {
         setData(prevData => {
             const updatedData = [...prevData];
             
-            const newItems = currentData.filter(item => 
+            const newItems = currentData.filter(item =>
                 !prevData.some(prevItem => prevItem.id === item.id)
             );
             
@@ -144,9 +144,9 @@ const BBoxAnnotTool = ({tablet}) => {
             ...prev,
             [id]: lang
         }));
-
+        
         setData(prevData =>
-            prevData.map(item => 
+            prevData.map(item =>
                 item.id === id ? {...item, lang:lang} : item
             )
         )
@@ -163,6 +163,23 @@ const BBoxAnnotTool = ({tablet}) => {
         await saveData(data);
     };
     
+    const getAnnotationStyle = (lang) => {
+        const defaultStyle = style
+
+        switch (lang) {
+            case "Hititçe":
+                //defaultStyle.shapeShadowStyle = "blue"
+                return defaultStyle;
+            case "Sümerce":
+                //defaultStyle.shapeShadowStyle = "red"
+                return defaultStyle;
+            case "Akadca":
+                //defaultStyle.shapeShadowStyle = "green"
+                return defaultStyle;
+            default:
+                return {defaultStyle}; // Default style
+        }
+    };
     
     return (
         <div className="bbox-annot">
@@ -185,8 +202,13 @@ const BBoxAnnotTool = ({tablet}) => {
                 {saveAlert && <p className={"alert alert-success"} style={{ marginLeft: "10px"}}><strong> <i className={"fa-solid fa-check"}></i> </strong></p>}
                 <p> Toplam hece sayısı: {data?.length} </p>
                 <div style={{ display: "flex", alignItems: "center" }}>
-                    <button className={"btn btn-primary"} accessKey={"s"} onClick={() => saveData(data)}>Save</button>
-                    <button className={"btn btn-danger"} style={{marginLeft: 5}} onClick={() => undo()}> Undo </button>
+                    <button className={"btn btn-primary"} accessKey={"s"} onClick={() => saveData(data)}>
+                        <i className={"fa-regular fa-floppy-disk"}></i> Save</button>
+                    <button className={"btn btn-warning"} style={{marginLeft: 5}} onClick={() => undo()}>
+                        <i className={"fa-solid fa-rotate-left"}></i> Undo </button>
+                    <button onClick={() => {
+                        data.forEach((d) => {console.log(langs[d.id])})
+                    }}> hey </button>
                 </div>
                 <p><strong>------------------------</strong></p>
                 <div>
@@ -204,12 +226,13 @@ const BBoxAnnotTool = ({tablet}) => {
                                     ))}
                                 </select>
                             </p>
-                            <button className={"btn btn-danger"} onClick={() => deleteBox(item.id)}> delete </button>
+                            <button className={"btn btn-danger"} onClick={() => deleteBox(item.id)}>
+                                <i className={"fa-solid fa-trash-can"}></i> delete </button>
                             <hr/>
                         </div>
                     ))}
                 </div>
-                
+            
             </div>
         </div>
     

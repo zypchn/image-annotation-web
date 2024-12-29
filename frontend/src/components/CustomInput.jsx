@@ -1,6 +1,6 @@
 import {useState} from "react";
 
-const CustomInput = ({ value, onChange, onDelete, onLangChange }) => {
+const CustomInput = ({ value, onChange, onDelete }) => {
     
     const CUSTOM_CHARS = ["ṷ", "Ṷ", "ḫ", "Ḫ", "ṣ", "Ṣ", "š", "Š", "á", "Á", "à", "Á", "é", "É", "è", "È", "í",
         "Í", "ì", "Ì", "ú", "Ú", "ù", "Ù"];
@@ -8,15 +8,13 @@ const CustomInput = ({ value, onChange, onDelete, onLangChange }) => {
     const firstRow = CUSTOM_CHARS.slice(0, halfLength);
     const secondRow = CUSTOM_CHARS.slice(halfLength);
     
-    const [dropdownValue, setDropdownValue] = useState("");
-    
-    const handleDropdownChange = (event) => {
-        setDropdownValue(event.target.value);
-        onLangChange(event.target.value);
-    };
-    
     return (
-        <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+        <div style={{ 
+            display: "inline-grid",
+            flexDirection: "column", 
+            //gap: "8px",
+            margin: 5
+        }}>
             <input
                 type={"text"}
                 value={value}
@@ -26,7 +24,7 @@ const CustomInput = ({ value, onChange, onDelete, onLangChange }) => {
                     padding: "8px",
                     borderRadius: "4px",
                     border: "1px solid #ccc",
-                    fontSize: "14px",
+                    fontSize: "14px"
                 }}
                 id={"textField"}
             />
@@ -40,7 +38,7 @@ const CustomInput = ({ value, onChange, onDelete, onLangChange }) => {
                     }}
                 >
                     {firstRow.map((char, index) => (
-                        <td key={`row1-custom-char-${index}`} className="accent-cell">
+                        <td key={`row1-custom-char-${index}`} className={"accent-cell"}>
                             {char}
                         </td>
                     ))}
@@ -53,7 +51,7 @@ const CustomInput = ({ value, onChange, onDelete, onLangChange }) => {
                     }}
                 >
                     {secondRow.map((char, index) => (
-                        <td key={`row1-custom-char-${index}`} className="accent-cell">
+                        <td key={`row1-custom-char-${index}`} className={"accent-cell"}>
                             {char}
                         </td>
                     ))}
@@ -61,22 +59,6 @@ const CustomInput = ({ value, onChange, onDelete, onLangChange }) => {
                 </tbody>
             </table>
             {/*
-            <select
-                value={dropdownValue}
-                onChange={handleDropdownChange}
-                style={{
-                    padding: "8px",
-                    borderRadius: "4px",
-                    border: "1px solid #ccc",
-                    fontSize: "14px",
-                }}
-            >
-                <option value="">Select an option</option>
-                <option value="Option1">Option 1</option>
-                <option value="Option2">Option 2</option>
-                <option value="Option3">Option 3</option>
-            </select>
-            */}
             <button
                 onClick={onDelete}
                 style={{
@@ -91,6 +73,7 @@ const CustomInput = ({ value, onChange, onDelete, onLangChange }) => {
             >
                 Delete
             </button>
+            */}
         </div>
     );
 };

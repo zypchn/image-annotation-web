@@ -1,4 +1,6 @@
-const { loginUser, signupUser, getUser, getAllStudents, assignTablet, getAssignedTablets, verifyOTP} = require("../controllers/userController");
+const { loginUser, signupUser, getUser, getAllStudents, assignTablet, getAssignedTablets, verifyOTP,
+    removeTabletFromUser
+} = require("../controllers/userController");
 
 const express = require("express");
 
@@ -17,5 +19,7 @@ router.get("/students", getAllStudents);
 router.get("/:id", getUser);
 
 router.post("/verifyOTP", verifyOTP);
+
+router.post("/removeAssignation", removeTabletFromUser);
 
 module.exports = router;
