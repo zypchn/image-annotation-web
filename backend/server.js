@@ -3,10 +3,7 @@ const PORT = process.env.PORT;
 
 const express = require("express");
 const cors = require("cors");
-const mysql = require("mysql2");
 const db = require("./models");
-const multer = require("multer");
-const path = require("path");
 
 const app = express();
 app.use(express.json());
@@ -19,6 +16,9 @@ app.use("/api/tablets", tabletRoutes);
 
 const userRoutes = require("./routes/userRoutes");
 app.use("/api/user", userRoutes);
+
+const annotRoutes = require("./routes/annotRoutes");
+app.use("/api/annots", annotRoutes);
 
 db.sequelize.sync().then(() => {
     app.listen(PORT, () => {

@@ -27,18 +27,6 @@ const BBoxAnnotPage = () => {
             }
         };
         
-        const handleUnload = () => {
-            window.confirm("Do you really want to leave?");
-            /*
-            if (confirmed) {
-                unlockPage().then();
-            }
-            
-             */
-        };
-      
-        
-        
         const onRender = async () => {
             
             if (user) {

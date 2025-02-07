@@ -3,7 +3,6 @@ const db = require("../models");
 const sizeOf = require("image-size");
 const redis = require("redis");
 const { promisify } = require("util");
-const {where} = require("sequelize");
 
 const Tablet = db.tablets;
 const User = db.users;
@@ -50,7 +49,6 @@ const uploadTablet = async (req, res) => {
             isLocked: 0,
             height: dimensions.height,
             width: dimensions.width,
-            annotations: []
         });
         
         const role = "Moderator";
@@ -78,17 +76,6 @@ const getTablet = async (req, res) => {
         const tablet = await Tablet.findByPk(id);
         return res.json(tablet);
     } catch (error) { res.status(500).send(error.message) }
-};
-
-const updateAnnots = async (req, res) => {
-    try {
-        const id = req.params.id;
-        const annotations = req.body;
-        const tablet = await Tablet.findByPk(id);
-        Object.assign(tablet, annotations);
-        await tablet.save();
-        return res.status(200).send(tablet);
-    } catch (error) {res.status(500).send(error.message)}
 };
 
 const getAssignedUsers = async (req, res) => {
@@ -151,7 +138,6 @@ module.exports = {
     getAllTablets,
     uploadTablet,
     getTablet,
-    updateAnnots,
     getAssignedUsers,
     changeStatus,
     changeLock,

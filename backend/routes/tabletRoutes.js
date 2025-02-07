@@ -21,8 +21,6 @@ router.post("/upload", upload.single("image"), uploadTablet);
 
 router.get("/:id", getTablet);
 
-router.patch("/:id/annotations", updateAnnots);
-
 router.get("/:id/assigned", getAssignedUsers);
 
 router.patch("/:id/status", changeStatus);

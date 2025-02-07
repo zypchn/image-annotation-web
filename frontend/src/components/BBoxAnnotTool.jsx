@@ -16,6 +16,8 @@ const BBoxAnnotTool = ({tablet}) => {
     const [data, setData] = useState(tablet.annotations);
     const [saveAlert, setSaveAlert] = useState(false);
     const [langs, setLangs] = useState({});
+    const [cols, setCols] = useState({});
+    const [rows, setRows] = useState({});
     
     /*
     const [pageSize, setPageSize] = useState({
@@ -52,9 +54,12 @@ const BBoxAnnotTool = ({tablet}) => {
     useEffect(() => {
         if(data !== undefined) {
             const tempLangs = {};
+            const tempCols = {};
+            const tempRows = {};
             // eslint-disable-next-line react/prop-types
             data.forEach((item) => (
                 tempLangs[item.id] = item.lang
+                //tempCols[item.id] = item.col
             ));
             setLangs(tempLangs);
         }
@@ -86,16 +91,12 @@ const BBoxAnnotTool = ({tablet}) => {
     const onSelect = (selectedId) => {
         if (!selectedId) return;
         
-        // Find the element for the selected annotation
         const selectedElement = document.querySelector(`[data-annotation-id="${selectedId}"]`);
         if (selectedElement) {
-            // Scroll the element into view
-            selectedElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            selectedElement.scrollIntoView({ behavior: "smooth", block: "center" });
             
-            // Add highlight effect
-            selectedElement.style.backgroundColor = '#fff3cd';
+            selectedElement.style.backgroundColor = "#fff3cd";
             
-            // Remove highlight after a delay
             setTimeout(() => {
                 selectedElement.style.backgroundColor = '';
             }, 2000);
@@ -212,6 +213,7 @@ const BBoxAnnotTool = ({tablet}) => {
                     {data && formatAnnotationData(data) && formatAnnotationData(data).map((item, index) => (
                         <div key={index} data-annotation-id={item.id} style={{padding: '10px'}}>
                             <p><strong>Label: </strong>{item.label}</p>
+                            
                             <p><strong>Lang: </strong>
                                 <select
                                     value={langs[item.id] || undefined}
@@ -223,6 +225,17 @@ const BBoxAnnotTool = ({tablet}) => {
                                     ))}
                                 </select>
                             </p>
+                            
+                            <p><strong>Satır No: </strong>
+                            <input id={"satir-no"} type={"number"}
+                            style={{width: 50}}/>
+                            </p>
+                            
+                            <p><strong>Sütun No: </strong>
+                            <input id={"satir-no"} type={"number"}
+                            style={{width: 50}}/>
+                            </p>
+                            
                             <button className={"btn btn-danger"} onClick={() => deleteBox(item.id)}>
                                 <i className={"fa-solid fa-trash-can"}></i> delete </button>
                             <hr/>

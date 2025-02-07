@@ -13,10 +13,6 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.DOUBLE,
             allowNull: false,
         },
-        annotations: {
-            type: DataTypes.JSON,
-            allowNull: false
-        },
         status: {
             type: DataTypes.ENUM("pending", "ready to check", "done"),
             allowNull: false
