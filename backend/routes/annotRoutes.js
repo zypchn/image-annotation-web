@@ -9,7 +9,7 @@ const router = express.Router();
 
 router.get("/:id", getAnnots);
 
-router.put("/:id", updateAnnots);
+router.patch("/:id", updateAnnots);
 
 router.delete("/:id", deleteAnnot);
 

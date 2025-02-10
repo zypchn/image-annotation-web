@@ -6,21 +6,21 @@ const getAnnots = async (req, res) => {
     try {
         const TabletId = req.params.id;
         const annots = await Annot.findAll({where: {TabletId: TabletId}});
-        return res.json(annots);
+        return res.send(JSON.stringify(annots));
     } catch (error) { res.status(500).send(error.message) }
 };
 
 const updateAnnots = async (req, res) => {
     try {
         const TabletId = req.params.id;
-        const new_annots = req.body;
+        const new_annots = req.body.annotations;
         
         await Annot.bulkCreate(new_annots, {
-            updateOnDuplicate: ["label", "col_no", "row_no", "x_coord", "y_coord", "height", "width"]
+            updateOnDuplicate: ["label", "lang", "col_no", "row_no", "mark"]
         });
         
         const updatedAnnots = await Annot.findAll({ where: { TabletId: TabletId } });
-        return res.status(200).json(updatedAnnots);
+        return res.status(200).send(updatedAnnots);
     } catch (error) {
         return res.status(500).send(error.message);
     }
@@ -33,7 +33,11 @@ const deleteAnnot = async (req, res) => {
         // TODO continue
         if (annot === null) {
             // user MAY try to delete a locally saved annotation, not from the database
-            return res.send(400); // unknown
+            return res.send(400); // client error
+        }
+        else {
+            await annot.destroy();
+            return res.status(200);
         }
     } catch (error) {
         return res.status(500).send(error.message);

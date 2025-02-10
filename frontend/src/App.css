@@ -255,6 +255,9 @@ input[type="radio"]:checked + span
 .bbox-annot {
     display: flex;
     gap: 16px;
+    position: relative;
+    left: 0;
+    top: 0;
 }
 
 .bbox-annot > * {
@@ -267,15 +270,29 @@ input[type="radio"]:checked + span
     width: 100%;
     background-color: white;
     padding: 10px;
-    margin: 10px;
     border-radius: 4px;
-    max-width: 210px;
+    max-width: 500px; {/*210*/}
     height: 610px;
+    margin-right: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    right: 0;
 }
 
-.rp-shapes {
-    width: 1200px;
-    height: 1000px;
+.coord-data {
+    display: flex;
+}
+
+.btn-comment {
+    background: none;
+    border: none;
+    font-size: 25px;
+    margin-left: -10px;
+}
+
+.btn-comment:hover {
+    font-weight: bold;
 }
 
 @media screen and (max-height: 450px) {

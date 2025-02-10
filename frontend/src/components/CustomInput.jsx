@@ -4,6 +4,7 @@ const CustomInput = ({ value, onChange, onDelete }) => {
     
     const CUSTOM_CHARS = ["ṷ", "Ṷ", "ḫ", "Ḫ", "ṣ", "Ṣ", "š", "Š", "á", "Á", "à", "Á", "é", "É", "è", "È", "í",
         "Í", "ì", "Ì", "ú", "Ú", "ù", "Ù"];
+    const languages = ["Hititçe", "Sümerce", "Akadca", "Hurrice", "Luwice", "Hattice", "Palaca"];
     const halfLength = Math.ceil(CUSTOM_CHARS.length / 2);
     const firstRow = CUSTOM_CHARS.slice(0, halfLength);
     const secondRow = CUSTOM_CHARS.slice(halfLength);
@@ -11,8 +12,7 @@ const CustomInput = ({ value, onChange, onDelete }) => {
     return (
         <div style={{ 
             display: "inline-grid",
-            flexDirection: "column", 
-            //gap: "8px",
+            flexDirection: "column",
             margin: 5,
             position: "relative",
             zIndex: 1
@@ -20,7 +20,7 @@ const CustomInput = ({ value, onChange, onDelete }) => {
             <input
                 type={"text"}
                 value={value}
-                onChange={(e) => onChange(e.target.value)}
+                onChange={(e) => onChange(e.target.value, "text")}
                 placeholder="Enter text"
                 style={{
                     padding: "8px",
@@ -49,7 +49,7 @@ const CustomInput = ({ value, onChange, onDelete }) => {
                     onClick={(e) => {
                         const textField = document.getElementById("textField");
                         textField.value += e.target.innerText;
-                        onChange(textField.value);
+                        onChange(textField.value, "text");
                     }}
                 >
                     {secondRow.map((char, index) => (
@@ -60,22 +60,6 @@ const CustomInput = ({ value, onChange, onDelete }) => {
                 </tr>
                 </tbody>
             </table>
-            {/*
-            <button
-                onClick={onDelete}
-                style={{
-                    marginTop: "8px",
-                    padding: "8px",
-                    borderRadius: "4px",
-                    border: "none",
-                    backgroundColor: "#ff4d4f",
-                    color: "white",
-                    cursor: "pointer",
-                }}
-            >
-                Delete
-            </button>
-            */}
         </div>
     );
 };

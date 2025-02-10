@@ -24,7 +24,7 @@ const Navbar = () => {
         color: "white",
         padding: "5px",
         whiteSpace: 'nowrap',
-        zIndex: 9999
+        zIndex: 999
     }
     
     const { logout } = useLogout();
@@ -33,10 +33,10 @@ const Navbar = () => {
     return (
         <div className={"navbar navbar-light bg-body-tertiary mx-5 my-3 d-flex"}>
             <div className={"navbar-btn"}>
-                <a href={"/profile"}> <button className={"me-3 btn btn-info"} style={{marginLeft: 100}}><i className={"fa-regular fa-address-card"}/> My Profile </button> </a>
-                <a href={"/tablet"}> <button className={"me-3 btn btn-info"}><i className={"fa-regular fa-rectangle-list"}/> All Tablets </button> </a>
-                <a href={"/tablet/create"}> <button className={"me-3 btn btn-info"}><i className={"fa-solid fa-upload"}></i> Upload </button> </a>
-                <button className={"btn btn-info"} onClick={handleClick}><i className={"fa-solid fa-arrow-right-from-bracket"}/> Logout </button>
+                <a href={"/profile"}> <button className={"me-3 btn btn-info"} style={{marginLeft: 100}}><i className={"fa-regular fa-address-card"}/> Profilim </button> </a>
+                <a href={"/tablet"}> <button className={"me-3 btn btn-info"}><i className={"fa-regular fa-rectangle-list"}/> Tüm Resimler </button> </a>
+                <a href={"/tablet/create"}> <button className={"me-3 btn btn-info"}><i className={"fa-solid fa-upload"}></i> Resim Yükle </button> </a>
+                <button className={"btn btn-info"} onClick={handleClick}><i className={"fa-solid fa-arrow-right-from-bracket"}/> Çıkış Yap </button>
             </div>
             
             <div style={{ position: "relative", display: "inline-block"}}>

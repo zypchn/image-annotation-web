@@ -12,6 +12,7 @@ const BBoxAnnotPage = () => {
     const {user} = useAuthContext();
     const {id} = useParams();
     const [tablet, setTablet] = useState({});
+    const [tabletAnnots, setTabletAnnots] = useState({});
     const navigate = useNavigate();
     const [lockStatus, setLockStatus] = useState(false);
     
@@ -58,7 +59,14 @@ const BBoxAnnotPage = () => {
                         return
                     }
                     
+                    const annotResponse = await axios.get(`${apiUrl}/annots/${id}`, {
+                        headers: {"Authorization": `Bearer ${user.token}`}
+                    });
+                    
+                    const annot = annotResponse.data;
+                    
                     setTablet(tablet);
+                    setTabletAnnots(annot);
                     
                     await axios.patch(`${apiUrl}/tablets/${id}/lock`, {isLocked: 1}, {
                         headers: {"Authorization": `Bearer ${user.token}`}
@@ -73,13 +81,13 @@ const BBoxAnnotPage = () => {
             window.addEventListener("beforeunload", unlockPage);
         }
         onRender().then();
-    }, [id, lockStatus, navigate, user]);
+    }, [id, lockStatus, navigate, setTablet, user]);
     
     
     return (
         <div>
             <Navbar/>
-            <BBoxAnnotTool key={tablet.id} tablet={tablet}/>
+            <BBoxAnnotTool key={tablet.id} tablet={tablet} tabletAnnots={tabletAnnots}/>
         </div>
     );
 };

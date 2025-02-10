@@ -5,7 +5,11 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        label: {
+        comment: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        lang: {
             type: DataTypes.STRING,
             allowNull: false
         },
@@ -17,6 +21,11 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.TINYINT,
             allowNull: false
         },
+        mark: {
+            type: DataTypes.JSON,
+            allowNull: false
+        }
+        /*
         x_coord: {
             type: DataTypes.DOUBLE,
             allowNull: false
@@ -33,6 +42,7 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.DOUBLE,
             allowNull: false
         },
+         */
         
     },
     {

@@ -40,12 +40,14 @@ Object.keys(db).forEach(modelName => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
+// initializing tables
 db.tablets = require("./tabletModel")(sequelize, Sequelize);
 db.users = require("./userModel")(sequelize, Sequelize);
 db.usertablet = require("./user_tablet")(sequelize, Sequelize);
 db.userotp = require("./userOTP")(sequelize, Sequelize);
 db.annotations = require("./annotModel")(sequelize, Sequelize);
 
+// defining relations
 db.users.belongsToMany(db.tablets, {through: "User_Tablet"});
 db.tablets.belongsToMany(db.users, {through: "User_Tablet"});
 db.users.hasOne(db.userotp);
