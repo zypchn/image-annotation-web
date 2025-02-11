@@ -4,6 +4,7 @@ import {useAuthContext} from "../hooks/useAuthContext.js";
 import axios from "axios";
 import CustomInput from "./CustomInput.jsx";
 import Popup from "reactjs-popup";
+import { groupBy } from "core-js/actual/array/group-by";
 
 const baseUrl = process.env.REACT_APP_BASE_URL;
 const apiUrl = process.env.REACT_APP_API_URL;
@@ -41,7 +42,7 @@ const BBoxAnnotTool = ({tablet}) => {
                 setData(res.data)
             });
         };
-        fetchData().then(() => console.log(data));
+        fetchData().then();
         // eslint-disable-next-line react/prop-types
     }, [tablet.id, user.token]);
     
@@ -201,8 +202,13 @@ const BBoxAnnotTool = ({tablet}) => {
     };
     
     const undo = async () => {
+        /*
         data.splice(-1, 1);
         await saveData(data);
+        
+         */
+        const res = data.groupBy(d => d.col_no);
+        console.log(res);
     };
     
     // Main Component
@@ -238,55 +244,66 @@ const BBoxAnnotTool = ({tablet}) => {
                     <p style={{margin: 10}}><strong>Toplam hece : </strong> {data?.length} </p>
                 </div>
                 
-                <br/>
-                <p><strong>-----------------------------------------------------------------------</strong></p>
                 <div className={"coord-data"}>
-                    {data && (data).map((item, index) => (
-                        (
-                            <div key={index} data-annotation-id={item.id} style={{padding: '10px'}}>
-                                <Popup className={"toolbar-popup"} trigger={<button className={"btn-comment"}>{item.comment}</button>}
-                                       position={"bottom left"} contentStyle={popupStyle}>
-                                    {close => (
-                                        <form className={"annot-form"}>
-                                            <p><strong>Dil : </strong>
-                                                <select
-                                                    value={langs[item.id] || undefined}
-                                                    onChange={(e) => {
-                                                        handleLangChange(item.id, e.target.value)
-                                                    }}
-                                                >
-                                                    <option value={"null"}>dil seçiniz</option>
-                                                    {languages && languages.map((lang) => (
-                                                        <option key={lang} value={lang}>{lang}</option>
-                                                    ))}
-                                                </select>
-                                            </p>
-                                            
-                                            <p><strong> Satır : </strong>
-                                                <input id={"row-no"} type={"number"} style={{width: 50}}
-                                                       value={rows[item.id] || -1}
-                                                       onChange={(e) => {
-                                                           handleRowChange(item.id, e.target.value)
-                                                       }}/>
-                                            </p>
-                                            
-                                            <p><strong> Sütun : </strong>
-                                                <input id={"col-no"} type={"number"} style={{width: 50}}
-                                                       value={cols[item.id] || -1}
-                                                       onChange={(e) => {
-                                                           handleColChange(item.id, e.target.value)
-                                                       }}/>
-                                            </p>
-                                            
-                                            <button className={"btn btn-danger"} onClick={() => deleteBox(item.id)}>
-                                                <i className={"fa-solid fa-trash-can"}></i> delete
-                                            </button>
-                                            
-                                        </form>
-                                    )}
-                                </Popup>
+                    {Object.entries(data.reduce((acc, item) => {
+                        const rowKey = item.row_no || 0;
+                        if (!acc[rowKey]) {
+                            acc[rowKey] = [];
+                        }
+                        acc[rowKey].push(item);
+                        return acc;
+                    }, {})).map(([rowKey, items]) => (
+                        <div key={rowKey}>
+                            <div style={{ display: "flex", flexDirection: "row", alignItems: "flex-start" }}>
+                                <p style={{fontSize: 25, marginTop: 10, marginRight: 10, fontWeight: "bold"}}>{rowKey})</p>
+                            {items.map((item, index) => (
+                                    <div key={index} data-annotation-id={item.id} style={{ padding: '10px', flex: '1 0 30%', display: "inline" }}>
+                                        <Popup className={"toolbar-popup"} trigger={<button className={"btn-comment"}>{item.comment}</button>}
+                                               position={"bottom left"} contentStyle={popupStyle}>
+                                            {close => (
+                                                <form className={"annot-form"}>
+                                                    <p><strong>Dil : </strong>
+                                                        <select
+                                                            value={langs[item.id] || undefined}
+                                                            onChange={(e) => {
+                                                                handleLangChange(item.id, e.target.value)
+                                                            }}
+                                                        >
+                                                            <option value={"null"}>dil seçiniz</option>
+                                                            {languages && languages.map((lang) => (
+                                                                <option key={lang} value={lang}>{lang}</option>
+                                                            ))}
+                                                        </select>
+                                                    </p>
+                                                    
+                                                    <p><strong> Satır : </strong>
+                                                        <input id={"row-no"} type={"text"} style={{width: 50}}
+                                                               value={rows[item.id] || 0}
+                                                               onChange={(e) => {
+                                                                   handleRowChange(item.id, Number(e.target.value))
+                                                               }}/>
+                                                    </p>
+                                                    
+                                                    <p><strong> Sütun : </strong>
+                                                        <input id={"col-no"} type={"number"} style={{width: 50}}
+                                                               value={cols[item.id] || 0}
+                                                               onChange={(e) => {
+                                                                   handleColChange(item.id, e.target.value)
+                                                               }}/>
+                                                    </p>
+                                                    
+                                                    <button className={"btn btn-danger"} onClick={() => deleteBox(item.id)}>
+                                                        <i className={"fa-solid fa-trash-can"}></i> delete
+                                                    </button>
+                                                    
+                                                </form>
+                                            )}
+                                        </Popup>
+                                        
+                                    </div>
+                                ))}
                             </div>
-                        )
+                        </div>
                     ))}
                 </div>
             </div>
