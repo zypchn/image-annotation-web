@@ -1,19 +1,26 @@
+/*
+
+##########
+DEPRECATED
+Reason: Client preferred a method that is not free-hand annotation
+Keeping the file for further projects or if they decide otherwise
+##########
+
+ */
+
 import {useGetPolygons, useUndoRedo} from "polygon-annotation";
 import {useEffect, useState} from "react";
 
 const Toolbar = ({
                      showLabel,
-                     setShowLabel,
                      saveData,
                      changeStatus,
-                     changeCustomID,
                      initialData
                  }) => {
     const {undo, redo, canUndo, canRedo} = useUndoRedo();
     const {polygons, updateLabel} = useGetPolygons();   // TODO memoization using redux
     const [showAlert, setShowAlert] = useState(false);
     const [statusAlert, setStatusAlert] = useState(false);
-    const [nameAlert, setNameAlert] = useState(false);
     const [langs, setLangs] = useState({});
     
     let data = polygons;

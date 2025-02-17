@@ -70,10 +70,6 @@ html {
     background-color: aliceblue;
 }
 
-.status-buttons {
-    white-space: pre-line;
-}
-
 .labelDeleteBtn {
     background-color: red;
     color: white;
@@ -110,8 +106,7 @@ html {
     font-size: 20px;
 }
 
-input[type="radio"]:checked + span
-{
+input[type="radio"]:checked + span {
     font-weight: bold;
 }
 
@@ -135,7 +130,7 @@ input[type="radio"]:checked + span
 
 #profile-label-btn {
     display: inline-flex;
-    margin-right: -10;
+    margin-right: -10px;
 }
 
 .navbar-btn a {
@@ -246,9 +241,9 @@ input[type="radio"]:checked + span
     color: #fff;
     width: 100%;
     height: 45px;
-    position: absolute;  
+    position: absolute;
     bottom: 0;
-    left: 0;          
+    left: 0;
     z-index: 100;
 }
 
@@ -264,6 +259,12 @@ input[type="radio"]:checked + span
     flex: 1;
 }
 
+.react-picture-annotation {
+    left: 10px;
+    top: 10px;
+    display: flex;
+}
+
 .annot-data {
     overflow-y: scroll;
     border: 0.5px solid;
@@ -271,7 +272,7 @@ input[type="radio"]:checked + span
     background-color: white;
     padding: 10px;
     border-radius: 4px;
-    max-width: 500px; {/*210*/}
+    max-width: 500px;
     height: 610px;
     margin-right: 10px;
     display: flex;
@@ -284,18 +285,45 @@ input[type="radio"]:checked + span
     display: block;
 }
 
-.btn-comment {
-    background: none;
-    border: none;
+.p-comment {
     font-size: 25px;
-    margin-left: -10px;
+    position: relative;
+    margin-left: 10px;
 }
 
-.btn-comment:hover {
+.p-comment:hover {
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.p-rowkey {
+    font-size: 25px;
+    margin-top: 10px;
     font-weight: bold;
 }
 
+.custom-input {
+    display: flex;
+    gap: 10px;
+    background: black;
+    padding: 10px;
+}
+
+.input-column {
+    flex: 1;
+}
+
+.select-column {
+    width: 130px;
+    color: white;
+}
+
 @media screen and (max-height: 450px) {
-    .sidebar {padding-top: 15px;}
-    .sidebar a {font-size: 18px;}
+    .sidebar {
+        padding-top: 15px;
+    }
+
+    .sidebar a {
+        font-size: 18px;
+    }
 }

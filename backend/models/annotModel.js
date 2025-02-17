@@ -1,7 +1,12 @@
 module.exports = (sequelize, DataTypes) => {
     return sequelize.define("Annotation", {
         
-        annotID: {
+        pk_id: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            primaryKey: true
+        },
+        id: {
             type: DataTypes.STRING,
             allowNull: false,
         },
@@ -25,25 +30,6 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.JSON,
             allowNull: false
         }
-        /*
-        x_coord: {
-            type: DataTypes.DOUBLE,
-            allowNull: false
-        },
-        y_coord: {
-            type: DataTypes.DOUBLE,
-            allowNull: false
-        },
-        height: {
-            type: DataTypes.DOUBLE,
-            allowNull: false
-        },
-        width: {
-            type: DataTypes.DOUBLE,
-            allowNull: false
-        },
-         */
-        
     },
     {
         timestamps: false

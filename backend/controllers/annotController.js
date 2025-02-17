@@ -22,7 +22,7 @@ const updateAnnots = async (req, res) => {
         const updatedAnnots = await Annot.findAll({ where: { TabletId: TabletId } });
         return res.status(200).send(updatedAnnots);
     } catch (error) {
-        return res.status(500).send(error.message);
+        return res.status(500).send(error.data);
     }
 };
 

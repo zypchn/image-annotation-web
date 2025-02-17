@@ -1,3 +1,13 @@
+/*
+
+##########
+DEPRECATED
+Reason: Client preferred a method that is not free-hand annotation
+Keeping the file for further projects or if they decide otherwise
+##########
+
+*/
+
 import {useState} from "react";
 import {PolygonAnnotation} from "polygon-annotation";
 import Toolbar from "./AnnotToolbar.jsx";

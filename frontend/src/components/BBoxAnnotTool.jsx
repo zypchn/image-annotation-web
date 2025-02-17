@@ -3,8 +3,6 @@ import {useEffect, useState} from "react";
 import {useAuthContext} from "../hooks/useAuthContext.js";
 import axios from "axios";
 import CustomInput from "./CustomInput.jsx";
-import Popup from "reactjs-popup";
-import { groupBy } from "core-js/actual/array/group-by";
 
 const baseUrl = process.env.REACT_APP_BASE_URL;
 const apiUrl = process.env.REACT_APP_API_URL;
@@ -14,16 +12,13 @@ const BBoxAnnotTool = ({tablet}) => {
     
     const {user} = useAuthContext();
     
-    // Languages Specifically Defined for Cuneiform Tablets
-    const languages = ["Hititçe", "Sümerce", "Akadca", "Hurrice", "Luwice", "Hattice", "Palaca"];
-    
     const [data, setData] = useState([]);
     const [saveAlert, setSaveAlert] = useState(false);
     const [langs, setLangs] = useState({});         // Local Storage for Language Data
     const [cols, setCols] = useState({});           // Local Storage for Column Data
     const [rows, setRows] = useState({});           // Local Storage for Row Data
-    const [rowSelection, setRowSelection] = useState();         // for Filtering the Toolbar Data
-    const [editField, setEditField] = useState(false);
+    const [comments, setComments] = useState({});   // Local Storage for Label Data
+    const [selectedId, setSelectedId] = useState(null);
     
     const popupStyle = {
         background: 'white',
@@ -39,28 +34,24 @@ const BBoxAnnotTool = ({tablet}) => {
             await axios.get(`${apiUrl}/annots/${tablet.id}`, {
                 headers: {"Authorization": `Bearer ${user.token}`}
             }).then((res) => {
-                setData(res.data)
+                setData(res.data);
             });
         };
         fetchData().then();
         // eslint-disable-next-line react/prop-types
     }, [tablet.id, user.token]);
     
+    
     // Initializing Local Storages for Annotation Metadata
     useEffect(() => {
         if (data !== undefined) {
-            const tempLangs = {};
-            const tempCols = {};
-            const tempRows = {};
             // eslint-disable-next-line react/prop-types
             data.forEach((item) => {
-                tempLangs[item.id] = item.lang
-                tempCols[item.id] = item.col_no
-                tempRows[item.id] = item.row_no
+                setComments(prev => ({...prev, [item.id]: item.comment}));
+                setLangs(prev => ({...prev, [item.id]: item.lang || ""}));
+                setRows(prev => ({...prev, [item.id]: item.row_no || 0}));
+                setCols(prev => ({...prev, [item.id]: item.col_no || 0}));
             });
-            setLangs(tempLangs);
-            setCols(tempCols);
-            setRows(tempRows);
         }
     }, [data]);
     
@@ -85,6 +76,7 @@ const BBoxAnnotTool = ({tablet}) => {
     const saveData = async (annot) => {
         const updatedData = annot.map(a => ({
             ...a,
+            comment: comments[a.id] || null,
             lang: langs[a.id] || null,
             col_no: cols[a.id] || null,
             row_no: rows[a.id] || null
@@ -112,83 +104,100 @@ const BBoxAnnotTool = ({tablet}) => {
     // Required Function for the Tool
     // Activating the Toolbar DOM Effect on Select
     const onSelect = (selectedId) => {
-        if (!selectedId) return;
+        if (!selectedId)
+            return;
         
         const selectedElement = document.querySelector(`[data-annotation-id="${selectedId}"]`);
         if (selectedElement) {
-            selectedElement.scrollIntoView({behavior: "smooth", block: "center"});
             
-            selectedElement.style.backgroundColor = "#fff3cd";
+            selectedElement.scrollIntoView({behavior: 'smooth', block: 'center'});
+            
+            selectedElement.style.backgroundColor = '#fff3cd';
             
             setTimeout(() => {
                 selectedElement.style.backgroundColor = '';
-            }, 1000);
+            }, 2000);
         }
+        setSelectedId(selectedId);
+        return selectedId;
     };
     
     // Required Function for the Tool
-    // Update Data State on Change of any Annotation Data
-    const onChange = (currentData) => {
+    // Update Data State on Change of any Annotation Data Except Text (Comment)
+    const onChangeAll = (currentData) => {
         setData(prevData => {
-            const updatedData = [...prevData];
+            const prevMap = new Map(prevData.map(item => [item.id, item]));
             
-            const newItems = currentData.filter(item =>
-                !prevData.some(prevItem => prevItem.id === item.id)
-            );
-            
-            updatedData.push(...newItems);
-            
-            updatedData.forEach((item, index) => {
-                const currentItem = currentData.find(curr => curr.id === item.id);
-                if (currentItem) {
-                    updatedData[index] = currentItem;
-                }
+            currentData.forEach(item => {
+                const updatedItem = {
+                    ...item,
+                    comment: comments[item.id] ?? item.comment,
+                    lang: langs[item.id] ?? item.lang,
+                    col_no: cols[item.id] ?? item.col_no,
+                    row_no: rows[item.id] ?? item.row_no
+                };
+                prevMap.set(item.id, updatedItem);
             });
             
-            return updatedData;
+            return Array.from(prevMap.values());
         });
     };
     
     // Keep Track of the Changes on Language Data
     const handleLangChange = (id, lang) => {
-        setLangs(prev => ({
-            ...prev,
-            [id]: lang
-        }));
-        
-        setData(prevData =>
-            prevData.map(item =>
-                item.id === id ? {...item, lang: lang} : item
-            )
-        )
+        try {
+            setLangs(prev => ({...prev, [id]: lang}));
+            
+            setData(prevData =>
+                prevData.map(item =>
+                    item.id === id ? {...item, lang} : item
+                )
+            );
+        } catch (error) {
+            console.error("Error in handleLangChange:", error);
+        }
     };
     
     // Keep Track of the Changes on Column Data
     const handleColChange = (id, col_no) => {
-        setCols(prev => ({
-            ...prev,
-            [id]: col_no
-        }));
-        
-        setData(prevData =>
-            prevData.map(item =>
-                item.id === id ? {...item, col_no: col_no} : item
-            )
-        )
+        try {
+            setCols(prev => ({...prev, [id]: col_no}));
+            
+            setData(prevData =>
+                prevData.map(item =>
+                    item.id === id ? {...item, col_no} : item
+                )
+            );
+        } catch (error) {
+            console.error("Error in handleColChange:", error);
+        }
     };
     
     // Keep Track of the Changes on Row Data
     const handleRowChange = (id, row_no) => {
-        setRows(prev => ({
+        try {
+            setRows(prev => ({...prev, [id]: row_no}));
+            
+            setData(prevData =>
+                prevData.map(item =>
+                    item.id === id ? {...item, row_no} : item
+                )
+            );
+        } catch (error) {
+            console.error("Error in handleRowChange:", error);
+        }
+    };
+    
+    // Keep Track of the Changes on Label (Comment) Data
+    const handleCommentChange = (id, comment) => {
+        setComments(prev => ({
             ...prev,
-            [id]: row_no
+            [id]: comment
         }));
         
-        setData(prevData =>
-            prevData.map(item =>
-                item.id === id ? {...item, row_no: row_no} : item
-            )
-        )
+        setData(prevData => prevData.map(item =>
+            item.id === id ? {...item, comment: comment} : item
+        ));
     };
     
     // Delete Request to the DB
@@ -205,28 +214,31 @@ const BBoxAnnotTool = ({tablet}) => {
         /*
         data.splice(-1, 1);
         await saveData(data);
-        
          */
-        const res = data.groupBy(d => d.col_no);
-        console.log(res);
+        console.log(data);
     };
+    
+    // Mock component for the tool. I didn't want to use the restricted format for the input field.
+    
     
     // Main Component
     return (
         <div className={"bbox-annot"}>
-            <div style={{left: 10, top: 10, display: "flex"}}>
+            <div className={"react-picture-annotation"}>
                 <ReactPictureAnnotation
                     /* eslint-disable-next-line react/prop-types */
                     image={`${baseUrl}/uploads/${tablet.name}`}
                     onSelect={onSelect}
-                    onChange={onChange}
+                    onChange={onChangeAll}
                     width={1000}
                     height={600}
                     scrollSpeed={0.001}
                     annotationData={data}
-                    inputElement={(value, onChange, onDelete) => (
-                        <CustomInput value={value} onChange={onChange} onDelete={onDelete}
-                                     onLangChange={handleLangChange}/>
+                    inputElement={() => (
+                        <CustomInput comments={comments} onTextChange={handleCommentChange} selectedId={selectedId}
+                                     langs={langs} onLanguageChange={handleLangChange}
+                                     rows={rows} onRowChange={handleRowChange}
+                                     cols={cols} onColChange={handleColChange}/>
                     )}
                 />
             </div>
@@ -237,11 +249,15 @@ const BBoxAnnotTool = ({tablet}) => {
                     <button className={"btn btn-primary"} accessKey={"s"} onClick={() => saveData(data)}>
                         <i className={"fa-regular fa-floppy-disk"}></i> Save
                     </button>
-                    
-                    <button className={"btn btn-warning"} style={{marginLeft: 5}} onClick={() => undo()}>
+                    <button className={"btn btn-secondary"} style={{marginLeft: 5}} onClick={() => undo()}>
                         <i className={"fa-solid fa-rotate-left"}></i> Undo
                     </button>
-                    <p style={{margin: 10}}><strong>Toplam hece : </strong> {data?.length} </p>
+                    <h5 style={{margin: 10}}><strong>Toplam hece : </strong> {data?.length} </h5>
+                </div>
+                <div style={{alignItems: "center"}}>
+                    <button className={"btn btn-danger"}>Pending</button>
+                    <button className={"btn btn-warning"}>Ready to Check</button>
+                    <button className={"btn btn-success"}>Done</button>
                 </div>
                 
                 <div className={"coord-data"}>
@@ -254,52 +270,16 @@ const BBoxAnnotTool = ({tablet}) => {
                         return acc;
                     }, {})).map(([rowKey, items]) => (
                         <div key={rowKey}>
-                            <div style={{ display: "flex", flexDirection: "row", alignItems: "flex-start" }}>
-                                <p style={{fontSize: 25, marginTop: 10, marginRight: 10, fontWeight: "bold"}}>{rowKey})</p>
-                            {items.map((item, index) => (
-                                    <div key={index} data-annotation-id={item.id} style={{ padding: '10px', flex: '1 0 30%', display: "inline" }}>
-                                        <Popup className={"toolbar-popup"} trigger={<button className={"btn-comment"}>{item.comment}</button>}
-                                               position={"bottom left"} contentStyle={popupStyle}>
-                                            {close => (
-                                                <form className={"annot-form"}>
-                                                    <p><strong>Dil : </strong>
-                                                        <select
-                                                            value={langs[item.id] || undefined}
-                                                            onChange={(e) => {
-                                                                handleLangChange(item.id, e.target.value)
-                                                            }}
-                                                        >
-                                                            <option value={"null"}>dil seçiniz</option>
-                                                            {languages && languages.map((lang) => (
-                                                                <option key={lang} value={lang}>{lang}</option>
-                                                            ))}
-                                                        </select>
-                                                    </p>
-                                                    
-                                                    <p><strong> Satır : </strong>
-                                                        <input id={"row-no"} type={"text"} style={{width: 50}}
-                                                               value={rows[item.id] || 0}
-                                                               onChange={(e) => {
-                                                                   handleRowChange(item.id, Number(e.target.value))
-                                                               }}/>
-                                                    </p>
-                                                    
-                                                    <p><strong> Sütun : </strong>
-                                                        <input id={"col-no"} type={"number"} style={{width: 50}}
-                                                               value={cols[item.id] || 0}
-                                                               onChange={(e) => {
-                                                                   handleColChange(item.id, e.target.value)
-                                                               }}/>
-                                                    </p>
-                                                    
-                                                    <button className={"btn btn-danger"} onClick={() => deleteBox(item.id)}>
-                                                        <i className={"fa-solid fa-trash-can"}></i> delete
-                                                    </button>
-                                                    
-                                                </form>
-                                            )}
-                                        </Popup>
-                                        
+                            <div style={{display: "flex", flexDirection: "row", alignItems: "flex-start"}}>
+                                <p className={"p-rowkey"}>{rowKey}) </p>
+                                {items.map((item, index) => (
+                                    <div key={index} data-annotation-id={item.id}
+                                         style={{marginTop: 10, display: "flex", alignItems: "center", gap: 10}}>
+                                        <p className={"p-comment"}> {item.comment} </p>
+                                        <button className={"btn btn-danger"}
+                                                onClick={() => deleteBox(item.id)}>
+                                            <i className={"fa-solid fa-trash-can"}></i> delete
+                                        </button>
                                     </div>
                                 ))}
                             </div>
