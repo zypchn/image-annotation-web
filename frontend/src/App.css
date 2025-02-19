@@ -318,6 +318,23 @@ input[type="radio"]:checked + span {
     color: white;
 }
 
+.fa-thumbs-up {
+    color: white;
+    font-size: 30px;
+    margin-left: 20px;
+    margin-top: 10px;
+}
+
+.thumbs-up-btn {
+    background: none;
+    border: none;
+    color: white;
+}
+
+.input-del {
+    margin-left: 10px;
+}
+
 @media screen and (max-height: 450px) {
     .sidebar {
         padding-top: 15px;

@@ -37,6 +37,7 @@ const BBoxAnnotTool = ({tablet}) => {
                 setData(res.data);
             });
         };
+        
         fetchData().then();
         // eslint-disable-next-line react/prop-types
     }, [tablet.id, user.token]);
@@ -76,10 +77,10 @@ const BBoxAnnotTool = ({tablet}) => {
     const saveData = async (annot) => {
         const updatedData = annot.map(a => ({
             ...a,
-            comment: comments[a.id] || null,
-            lang: langs[a.id] || null,
-            col_no: cols[a.id] || null,
-            row_no: rows[a.id] || null
+            comment: comments[a.id],
+            lang: langs[a.id],
+            col_no: cols[a.id],
+            row_no: rows[a.id],
         }));
         
         await axios.patch(`${apiUrl}/annots/${tablet.id}`, {
@@ -201,25 +202,19 @@ const BBoxAnnotTool = ({tablet}) => {
     };
     
     // Delete Request to the DB
-    const deleteBox = async (id) => {
-        const annotKey = Object.keys(data).find(key => data[key].id === id);
+    const handleDelete = async (id) => {
+        setData(prevData => prevData.filter(item => item.id !== id));
         await axios.delete(`${apiUrl}/annots/${id}`, {
             headers: {"Authorization": `Bearer ${user.token}`}
         }).then().catch();
-        data.splice(Number(annotKey), 1);
-        //await saveData(data);
     };
     
     const undo = async () => {
-        /*
-        data.splice(-1, 1);
-        await saveData(data);
-         */
-        console.log(data);
+        const lastIdx = data.length - 1;
+        const lastAnnotId = data[lastIdx].id;
+        setData(prevData => prevData.filter(item => item.id !== lastAnnotId));
+        await handleDelete(lastAnnotId);
     };
-    
-    // Mock component for the tool. I didn't want to use the restricted format for the input field.
-    
     
     // Main Component
     return (
@@ -238,7 +233,7 @@ const BBoxAnnotTool = ({tablet}) => {
                         <CustomInput comments={comments} onTextChange={handleCommentChange} selectedId={selectedId}
                                      langs={langs} onLanguageChange={handleLangChange}
                                      rows={rows} onRowChange={handleRowChange}
-                                     cols={cols} onColChange={handleColChange}/>
+                                     cols={cols} onColChange={handleColChange} onDelete={handleDelete}/>
                     )}
                 />
             </div>
@@ -276,10 +271,6 @@ const BBoxAnnotTool = ({tablet}) => {
                                     <div key={index} data-annotation-id={item.id}
                                          style={{marginTop: 10, display: "flex", alignItems: "center", gap: 10}}>
                                         <p className={"p-comment"}> {item.comment} </p>
-                                        <button className={"btn btn-danger"}
-                                                onClick={() => deleteBox(item.id)}>
-                                            <i className={"fa-solid fa-trash-can"}></i> delete
-                                        </button>
                                     </div>
                                 ))}
                             </div>

@@ -1,8 +1,10 @@
 import {useState} from "react";
 
 const CustomInput = ({
+                         // eslint-disable-next-line react/prop-types
                          comments, onTextChange, selectedId, langs, onLanguageChange,
-                         rows, onRowChange, cols, onColChange
+                         // eslint-disable-next-line react/prop-types
+                         rows, onRowChange, cols, onColChange, onDelete
                      }) => {
     
     const CUSTOM_CHARS = ["ṷ", "Ṷ", "ḫ", "Ḫ", "ṣ", "Ṣ", "š", "Š", "á", "Á", "à", "Á", "é", "É", "è", "È", "í",
@@ -12,30 +14,27 @@ const CustomInput = ({
     const halfLength = Math.ceil(CUSTOM_CHARS.length / 2);
     const firstRow = CUSTOM_CHARS.slice(0, halfLength);
     const secondRow = CUSTOM_CHARS.slice(halfLength);
-    const [text, setText] = useState(null);
-    const [lang, setLang] = useState(null);
-    const [row, setRow] = useState(0);
-    const [col, setCol] = useState(0);
+    const [text, setText] = useState(comments[selectedId] || null);
+    const [lang, setLang] = useState(langs[selectedId] || null);
+    const [row, setRow] = useState(rows[selectedId] || 0);
+    const [col, setCol] = useState(cols[selectedId] || 0);
+    const [alert, setAlert] = useState(false);
     
     return ( // TODO : Implement old method
         <form className={"custom-input"} onSubmit={(e) => {
+            e.preventDefault();
             onTextChange(selectedId, text);
             onLanguageChange(selectedId, lang);
             onRowChange(selectedId, row);
             onColChange(selectedId, col);
-            e.preventDefault();
-            //console.log("hahah");
+            
         }}>
             <div className={"input-column"}>
                 <input
                     type="text"
                     onChange={(e) => {
-                        setText(e.target.value);
-                    }}
-                    onKeyPress={(e) => {
-                        if (e.key === "Enter") {
-                            onTextChange(selectedId, text);
-                        }
+                        e.preventDefault();
+                        setText(e.target.value)
                     }}
                     defaultValue={comments[selectedId]}
                     placeholder={"enter text"}
@@ -47,7 +46,7 @@ const CustomInput = ({
                         onClick={(e) => {
                             const textField = document.getElementById("textField");
                             textField.value = textField.value + e.target.innerText;
-                            //onTextChange(selectedId, newValue);
+                            setText(textField.value);
                         }}
                     >
                         {firstRow.map((char, index) => (
@@ -60,7 +59,7 @@ const CustomInput = ({
                         onClick={(e) => {
                             const textField = document.getElementById("textField");
                             textField.value = textField.value + e.target.innerText;
-                            //onTextChange(selectedId, newValue);
+                            setText(textField.value);
                         }}
                     >
                         {secondRow.map((char, index) => (
@@ -71,6 +70,15 @@ const CustomInput = ({
                     </tr>
                     </tbody>
                 </table>
+                <button type={"submit"} className={"btn btn-success"} onClick={() => {
+                    setAlert(true);
+                    setTimeout(() => setAlert(false), 1000);
+                }}><i className="fa-solid fa-check"></i></button>
+                <button className={"btn btn-danger input-del"} onClick={async () => {
+                    await onDelete(selectedId);
+                }}><i className={"fa-solid fa-trash-can"}></i></button>
+                {alert &&
+                <button className={"thumbs-up-btn"}><i className={"fa-regular fa-thumbs-up"}/></button> }
             </div>
             <div className={"select-column"}>
                 <p>
@@ -81,7 +89,7 @@ const CustomInput = ({
                             setLang(e.target.value);
                         }}
                     >
-                        <option value="null">dil seçiniz</option>
+                        <option value={"null"}>dil seçiniz</option>
                         {languages && languages.map((lang) => (
                             <option key={lang} value={lang}>{lang}</option>
                         ))}
@@ -92,10 +100,6 @@ const CustomInput = ({
                     <input id={"row-no"} type={"number"} style={{width: 50}}
                            defaultValue={rows[selectedId] || 0} min={0}
                            onChange={(e) => {
-                               /*
-                               onRowChange(selectedId, Number(e.target.value));
-                               
-                                */
                                setRow(Number(e.target.value))
                            }}/>
                 </p>
@@ -104,12 +108,10 @@ const CustomInput = ({
                     <input id={"col-no"} type={"number"} style={{width: 50}}
                            defaultValue={cols[selectedId] || 0} min={0}
                            onChange={(e) => {
-                               setCol(Number(e.target.value))
+                               setCol(Number(e.target.value));
                            }}/>
                 </p>
-            
             </div>
-            <button type={"submit"}>lala</button>
         </form>
     );
 };

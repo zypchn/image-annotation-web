@@ -2,9 +2,10 @@ module.exports = (sequelize, DataTypes) => {
     return sequelize.define("Annotation", {
         
         pk_id: {
-            type: DataTypes.STRING,
+            type: DataTypes.TINYINT,
             allowNull: false,
-            primaryKey: true
+            autoIncrement: true,
+            primaryKey: true,
         },
         id: {
             type: DataTypes.STRING,
