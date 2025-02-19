@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import {useState} from "react";
 import {useLogin} from "../hooks/useLogin.js";
 
 const LoginPage = () => {
@@ -27,8 +27,7 @@ const LoginPage = () => {
                 <div className={"container-fluid"}>
                     <div className={"row justify-content-center align-items-center h-100"}>
                         <div className={"col-12"}>
-                            <div className={"card bg-dark text-white my-5 mx-auto"}
-                                 style={{borderRadius: "1rem", maxWidth: "400px"}}>
+                            <div className={"card bg-dark text-white my-5 mx-auto login-card"}>
                                 <div className={"card-body p-5 d-flex flex-column align-items-center mx-auto w-100"}>
                                     <h2 className={"fw-bold mb-4"}> Log In </h2>
                                     <input className={"form-control mb-4 mx-5 w-100"} placeholder={"Email"}
@@ -47,7 +46,7 @@ const LoginPage = () => {
                         </div>
                     </div>
                 </div>
-                <div className={"trex-container"} style={{marginBottom: 10}}>
+                <div className={"trex-container"}>
                     <img alt={"trex"} src={"/images/trex.png"}/>
                 </div>
             </form>

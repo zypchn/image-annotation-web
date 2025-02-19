@@ -33,7 +33,7 @@ const ProfilePage = () => {
             <div className={"container"}>
                 <div className={"row"}>
                     <div className={"col-md-12 col-lg-7 mb-4 profile-container"}>
-                        <h1 className={"profile-header"} style={{textAlign: "center"}}> My Profile </h1>
+                        <h1 className={"profile-header"}> My Profile </h1>
                         <div className={"mb-3 profile-detail"}>
                             <h3><strong> Name </strong></h3>
                             <p id={"name"}> {userData.name} </p>
@@ -48,10 +48,10 @@ const ProfilePage = () => {
                         </div>
                     </div>
                     <div className={"col-lg-4 col-md-12 tablets-list-container"}>
-                        <h3 className={"mb-4 mt-1 tablets-header"} style={{textAlign: "center"}}> Assigned Tablet(s)
+                        <h3 className={"mb-4 mt-1 tablets-header"}> Assigned Tablet(s)
                             List &nbsp; #{Object.keys(assignedTablets).length}</h3>
                         <div className={"custom-scrollbar"}>
-                            <ul className={"list-group"} style={{height: 280, overflowY: "scroll"}}>
+                            <ul className={"list-group profile-tablets-list"}>
                                 {assignedTablets && Object.keys(assignedTablets).map((tabletID) => {
                                     return <li key={tabletID} className={"list-group-item d-flex justify-content-between align-items-center"}>
                                         <strong>{assignedTablets[tabletID] ? assignedTablets[tabletID] : tabletID}</strong>
@@ -60,7 +60,7 @@ const ProfilePage = () => {
                                             id={"profile-label-btn"}
                                             className={"btn btn-secondary"}
                                         >
-                                            Label
+                                            Annotate
                                         </a>
                                     </li>
                                 })}

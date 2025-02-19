@@ -22,17 +22,17 @@ const TabletCards = ({ listOfTablets }) => {
     };
    
    return (
-       <div className={"row-sm-2 my-5 mx-5 d-inline-flex "}>
+       <div className={"row-sm-2 my-5 mx-5 d-inline-flex"}>
            <div className={"card"} >
                <div className={"card-header text-center h5"} style={{color: listOfTablets?.status === "done" ? "green" : listOfTablets.status === "ready to check" ? "orange": "red"}} key={listOfTablets._id}>
                    {listOfTablets.status}
                </div>
-               <div className={"card-body"} style={{width: 280}}>
-                   <img src={`${baseUrl}/uploads/` + listOfTablets.name} className={"card-img-top"} style={{height: 175}} alt={"tablet"} />
-                   <h4 className={"card-title my-4"}> {tabletName} &nbsp; &nbsp; <i className={"fa-regular fa-pen-to-square"} onClick={() => setIsEdit(!isEdit)} style={{cursor: "pointer"}}></i> </h4>
+               <div className={"card-body"}>
+                   <img src={`${baseUrl}/uploads/` + listOfTablets.name} className={"card-img-top"} alt={"tablet"} />
+                   <h4 className={"card-title my-4"}> {tabletName} &nbsp; &nbsp; <i className={"fa-regular fa-pen-to-square"} onClick={() => setIsEdit(!isEdit)}></i> </h4>
                    {isEdit && <div className={"d-flex gap-2 align-items-center"}>
-                       <input type={"text"} id={"changeCustomIDField"} className={"form-control"} style={{width: 150}}/>
-                       <button style={{border: "none"}} onClick={() => {
+                       <input type={"text"} id={"changeCustomIDField"} className={"form-control set-custom-id-div"}/>
+                       <button className={"set-custom-id-btn"} onClick={() => {
                            const customID = document.getElementById("changeCustomIDField").value;
                            changeCustomID(customID).then();
                            setTabletName(customID);
@@ -40,7 +40,7 @@ const TabletCards = ({ listOfTablets }) => {
                        }}> Change ID </button>
                    </div>}
                    <h6 className={"card-title my-4"}> Database ID: {listOfTablets.id} </h6>
-                   <a href={"/tablet/" + (listOfTablets.id)} className={"btn btn-primary align-items-center my-2"}> Label </a>
+                   <a href={"/tablet/" + (listOfTablets.id)} className={"btn btn-primary align-items-center my-2"}> Annotate </a>
                </div>
                <div className={"card-footer text-muted"}>
                    last update: {formatDistanceToNow(new Date(listOfTablets.updatedAt), {addSuffix: true})}

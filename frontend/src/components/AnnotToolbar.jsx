@@ -144,7 +144,7 @@ const Toolbar = ({
     return (
         <div className={"toolbar-wrapper"}>
             
-            <div className={"textField-wrapper"} style={{width: 475}}>
+            <div className={"textField-wrapper"}>
                 {showLabel && polygons.map((p, index) => (
                     <div key={p.id}>
                         <label htmlFor={`label-${p.id}`} id={"label-idx"}> <b>{index + 1})</b> &nbsp; </label>
@@ -199,7 +199,7 @@ const Toolbar = ({
                                 }}
                             >
                                 {secondRow.map((char, index) => (
-                                    <td key={`row2-custom-char-${index}`} className="accent-cell">
+                                    <td key={`row2-custom-char-${index}`} className={"accent-cell"}>
                                         {char}
                                     </td>
                                 ))}
@@ -231,7 +231,7 @@ const Toolbar = ({
             
             <br/>
             
-            <div className={"scroll-buttons mx-3"} style={{display: "inline-block"}}>
+            <div className={"scroll-buttons mx-3"}>
                 <button onClick={() => scroll("up")} className={"btn btn-primary"}><i
                     className="fa-solid fa-arrow-up"></i> Up
                 </button>
@@ -259,7 +259,7 @@ const Toolbar = ({
             <div className={"points-wrapper"}>
                 {polygons.map((polygon) => (
                     <div key={polygon.id}>
-                        <pre style={{whiteSpace: 'pre-wrap'}}>
+                        <pre className={"points-wrapper-pre"}>
                             label: {JSON.stringify(polygon.label)}
                             <button className={"labelDeleteBtn"}
                                     onClick={() => {
@@ -274,7 +274,7 @@ const Toolbar = ({
                 ))}
             </div>
             
-            <div className={"status-buttons mx-3"} style={{display: "inline-block"}}>
+            <div className={"status-buttons mx-3"}>
                 <button onClick={() => changeStatusFunc("pending")} className={"btn btn-danger"}
                         id={"pendingBtn"}> Pending
                 </button>

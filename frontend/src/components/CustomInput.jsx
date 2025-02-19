@@ -97,7 +97,7 @@ const CustomInput = ({
                 </p>
                 
                 <p><strong> Satır : </strong>
-                    <input id={"row-no"} type={"number"} style={{width: 50}}
+                    <input id={"row-no"} type={"number"}
                            defaultValue={rows[selectedId] || 0} min={0}
                            onChange={(e) => {
                                setRow(Number(e.target.value))
@@ -105,7 +105,7 @@ const CustomInput = ({
                 </p>
                 
                 <p><strong> Sütun : </strong>
-                    <input id={"col-no"} type={"number"} style={{width: 50}}
+                    <input id={"col-no"} type={"number"}
                            defaultValue={cols[selectedId] || 0} min={0}
                            onChange={(e) => {
                                setCol(Number(e.target.value));

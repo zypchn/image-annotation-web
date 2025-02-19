@@ -85,18 +85,18 @@ const AssignTablet = ({assignedTablets}) => {
     
     return (
         <div className={"d-flex justify-content-center align-items-center mt-4"}>
-            <div className={"assign-tablet-container"} style={{display: "inline"}}>
-                <h2 className={"my-4"} style={{textAlign: "center"}}> Assign Tablet to Student(s) <button
+            <div className={"assign-tablet-container"}>
+                <h2 className={"assign-tablet-h2 my-4"}> Assign Tablet to Student(s) <button
                     onClick={handleAssign} className={"btn btn-danger"}> Assign </button></h2>
                 {showAlert &&
-                    <div className={"alert alert-success my-2"} style={{textAlign: "center"}}><strong> Assigned
-                        Successfully! </strong>
+                    <div className={"assign-success alert alert-success my-2"}>
+                        <strong> Assigned Successfully! </strong>
                     </div>}
                 <div className={"mt-4 mb-2"}>
                     <div className={"row"}>
                         <div className={"col-md-3 col-lg-3"}>
-                            <h3 style={{textAlign: "center"}}> Select Tablet </h3>
-                            <ul className={"list-group"} style={{height: 600, overflowY: "scroll"}}>
+                            <h3 className={"select-tablet-h3"}> Select Tablet </h3>
+                            <ul className={"list-group assign-tablet-list"}>
                                 {/* eslint-disable-next-line react/prop-types */}
                                 {assignedTablets && Object.keys(assignedTablets).map(tabletID => (
                                     <li key={tabletID} className={"list-group-item"}>
@@ -105,8 +105,7 @@ const AssignTablet = ({assignedTablets}) => {
                                             name={"tabletID"}
                                             value={tabletID}
                                             onChange={(e) => setSelectedTablet(e.target.value)}
-                                            className={"mr-2"}
-                                            style={{marginRight: 7}}
+                                            className={"assign-radio-btn mr-2"}
                                         />
                                         <label>
                                             <strong>{assignedTablets[tabletID] ? assignedTablets[tabletID] : tabletID}</strong>
@@ -116,8 +115,8 @@ const AssignTablet = ({assignedTablets}) => {
                             </ul>
                         </div>
                         <div className={"col-md-4 col-lg-4"}>
-                            <h3 style={{textAlign: "center"}}> Select Student(s) </h3>
-                            <ul className={"list-group mb-2"} style={{height: 600, overflowY: "scroll", width: 300}}>
+                            <h3 className={"assign-student-h3"}> Select Student(s) </h3>
+                            <ul className={"list-group assign-student-list mb-2"}>
                                 {allStudents && allStudents.map(student => (
                                     <li key={student.id} className={"list-group-item"}>
                                         <input
@@ -125,36 +124,35 @@ const AssignTablet = ({assignedTablets}) => {
                                             name={"studentID"}
                                             value={student.id}
                                             onChange={handleStudentSelect}
-                                            className={"mr-2"}
-                                            style={{marginRight: 7}}
+                                            className={"assign-student-checkbox mr-2"}
                                         />
                                         <label> {student.name} </label>
                                     </li>
                                 ))}
                             </ul>
                         </div>
-                        <div className={"col-md-4 col-lg-4"} style={{marginLeft: 70}}>
-                            <h3 style={{textAlign: "center"}}> Remove Assignation
+                        <div className={"col-md-4 col-lg-4 remove-assignation-div"}>
+                            <h3 className={"remove-assignation-h3"}> Remove Assignation
                                 <select onChange={(e) => {
                                     setAssignedStudentID(e.target.value);
                                 }}>
-                                    <option value="null">öğrenci seçiniz</option>
+                                    <option value={"null"}>öğrenci seçiniz</option>
                                     {allStudents && allStudents.map((student) => (
                                         <option key={student.id} value={student.id}> {student.name} </option>
                                     ))}
                                 </select></h3>
                             
-                            <ul className={"list-group mb-2"} style={{height: 600, overflowY: "scroll", width: 300}}>
+                            <ul className={"assigned-tablets-delete-div list-group mb-2"}>
                                 {assignedTabletsDelete ? 
                                     Object.entries(assignedTabletsDelete).map(([key, value]) => (
                                         <li key={key} className={"list-group-item"}>
                                             <button className={"btn btn-danger"}
                                                     onClick={() => handleDelete(assignedStudentID, key)}><i
                                                 className={"fa-solid fa-trash-can"}></i></button>
-                                            <label style={{marginLeft: 10}}>{value}</label>
+                                            <label className={"assigned-tablets-delete-label"}>{value}</label>
                                         </li>
                                     ))
-                                    : <li className="list-group-item">No tablets assigned</li>
+                                    : <li className={"list-group-item"}>No tablets assigned</li>
                                 }
                             </ul>
                         </div>

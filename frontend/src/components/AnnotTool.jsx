@@ -46,7 +46,7 @@ const AnnotTool = ({tablet}) => {
     };
     
     return (
-        <div className={"label-tool"} style={{position: "static"}}>
+        <div className={"label-tool"}>
             <PolygonAnnotation
                 /* eslint-disable-next-line react/prop-types */
                 bgImage={`${baseUrl}/uploads/${tablet.name}`}

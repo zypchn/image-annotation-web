@@ -33,10 +33,10 @@ const UploadTablet = () => {
     return (
         <div>
             <Navbar/>
-            <div className={"container"} style={{position: "static"}}>
+            <div className={"container upload-container"}>
                 <input type={"file"} onChange={handleFile}/>
                 <button onClick={handleUpload}> Upload</button>
-                {showAlert && <span className={"alert alert-success my-2 mx-3"} style={{textAlign: "center"}}>
+                {showAlert && <span className={"alert alert-success my-2 mx-3 upload-success-alert"}>
                     <strong> File Uploaded Successfully! </strong></span>}
             </div>
         </div>

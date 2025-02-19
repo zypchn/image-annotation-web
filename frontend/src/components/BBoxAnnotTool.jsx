@@ -245,20 +245,20 @@ const BBoxAnnotTool = ({tablet}) => {
                 />
             </div>
             <div className={"annot-data"}>
-                {successAlert && <p className={"alert alert-success"} style={{marginLeft: "10px"}}><strong>
+                {successAlert && <p className={"alert alert-success"}><strong>
                     <i className={"fa-solid fa-check"}></i> Kayıt Başarılı </strong></p>}
-                {failAlert && <p className={"alert alert-danger"} style={{marginLeft: "10px"}}><strong>
+                {failAlert && <p className={"alert alert-danger"}><strong>
                     <i className={"fa-solid fa-xmark"}></i> Kayıt Başarısız </strong></p>}
-                <div style={{display: "flex", alignItems: "center"}}>
+                <div className={"tool-buttons"}>
                     <button className={"btn btn-primary"} accessKey={"s"} onClick={() => saveData(data)}>
                         <i className={"fa-regular fa-floppy-disk"}></i> Save
                     </button>
-                    <button className={"btn btn-secondary"} style={{marginLeft: 5}} onClick={() => undo()}>
+                    <button className={"btn btn-secondary undo-btn"} onClick={() => undo()}>
                         <i className={"fa-solid fa-rotate-left"}></i> Undo
                     </button>
-                    <h5 style={{margin: 10}}><strong>Toplam hece : </strong> {data?.length} </h5>
+                    <h5 className={"syll-counter"}><strong>Toplam hece : </strong> {data?.length} </h5>
                 </div>
-                <div style={{alignItems: "center"}}>
+                <div className={"status-buttons"}>
                     <button className={"btn btn-danger"}>Pending</button>
                     <button className={"btn btn-warning"}>Ready to Check</button>
                     <button className={"btn btn-success"}>Done</button>
@@ -277,11 +277,10 @@ const BBoxAnnotTool = ({tablet}) => {
                         return acc;
                     }, {})).map(([rowKey, items]) => (
                         <div key={rowKey}>
-                            <div style={{display: "flex", flexDirection: "row", alignItems: "flex-start"}}>
+                            <div className={"annot-toolbar-row"}>
                                 <p className={"p-rowkey"}>{rowKey}) </p>
                                 {items.map((item, index) => (
-                                    <div key={index} data-annotation-id={item.id}
-                                         style={{marginTop: 10, display: "flex", alignItems: "center", gap: 10}}>
+                                    <div key={index} data-annotation-id={item.id} className={"annot-toolbar-syll"}>
                                         <p className={"p-comment"}> {item.comment} </p>
                                     </div>
                                 ))}

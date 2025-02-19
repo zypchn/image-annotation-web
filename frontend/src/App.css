@@ -14,6 +14,7 @@ html {
     justify-content: center;
     gap: 24px;
     overflow: auto;
+    position: static;
 }
 
 .konvajs-content {
@@ -48,6 +49,7 @@ html {
     align-items: center;
     gap: 8px;
     height: 300px;
+    width: 475px;
     overflow-y: auto;
 }
 
@@ -115,6 +117,7 @@ input[type="radio"]:checked + span {
     bottom: 0;
     right: 0;
     padding: 10px;
+    margin-bottom: 10px;
 }
 
 .trex-container img {
@@ -182,6 +185,7 @@ input[type="radio"]:checked + span {
 
 .scroll-buttons {
     border: black;
+    display: inline-block;
 }
 
 .otp-container {
@@ -337,6 +341,194 @@ input[type="radio"]:checked + span {
 
 .annot-warning {
     font-size: 20px;
+}
+
+.points-wrapper-pre {
+    white-space: pre-wrap;
+}
+
+.status-buttons {
+    align-items: center;
+}
+
+.assign-tablet-container {
+    display: inline;
+}
+
+.assign-tablet-h2 {
+    text-align: center;
+}
+
+.assign-success {
+    text-align: center;
+}
+
+.select-tablet-h3 {
+    text-align: center;
+}
+
+.assign-tablet-list {
+    height: 600px;
+    overflow-y: scroll;
+}
+
+.assign-radio-btn {
+    margin-right: 7px;
+}
+
+.assign-student-list {
+    height: 600px;
+    width: 300px;
+    overflow-y: scroll;
+}
+
+.assign-student-h3 {
+    text-align: center;
+}
+
+.assign-student-checkbox {
+    margin-right: 7px;
+}
+
+.remove-assignation-div {
+    margin-left: 70px;
+}
+
+.remove-assignation-h3 {
+    text-align: center;
+}
+
+.assigned-tablets-delete-div {
+    height: 600px;
+    width: 300px;
+    overflow-y: scroll;
+}
+
+.assigned-tablets-delete-label {
+    margin-left: 10px;
+}
+
+.alert-success {
+    margin-left: 10px;
+}
+
+.alert-danger {
+    margin-left: 10px;
+}
+
+.tool-buttons {
+    display: flex;
+    align-items: center;
+}
+
+.syll-counter {
+    margin: 10px;
+}
+
+.undo-btn {
+    margin-left: 5px;
+}
+
+.annot-toolbar-row {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+.annot-toolbar-syll {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#row-no {
+    width: 50px;
+}
+
+#col-no {
+    width: 50px;
+}
+
+.info-buttons-div {
+    position: relative;
+    display: inline-block;
+}
+
+.info-buttons {
+    position: absolute;
+    top: 110%;
+    left: 15%;
+    transform: translateX(-50%);
+    background: black;
+    color: white;
+    padding: 5px;
+    white-space: nowrap;
+    z-index: 999;
+}
+
+#profile-btn {
+    margin-left: 100px;
+}
+
+#token-info-btn {
+    cursor: pointer;
+}
+
+#shortcut-info-btn {
+    cursor: pointer;
+    margin-right: 100px;
+}
+
+.card-body {
+    width: 280px;
+}
+
+.card-img-top {
+    height: 175px;
+}
+
+.fa-pen-to-square {
+    cursor: pointer;
+}
+
+.set-custom-id-div {
+    width: 150px;
+}
+
+.set-custom-id-btn {
+    border: none;
+}
+
+.login-card {
+    border-radius: 1rem;
+    max-width: 400px;
+}
+
+.signup-card {
+    border-radius: 1rem;
+    max-width: 400px;
+}
+
+.profile-header {
+    text-align: center;
+}
+
+.tablets-header {
+    text-align: center;
+}
+
+.profile-tablets-list {
+    height: 280px;
+    overflow-y: scroll;
+}
+
+.upload-success-alert {
+    text-align: center;
+}
+
+.upload-container {
+    position: static;
 }
 
 @media screen and (max-height: 450px) {
