@@ -12,13 +12,19 @@ const getAnnots = async (req, res) => {
 
 const updateAnnots = async (req, res) => {
     try {
+        
+        const filterByColValue = (item) => {
+            return item.row_no > 0;
+        }
+        
         const TabletId = req.params.id;
         const new_annots = req.body.annotations.map(annot => ({
             ...annot,
             TabletId: TabletId
         }));
+        const filtered_annots = new_annots.filter(filterByColValue);
         
-        await Annot.bulkCreate(new_annots, {
+        await Annot.bulkCreate(filtered_annots, {
             updateOnDuplicate: ["comment", "lang", "col_no", "row_no", "mark"]
         });
         

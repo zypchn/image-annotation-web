@@ -13,7 +13,8 @@ const BBoxAnnotTool = ({tablet}) => {
     const {user} = useAuthContext();
     
     const [data, setData] = useState([]);
-    const [saveAlert, setSaveAlert] = useState(false);
+    const [successAlert, setSuccesAlert] = useState(false);
+    const [failAlert, setFailAlert] = useState(false);
     const [langs, setLangs] = useState({});         // Local Storage for Language Data
     const [cols, setCols] = useState({});           // Local Storage for Column Data
     const [rows, setRows] = useState({});           // Local Storage for Row Data
@@ -87,9 +88,15 @@ const BBoxAnnotTool = ({tablet}) => {
             annotations: updatedData
         }, {
             headers: {"Authorization": `Bearer ${user.token}`}
+        }).then((res) => {
+            if (res.status === 200) {
+                setSuccesAlert(true);
+                setTimeout(() => setSuccesAlert(false), 500);
+            }
+        }).catch(() => {
+            setFailAlert(true);
+            setTimeout(() => setFailAlert(false), 500);
         });
-        setSaveAlert(true);
-        setTimeout(() => setSaveAlert(false), 500);
     };
     
     // TODO : Implement buttons
@@ -238,8 +245,10 @@ const BBoxAnnotTool = ({tablet}) => {
                 />
             </div>
             <div className={"annot-data"}>
-                {saveAlert && <p className={"alert alert-success"} style={{marginLeft: "10px"}}><strong>
-                    <i className={"fa-solid fa-check"}></i> </strong></p>}
+                {successAlert && <p className={"alert alert-success"} style={{marginLeft: "10px"}}><strong>
+                    <i className={"fa-solid fa-check"}></i> Kayıt Başarılı </strong></p>}
+                {failAlert && <p className={"alert alert-danger"} style={{marginLeft: "10px"}}><strong>
+                    <i className={"fa-solid fa-xmark"}></i> Kayıt Başarısız </strong></p>}
                 <div style={{display: "flex", alignItems: "center"}}>
                     <button className={"btn btn-primary"} accessKey={"s"} onClick={() => saveData(data)}>
                         <i className={"fa-regular fa-floppy-disk"}></i> Save
@@ -253,6 +262,9 @@ const BBoxAnnotTool = ({tablet}) => {
                     <button className={"btn btn-danger"}>Pending</button>
                     <button className={"btn btn-warning"}>Ready to Check</button>
                     <button className={"btn btn-success"}>Done</button>
+                </div>
+                <div>
+                    <p className={"annot-warning"}><i className={"fa-solid fa-triangle-exclamation"}></i> Satır numarası 0 olan heceler veri tabanına kaydedilmeyecektir!</p>
                 </div>
                 
                 <div className={"coord-data"}>

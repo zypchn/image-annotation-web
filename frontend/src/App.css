@@ -335,6 +335,10 @@ input[type="radio"]:checked + span {
     margin-left: 10px;
 }
 
+.annot-warning {
+    font-size: 20px;
+}
+
 @media screen and (max-height: 450px) {
     .sidebar {
         padding-top: 15px;
