@@ -2,7 +2,6 @@ const multer = require("multer");
 const db = require("../models");
 const sizeOf = require("image-size");
 const redis = require("redis");
-const { promisify } = require("util");
 
 const Tablet = db.tablets;
 const User = db.users;
@@ -11,9 +10,8 @@ const UserTablet = db.usertablet;
 const UPLOAD_PATH=process.env.UPLOAD_PATH;
 
 const client = redis.createClient();
-const getAsync = promisify(client.get).bind(client);
-const setAsync = promisify(client.set).bind(client);
 
+// ensuring the uploaded file is an image
 const imageFilter = (req, file, cb) => {
     if (file.mimetype.startsWith("image")) {
         cb(null, true);
@@ -22,6 +20,7 @@ const imageFilter = (req, file, cb) => {
     }
 };
 
+// multer storage for images
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, UPLOAD_PATH);
@@ -31,11 +30,13 @@ const storage = multer.diskStorage({
     }
 });
 
+// get all Tablet data : GET
 const getAllTablets = async (req, res) => {
     const listOfTablets = await Tablet.findAll();
     res.json(listOfTablets);
 };
 
+// upload an image and crate an instance on the database : POST
 const uploadTablet = async (req, res) => {
     try {
         if (req.file === undefined) { return res.send("you must select a file") }
@@ -60,7 +61,7 @@ const uploadTablet = async (req, res) => {
             try {
                 const id = element.dataValues.id;
                 const mod = await User.findByPk(id);
-                await mod.addTablet(tablet, {through: "user_tablet"});
+                await mod.addTablet(tablet, {through: "user_tablet"}); // add relation
             } catch (error) { return res.status(500).send(error.message) }
         }
         
@@ -70,6 +71,7 @@ const uploadTablet = async (req, res) => {
     }
 };
 
+// get a single Tablet : GET
 const getTablet = async (req, res) => {
     try {
         const id = req.params.id;
@@ -78,6 +80,7 @@ const getTablet = async (req, res) => {
     } catch (error) { res.status(500).send(error.message) }
 };
 
+// get a list of all the users that have a relation with the selected Tablet
 const getAssignedUsers = async (req, res) => {
     try {
         const tabletID = Number(req.params.id);
@@ -87,6 +90,7 @@ const getAssignedUsers = async (req, res) => {
     } catch (error) { res.status(500).send(error.message) }
 };
 
+// change the completion status of one Tablet
 const changeStatus = async (req, res) => {
     try {
         const tabletID = req.params.id;
@@ -98,6 +102,7 @@ const changeStatus = async (req, res) => {
     } catch (error) { res.status(500).send(error.message) }
 };
 
+// change the customId field of a single Tablet
 const changeCustomID = async (req, res) => {
     try {
         const tabletID = req.params.id;
@@ -109,6 +114,8 @@ const changeCustomID = async (req, res) => {
     } catch (error) { res.status(500).send(error.message) }
 };
 
+// TODO : fix
+// lock a Tablet's page if someone is using it
 const changeLock = async (req, res) => {
     try {
         const tabletID = req.params.id;
@@ -124,6 +131,7 @@ const changeLock = async (req, res) => {
     } catch (error) { res.status(500).send(error.message) }
 };
 
+// check if a Tablet is being annotated
 const checkLock = async (req, res) => {
     try {
         const tabletID = req.params.id;

@@ -29,6 +29,7 @@ const AnnotTool = ({tablet}) => {
     const [initialData, setInitialData] = useState(tablet.annotations);
     const {user} = useAuthContext();
     
+    // Patch request to database to saving data
     const saveData = async (annot) => {
         await axios.patch(`${apiUrl}/tablets/${tablet.id}/annotations`, {
             annotations: annot
@@ -37,6 +38,7 @@ const AnnotTool = ({tablet}) => {
         });
     };
     
+    // Changing Tablet's status for admin (Moderator) approval
     const changeStatus = async (status) => {
         await axios.patch(`${apiUrl}/tablets/${tablet.id}/status`, {
             status: status

@@ -2,6 +2,7 @@ const db = require("../models");
 
 const Annot = db.annotations;
 
+// get all Annotations : GET
 const getAnnots = async (req, res) => {
     try {
         const TabletId = req.params.id;
@@ -10,6 +11,7 @@ const getAnnots = async (req, res) => {
     } catch (error) { res.status(500).send(error.message) }
 };
 
+// update Annotations : PATCH
 const updateAnnots = async (req, res) => {
     try {
         
@@ -37,6 +39,8 @@ const updateAnnots = async (req, res) => {
     }
 };
 
+
+// delete single Annotation : DELETE
 const deleteAnnot = async (req, res) => {
     try {
         const annotId = req.params.id;
@@ -44,7 +48,7 @@ const deleteAnnot = async (req, res) => {
         // TODO continue
         if (annot === null) {
             // user MAY try to delete a locally saved annotation, not from the database
-            return res.send(400); // client error
+            return res.send(400);
         }
         else {
             await Annot.destroy({

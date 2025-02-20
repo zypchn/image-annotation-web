@@ -1,3 +1,11 @@
+/*
+
+##########
+Using React Hooks to keep track of OTP Verification from email
+##########
+
+*/
+
 import {useState} from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";

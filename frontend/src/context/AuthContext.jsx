@@ -1,3 +1,11 @@
+/*
+
+##########
+Using React Context Provider to keep track of authentication
+##########
+
+*/
+
 import {createContext, useEffect, useReducer, useState} from "react";
 
 export const AuthContext = createContext();

@@ -15,6 +15,7 @@ const AssignTablet = ({assignedTablets}) => {
     const [assignedStudentID, setAssignedStudentID] = useState(null);
     const [assignedTabletsDelete, setAssignedTabletsDelete] = useState({});
     
+    // get all students
     useEffect(() => {
         axios.get(`${apiUrl}/user/students`)
         .then((response) => {
@@ -22,6 +23,7 @@ const AssignTablet = ({assignedTablets}) => {
         });
     }, []);
     
+    // get the user's assigned Tablets
     useEffect(() => {
         axios.get(`${apiUrl}/user/${assignedStudentID}/assigned`)
         .then((response) => {
@@ -30,6 +32,7 @@ const AssignTablet = ({assignedTablets}) => {
         
     }, [assignedStudentID, assignedTabletsDelete]);
     
+    // selecting student from menu
     const handleStudentSelect = (e) => {
         const {value, checked} = e.target;
         
@@ -40,6 +43,7 @@ const AssignTablet = ({assignedTablets}) => {
         }
     };
     
+    //
     const handleAssign = async () => {
         
         await axios.post(`${apiUrl}/user/assign`, {
@@ -59,6 +63,7 @@ const AssignTablet = ({assignedTablets}) => {
         setSelectedStudents([]);
     };
     
+    // remove a Tablet from Student's list
     const handleDelete = async (userID, tabletID) => {
         await axios.post(`${apiUrl}/user/removeAssignation`, {
             userID: userID,
@@ -69,20 +74,7 @@ const AssignTablet = ({assignedTablets}) => {
         setDeletedTablet(null);
     };
     
-    const getAssignedTablets = async (userID) => {
-        
-        if (userID === null) {
-            setAssignedTabletsDelete([]);
-            return;
-        }
-        
-        await axios.get(`${apiUrl}/user/${userID}/assigned`)
-        .then((response) => {
-            setAssignedTabletsDelete(response.data);
-            console.log(assignedTabletsDelete);
-        });
-    };
-    
+    // Main component
     return (
         <div className={"d-flex justify-content-center align-items-center mt-4"}>
             <div className={"assign-tablet-container"}>

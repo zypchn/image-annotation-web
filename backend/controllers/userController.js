@@ -9,10 +9,12 @@ const Tablet = db.tablets;
 const UserTablet = db.usertablet;
 const userOTP = db.userotp;
 
+// create a Login token for React Context Provider
 const createToken = (id) => {
     return jwt.sign({id}, process.env.SECRET, { expiresIn: "12h" });
 };
 
+// login a user : POST
 const loginUser = async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -35,6 +37,7 @@ const loginUser = async (req, res) => {
     }
 };
 
+// register a user to the database : POST
 const signupUser = async (req, res) => {
     try {
         const { name, email, password, role } = req.body;
@@ -81,18 +84,21 @@ const signupUser = async (req, res) => {
     }
 };
 
+// get the info of a single user : GET
 const getUser = async (req, res) => {
     const id = req.params.id;
     const user = await User.findByPk(id);
     return res.status(200).json(user);
 };
 
+// get all users with role=Student : GET
 const getAllStudents = async (req, res) => {
     const role = "Student";
     const students = await User.findAll({where: {role}})
     return res.status(200).json(students)
 };
 
+// make a relation between a user and a Tablet : POST
 const assignTablet = async (req, res) => {
     try {
         const { userID, tabletID } = req.body;
@@ -109,6 +115,7 @@ const assignTablet = async (req, res) => {
     }
 };
 
+// get all Tablets that have a relation with a user : GET
 const getAssignedTablets = async (req, res) => {
     try {
         const userID = Number(req.params.id);
@@ -123,6 +130,7 @@ const getAssignedTablets = async (req, res) => {
     } catch (error) { res.status(500).send(error.message) }
 };
 
+// verify the One-Time Password and set verified column to True : POST
 const verifyOTP = async (req, res) => {
     try {
         let {userEmail, otp} = req.body;
@@ -167,6 +175,7 @@ const verifyOTP = async (req, res) => {
     } catch (error) { console.log(error) }
 };
 
+// remove the relation between user and Tablet : POST
 const removeTabletFromUser = async (req, res) => {
     try {
         const { userID, tabletID } = req.body;

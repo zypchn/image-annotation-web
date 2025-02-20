@@ -1,4 +1,11 @@
-import { useAuthContext } from "./useAuthContext.js";
+/*
+
+##########
+Using React Hooks to keep track of SIGNUP operation
+##########
+
+*/
+
 import {useState} from "react";
 import axios from "axios";
 

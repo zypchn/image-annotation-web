@@ -1,3 +1,11 @@
+/*
+
+##########
+Using React Hooks to keep track of LOGOUT operation
+##########
+
+*/
+
 import {useAuthContext} from "./useAuthContext.js";
 
 export const useLogout = () => {
