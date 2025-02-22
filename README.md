@@ -10,7 +10,8 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-<!-- ADD GIF OR DCREENSHOT -->
+![image](https://github.com/user-attachments/assets/d598888e-29bd-457e-bdfe-5fb66845c12f)
+
 
 There are many bounding box annnotation softwares, but nearly every one of them accepts only the text data i.e. label of the bounding box. But for computer vision tasks, you'll need a bit more, like column and row indexes of each item. And for cuneiform tablets, you'll need the language data for post processing the data. Since, there is no website that satisfies my demands, I created my own!
 
