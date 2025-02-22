@@ -18,8 +18,7 @@ There are many bounding box annnotation softwares, but nearly every one of them 
 Here are the most significant features:
 - You can sign up as either *Moderator* or *Student*. Moderators assign the tablets to Students to keep the sensitive data secure. If you are not assigned to a Tablet, you can not see any of it's features, besides a small thumbnail on the main page.
 - The bounding box not only accepts the text input (which is not pre-defined, you can write anything you want), it also gets the following data: Language, Row Index, Column Index.
-
-
+- The annotation page contains a toolbar where annotated elements are organized by row value, making it as intuitive to navigate as reading a book!
 
 ### Built With
 
