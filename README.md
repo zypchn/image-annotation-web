@@ -78,13 +78,13 @@ Zeynep Cahan - zeynepcahan8@gmail.com
 
 Project Link: [https://github.com/zypchn/image-annotation-web](https://github.com/zypchn/image-annotation-web)
 
+<br />
 
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
-Use this space to list resources you find helpful and would like to give credit to. I've included a few of my favorites to kick things off!
-
 * [React Picture Annotation](https://github.com/Kunduin/react-picture-annotation)
+* Special thanks to [@uralaltan](https://github.com/uralaltan) for his CSS contributions. 
 
 
 <!-- MARKDOWN LINKS & IMAGES -->
