@@ -20,6 +20,8 @@ Here are the most significant features:
 - The bounding box not only accepts the text input (which is not pre-defined, you can write anything you want), it also gets the following data: Language, Row Index, Column Index.
 - The annotation page contains a toolbar where annotated elements are organized by row value, making it as intuitive to navigate as reading a book!
 
+PS: You can only upload .jpg or .JPEG file formats. Although it is modifiable through backend.
+
 ### Built With
 
 * [![React][React.js]][React-url]
