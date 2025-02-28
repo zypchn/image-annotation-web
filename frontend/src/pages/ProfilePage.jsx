@@ -411,7 +411,7 @@ const ProfilePage = () => {
 
         {/* Assign Tablet Section (Moderator only) */}
         {userData.role === "Moderator" && (
-          <div className="row">
+          <div className="row" style={{ paddingBottom: "100px" }}>
             <div className="col-12">
               <div
                 style={{
@@ -423,7 +423,8 @@ const ProfilePage = () => {
                   border: "1px solid rgba(255, 255, 255, 0.18)",
                   position: "relative",
                   overflow: "hidden",
-                  height: "90%",
+                  height: "100%",
+                  paddingBottom: "0",
                 }}
               >
                 <div
