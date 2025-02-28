@@ -3,3 +3,4 @@ public/uploads
 *.env
 /.idea
 config
+*.DS_Store
