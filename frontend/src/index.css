@@ -1,0 +1,39 @@
+.image-wrapper {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.tablet-card-hover:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 20px rgba(0,0,0,0.15);
+}
+
+.tablet-image {
+  transition: all 0.3s ease;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.tablet-card:hover .tablet-image {
+  transform: scale(1.05);
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(240, 240, 240, 0.5);
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(190, 190, 190, 0.5);
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(170, 170, 170, 0.8);
+}
