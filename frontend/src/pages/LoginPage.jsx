@@ -66,7 +66,7 @@ const LoginPage = () => {
           style={{ overflow: "hidden" }}
         >
           <img
-            src="/onboarding.jpg"
+            src="/images/onboarding.jpg"
             alt="onboarding"
             style={{ width: "100%", height: "100%", objectFit: "cover" }}
           />

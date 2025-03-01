@@ -14,6 +14,8 @@ const SignupPage = () => {
 
   const { signup, signupError, otpSent } = useSignup();
   const { otpVerification, otpError } = useOTPVerification();
+    
+    const baseUrl = process.env.REACT_APP_BASE_URL;
 
   const isFormFilled =
     name.trim() !== "" &&
@@ -86,7 +88,7 @@ const SignupPage = () => {
           style={{ overflow: "hidden" }}
         >
           <img
-            src="/onboarding.jpg"
+            src="/images/onboarding.jpg"
             alt="onboarding"
             style={{ width: "100%", height: "100%", objectFit: "cover" }}
           />
