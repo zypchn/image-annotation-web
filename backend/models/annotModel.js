@@ -2,7 +2,7 @@ module.exports = (sequelize, DataTypes) => {
     return sequelize.define("Annotation", {
         
         pk_id: {
-            type: DataTypes.TINYINT,
+            type: DataTypes.INTEGER,
             allowNull: false,
             autoIncrement: true,
             primaryKey: true,
@@ -20,11 +20,11 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         },
         col_no: {
-            type: DataTypes.TINYINT,
+            type: DataTypes.INTEGER,
             allowNull: false,
         },
         row_no: {
-            type: DataTypes.TINYINT,
+            type: DataTypes.INTEGER,
             allowNull: false
         },
         mark: {

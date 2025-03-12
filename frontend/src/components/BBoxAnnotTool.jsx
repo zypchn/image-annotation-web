@@ -20,6 +20,7 @@ const BBoxAnnotTool = ({tablet}) => {
     const [rows, setRows] = useState({});           // Local Storage for Row Data
     const [comments, setComments] = useState({});   // Local Storage for Label Data
     const [selectedId, setSelectedId] = useState(null);
+    const [selectedCol, setSelectedCol] = useState(null);
     
     const popupStyle = {
         background: 'white',
@@ -258,24 +259,35 @@ const BBoxAnnotTool = ({tablet}) => {
                     </button>
                     <h5 className={"syll-counter"}><strong>Toplam hece : </strong> {data?.length} </h5>
                 </div>
+                {/*
                 <div className={"status-buttons"}>
                     <button className={"btn btn-danger"}>Pending</button>
                     <button className={"btn btn-warning"}>Ready to Check</button>
                     <button className={"btn btn-success"}>Done</button>
                 </div>
+                */}
                 <div>
                     <p className={"annot-warning"}><i className={"fa-solid fa-triangle-exclamation"}></i> Satır numarası 0 olan heceler veri tabanına kaydedilmeyecektir!</p>
                 </div>
                 
+                <div>
+                    <label className={"selectedColLabel"}> Sütun no giriniz : </label>
+                    <input className={"selectedColField"} type={"number"} value={selectedCol || ""}
+                        onChange={(e) => setSelectedCol(e.target.value ? parseInt(e.target.value) : null)}
+                    />
+                </div>
+                
                 <div className={"coord-data"}>
-                    {Object.entries(data.reduce((acc, item) => {
-                        const rowKey = item.row_no || 0;
-                        if (!acc[rowKey]) {
-                            acc[rowKey] = [];
-                        }
-                        acc[rowKey].push(item);
-                        return acc;
-                    }, {})).map(([rowKey, items]) => (
+                    {Object.entries(data
+                        .filter(item => selectedCol ? item.col_no === selectedCol : true)
+                        .reduce((acc, item) => {
+                            const rowKey = item.row_no || 0;
+                            if (!acc[rowKey]) {
+                                acc[rowKey] = [];
+                            }
+                            acc[rowKey].push(item);
+                            return acc;
+                        }, {})).map(([rowKey, items]) => (
                         <div key={rowKey}>
                             <div className={"annot-toolbar-row"}>
                                 <p className={"p-rowkey"}>{rowKey}) </p>
